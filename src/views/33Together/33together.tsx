@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { t } from "@lingui/macro";
 import { Paper, Tab, Tabs, Box } from "@material-ui/core";
 import { InfoTooltipMulti } from "@olympusdao/component-library";
-import { Prize, PrizePool } from "src/typechain/pooltogether.d";
+import { Prize, PrizePool } from "../../../src/typechain/pooltogether";
 import TabPanel from "../../components/TabPanel";
 import CardHeader from "../../components/CardHeader/CardHeader";
 import { PoolDeposit } from "./PoolDeposit";
@@ -15,8 +15,8 @@ import { addresses, POOL_GRAPH_URLS } from "src/constants";
 import { useWeb3Context, useAppSelector } from "src/hooks";
 import { apolloExt } from "src/lib/apolloClient";
 import { poolDataQuery, yourAwardsQuery } from "./poolData";
-import { calculateOdds, trimOdds } from "src/helpers/33Together";
-import { getPoolValues, getRNGStatus } from "src/slices/PoolThunk";
+import { calculateOdds, trimOdds } from "../../../src/helpers/33Together";
+import { getPoolValues, getRNGStatus } from "../../../src/slices/PoolThunk";
 
 function a11yProps(index: number) {
   return {
