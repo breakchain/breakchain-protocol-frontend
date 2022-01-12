@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { t } from "@lingui/macro";
 import { Paper, Tab, Tabs, Box } from "@material-ui/core";
 import { InfoTooltipMulti } from "@olympusdao/component-library";
-import { Prize, PrizePool } from "src/typechain/pooltogether";
+import { Prize, PrizePool } from "src/typechain/pooltogether.d";
 import TabPanel from "../../components/TabPanel";
 import CardHeader from "../../components/CardHeader/CardHeader";
 import { PoolDeposit } from "./PoolDeposit";
