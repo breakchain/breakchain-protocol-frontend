@@ -1,5 +1,5 @@
 import { useCallback, useState, useEffect, ChangeEvent, ChangeEventHandler } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { usePathForNetwork } from "src/hooks/usePathForNetwork";
 import { useHistory } from "react-router";
 import {
@@ -22,12 +22,10 @@ import {
   AccordionDetails,
 } from "@material-ui/core";
 import { t, Trans } from "@lingui/macro";
-import CheckBoxIcon from "@material-ui/icons/CheckBox";
-import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 
 import RebaseTimer from "../../components/RebaseTimer/RebaseTimer";
 import TabPanel from "../../components/TabPanel";
-import { getGohmBalFromSohm, trim } from "../../helpers";
+import { getGohmBalFromSohm, trim, formatCurrency } from "../../helpers";
 import { changeApproval, changeStake } from "../../slices/StakeThunk";
 import { changeApproval as changeGohmApproval } from "../../slices/WrapThunk";
 import "./stake.scss";
@@ -37,7 +35,6 @@ import { Skeleton } from "@material-ui/lab";
 import ExternalStakePool from "./ExternalStakePool";
 import { error } from "../../slices/MessagesSlice";
 import { ethers } from "ethers";
-import ZapCta from "../Zap/ZapCta";
 import { useAppSelector } from "src/hooks";
 import { ExpandMore } from "@material-ui/icons";
 import { Metric, MetricCollection, DataRow } from "@olympusdao/component-library";
@@ -62,6 +59,10 @@ function Stake() {
   const [confirmation, setConfirmation] = useState(false);
 
   const isAppLoading = useAppSelector(state => state.app.loading);
+
+  const sOhmPrice = useSelector((state: any) => {
+    return state.app.marketPrice;
+  });
   const currentIndex = useAppSelector(state => {
     return state.app.currentIndex ?? "1";
   });
@@ -289,9 +290,9 @@ function Stake() {
       <Zoom in={true} onEntered={() => setZoomed(true)}>
         <Paper className={`ohm-card`}>
           <Grid container direction="column" spacing={2}>
-            <Grid item>
+            <Grid item direction="row">
               <div className="card-header">
-                <Typography variant="h5">Single Stake (3, 3)</Typography>
+                <Typography variant="h5">Single Stake</Typography>
                 <RebaseTimer />
               </div>
             </Grid>
@@ -312,9 +313,9 @@ function Stake() {
                 />
                 <Metric
                   className="stake-index"
-                  label={t`Current Index`}
-                  metric={`${formattedCurrentIndex} sOHM`}
-                  isLoading={currentIndex ? false : true}
+                  label={`sOHM ${t`Price`}`}
+                  metric={formatCurrency(sOhmPrice, 2)}
+                  isLoading={sOhmPrice ? false : true}
                 />
               </MetricCollection>
             </Grid>
@@ -486,7 +487,7 @@ function Stake() {
                   />
                   <div className="stake-user-data">
                     <DataRow
-                      title={t`Unstaked Balance`}
+                      title={`Your Balance`}
                       id="user-balance"
                       balance={`${trim(Number(ohmBalance), 4)} OHM`}
                       isLoading={isAppLoading}
@@ -494,13 +495,13 @@ function Stake() {
                     <Accordion className="stake-accordion" square defaultExpanded>
                       <AccordionSummary expandIcon={<ExpandMore className="stake-expand" />}>
                         <DataRow
-                          title={t`Total Staked Balance`}
+                          title={`Your Staked Balance`}
                           id="user-staked-balance"
                           balance={`${trimmedBalance} sOHM`}
                           isLoading={isAppLoading}
                         />
                       </AccordionSummary>
-                      <AccordionDetails>
+                      {/* <AccordionDetails>
                         <DataRow
                           title={t`sOHM Balance`}
                           balance={`${trim(Number(sohmBalance), 4)} sOHM`}
@@ -585,7 +586,7 @@ function Stake() {
                             isLoading={isAppLoading}
                           />
                         )}
-                      </AccordionDetails>
+                      </AccordionDetails> */}
                     </Accordion>
                     <Divider color="secondary" />
                     <DataRow
@@ -603,6 +604,16 @@ function Stake() {
                       balance={`${trim(Number(fiveDayRate) * 100, 4)}%`}
                       isLoading={isAppLoading}
                     />
+                    <DataRow
+                      title="Earnings Per Day"
+                      balance={`$${Number(nextRewardValue) * 3 * Number(sOhmPrice)}`}
+                      isLoading={isAppLoading}
+                    />
+                    <DataRow
+                      title="Position"
+                      balance={`${(Number(stakingTVL) / Number(currentIndex)).toFixed(2)}`}
+                      isLoading={isAppLoading}
+                    />
                   </div>
                 </>
               )}
@@ -612,7 +623,7 @@ function Stake() {
       </Zoom>
       {/* NOTE (appleseed-olyzaps) olyzaps disabled until v2 contracts */}
       {/* <ZapCta /> */}
-      <ExternalStakePool />
+      {/* <ExternalStakePool /> */}
     </div>
   );
 }

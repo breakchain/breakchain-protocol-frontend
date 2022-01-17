@@ -1,0 +1,20 @@
+.airdropview {
+  display: flex;
+  flex-wrap: wrap;
+  .title {
+    font-size: 36px;
+    margin-bottom: 25px;
+  }
+  .airdropitem {
+    padding: 20px 30px 30px 30px;
+
+    h5 {
+      font-size: 1.3118rem;
+      padding-bottom: 16px;
+    }
+
+    button {
+      width: 100%;
+    }
+  }
+}

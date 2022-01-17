@@ -1,0 +1,16 @@
+#calculator-view {
+  display: flex;
+  justify-content: center;
+
+  .sohmItem {
+    margin-bottom: 15px;
+    width: 100%;
+    .MuiFormControl-root {
+      width: 100%;
+    }
+  }
+
+  .datarow {
+    flex: 1;
+  }
+}

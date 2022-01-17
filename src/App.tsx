@@ -54,7 +54,9 @@ import ProjectInfo from "./views/Give/ProjectInfo";
 import projectData from "src/views/Give/projects.json";
 import Announcement from "./components/Announcement/Announcement";
 import { getAllBonds, getUserNotes } from "./slices/BondSliceV2";
+import Airdrop from "src/views/Airdrop";
 import { NetworkId } from "./constants";
+import Calculator from "./views/Calculator";
 
 // 😬 Sorry for all the console logging
 const DEBUG = false;
@@ -86,6 +88,7 @@ const useStyles = makeStyles(theme => ({
     height: "100%",
     overflow: "auto",
     marginLeft: drawerWidth,
+    background: "lightgray",
   },
   contentShift: {
     transition: theme.transitions.create("margin", {
@@ -381,6 +384,9 @@ function App() {
               <Route exact path="/give/redeem">
                 <RedeemYield />
               </Route>
+              <Route exact path="/airdrop">
+                <Airdrop />
+              </Route>
 
               <Route path="/wrap">
                 <Route exact path={`/wrap`}>
@@ -392,6 +398,9 @@ function App() {
                 <Route exact path={`/zap`}>
                   <Zap />
                 </Route>
+              </Route>
+              <Route path="/calculator">
+                <Calculator />
               </Route>
 
               {/* <Route path="/33-together">
