@@ -156,13 +156,13 @@ function NavContent({ handleDrawerToggle }) {
                   <Trans>Staking</Trans>
                 </Typography>
               </Link>
-              <Link component={NavLink} id="stake" to="calculator" className={`button-dapp-menu ${isActive ? "active" : ""}`}>
+              <Link id="stake" component={NavLink} to="/calculator" className={`button-dapp-menu ${isActive ? "active" : ""}`}>
                 <Typography variant="h6">
                   <SvgIcon color="primary" component={InfoIcon} />
                   <Trans>Calculator</Trans>
                 </Typography>
               </Link>
-              <Link component={NavLink} id="stake" to="/airdrop" className={`button-dapp-menu ${isActive ? "active" : ""}`}>
+              <Link id="stake" component={NavLink} to="/airdrop" className={`button-dapp-menu ${isActive ? "active" : ""}`}>
                 <Typography variant="h6">
                   <SvgIcon color="primary" component={ZapIcon} />
                   <Trans>Airdrop</Trans>
