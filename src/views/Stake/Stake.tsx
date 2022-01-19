@@ -187,13 +187,13 @@ function Stake() {
     // 1st catch if quantity > balance
     let gweiValue = ethers.utils.parseUnits(quantity.toString(), "gwei");
     if (action === "stake" && gweiValue.gt(ethers.utils.parseUnits(ohmBalance, "gwei"))) {
-      return dispatch(error(t`You cannot stake more than your OHM balance.`));
+      return dispatch(error(t`You cannot stake more than your XCHAIN balance.`));
     }
 
     if (confirmation === false && action === "unstake" && gweiValue.gt(ethers.utils.parseUnits(sohmBalance, "gwei"))) {
       return dispatch(
         error(
-          t`You do not have enough sOHM to complete this transaction.  To unstake from gOHM, please toggle the sohm-gohm switch.`,
+          t`You do not have enough XCHAIN to complete this transaction.  To unstake from XCHAIN, please toggle the XCHAIN switch.`,
         ),
       );
     }
@@ -326,7 +326,7 @@ function Stake() {
                     {modalButton}
                   </div>
                   <Typography variant="h6">
-                    <Trans>Connect your wallet to stake OHM</Trans>
+                    <Trans>Connect your wallet to stake XCHAIN</Trans>
                   </Typography>
                 </div>
               ) : (
