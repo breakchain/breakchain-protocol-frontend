@@ -12,7 +12,7 @@ function Airdrop() {
   return (
     <div className="airdropview">
       <Typography component="h3" className="title">
-        Airdrops
+        Rewards
       </Typography>
       <Grid container>
         <Grid item xs={3}>

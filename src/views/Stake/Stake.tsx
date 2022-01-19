@@ -292,7 +292,7 @@ function Stake() {
           <Grid container direction="column" spacing={2}>
             <Grid item direction="row">
               <div className="card-header">
-                <Typography variant="h5">Single Stake</Typography>
+                <Typography variant="h5">Single Staking</Typography>
                 <RebaseTimer />
               </div>
             </Grid>

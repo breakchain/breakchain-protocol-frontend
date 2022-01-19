@@ -163,7 +163,7 @@ function NavContent({ handleDrawerToggle }) {
               >
                 <Typography variant="h6">
                   <SvgIcon color="primary" component={InfoIcon} />
-                  <Trans>Calculator</Trans>
+                  <Trans>ROI Projections</Trans>
                 </Typography>
               </Link>
               <Link
@@ -174,7 +174,7 @@ function NavContent({ handleDrawerToggle }) {
               >
                 <Typography variant="h6">
                   <SvgIcon color="primary" component={ZapIcon} />
-                  <Trans>Airdrop</Trans>
+                  <Trans>Rewards</Trans>
                 </Typography>
               </Link>
               <Link
@@ -189,7 +189,7 @@ function NavContent({ handleDrawerToggle }) {
               >
                 <Typography variant="h6">
                   <SvgIcon color="primary" component={BondIcon} />
-                  <Trans>Bond</Trans>
+                  <Trans>Bonds</Trans>
                 </Typography>
               </Link>
 
