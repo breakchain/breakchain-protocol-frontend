@@ -135,9 +135,8 @@ function NavContent({ handleDrawerToggle }) {
               </Link>
 
               <Link
-                component={NavLink}
                 id="bond-nav"
-                to="/wrap"
+                href="https://quickswap.exchange/#/swap"
                 className={`button-dapp-menu ${isActive ? "active" : ""}`}
               >
                 <Typography variant="h6">
