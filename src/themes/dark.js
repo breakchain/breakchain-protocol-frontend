@@ -39,7 +39,7 @@ const darkTheme = {
   outlinedSecondaryButtonHoverColor: "#F8CC82", //gold
   containedSecondaryButtonHoverBG: "rgba(255, 255, 255, 0.15)",
   graphStrokeColor: "rgba(255, 255, 255, .1)",
-  gridButtonHoverBackground: "rgba(255, 255, 255, 0.6)",
+  gridButtonHoverBackground: "white",
   gridButtonActiveBackground: "#00000038",
   switchBg: "#333333",
 };
