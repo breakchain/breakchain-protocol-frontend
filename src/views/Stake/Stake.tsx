@@ -313,7 +313,7 @@ function Stake() {
                 />
                 <Metric
                   className="stake-index"
-                  label={`sOHM ${t`Price`}`}
+                  label={`XCHAIN ${t`Price`}`}
                   metric={formatCurrency(sOhmPrice, 2)}
                   isLoading={sOhmPrice ? false : true}
                 />
@@ -363,16 +363,16 @@ function Stake() {
                               <Typography variant="body1" className="stake-note" color="textSecondary">
                                 {view === 0 ? (
                                   <>
-                                    <Trans>First time staking</Trans> <b>OHM</b>?
+                                    <Trans>First time staking</Trans> <b>XCHAIN</b>?
                                     <br />
-                                    <Trans>Please approve Olympus Dao to use your</Trans> <b>OHM</b>{" "}
+                                    <Trans>Please approve Olympus Dao to use your</Trans> <b>XCHAIN</b>{" "}
                                     <Trans>for staking</Trans>.
                                   </>
                                 ) : (
                                   <>
-                                    <Trans>First time unstaking</Trans> <b>sOHM</b>?
+                                    <Trans>First time unstaking</Trans> <b>XCHAIN</b>?
                                     <br />
-                                    <Trans>Please approve Olympus Dao to use your</Trans> <b>sOHM</b>{" "}
+                                    <Trans>Please approve Olympus Dao to use your</Trans> <b>XCHAIN</b>{" "}
                                     <Trans>for unstaking</Trans>.
                                   </>
                                 )}
@@ -479,17 +479,17 @@ function Stake() {
                       </Grid>
                     </Grid>
                   </Box>
-                  <ConfirmDialog
+                  {/* <ConfirmDialog
                     quantity={quantity}
                     currentIndex={currentIndex}
                     view={view}
                     onConfirm={setConfirmation}
-                  />
+                  /> */}
                   <div className="stake-user-data">
                     <DataRow
                       title={`Your Balance`}
                       id="user-balance"
-                      balance={`${trim(Number(ohmBalance), 4)} OHM`}
+                      balance={`${trim(Number(ohmBalance), 4)} XCHAIN`}
                       isLoading={isAppLoading}
                     />
                     <Accordion className="stake-accordion" square defaultExpanded>
@@ -497,7 +497,7 @@ function Stake() {
                         <DataRow
                           title={`Your Staked Balance`}
                           id="user-staked-balance"
-                          balance={`${trimmedBalance} sOHM`}
+                          balance={`${trimmedBalance} XCHAIN`}
                           isLoading={isAppLoading}
                         />
                       </AccordionSummary>
@@ -591,7 +591,7 @@ function Stake() {
                     <Divider color="secondary" />
                     <DataRow
                       title={t`Next Reward Amount`}
-                      balance={`${nextRewardValue} sOHM`}
+                      balance={`${nextRewardValue} XCHAIN`}
                       isLoading={isAppLoading}
                     />
                     <DataRow

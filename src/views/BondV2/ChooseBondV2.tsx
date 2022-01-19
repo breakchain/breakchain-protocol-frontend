@@ -123,7 +123,7 @@ function ChooseBondV2() {
               isLoading={!!treasuryBalance ? false : true}
             />
             <Metric
-              label={t`OHM Price`}
+              label={t`XCHAIN Price`}
               metric={formatCurrency(Number(marketPrice), 2)}
               isLoading={marketPrice ? false : true}
             />

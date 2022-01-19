@@ -24,7 +24,7 @@ export const OHMPrice = () => {
   const marketPrice = useSelector(state => state.app.marketPrice);
   return (
     <Metric
-      label={t`OHM Price`}
+      label={`XCHAIN Price`}
       metric={marketPrice && formatCurrency(marketPrice, 2)}
       isLoading={marketPrice ? false : true}
       {...sharedProps}
@@ -50,7 +50,7 @@ export const BackingPerOHM = () => {
   const backingPerOhm = useSelector(state => state.app.treasuryMarketValue / state.app.circSupply);
   return (
     <Metric
-      label={t`Backing per OHM`}
+      label={t`Backing per XCHAIN`}
       metric={!isNaN(backingPerOhm) && formatCurrency(backingPerOhm, 2)}
       isLoading={backingPerOhm ? false : true}
       {...sharedProps}
@@ -63,10 +63,10 @@ export const CurrentIndex = () => {
   return (
     <Metric
       label={t`Current Index`}
-      metric={currentIndex && trim(currentIndex, 2) + " sOHM"}
+      metric={currentIndex && trim(currentIndex, 2) + " XCHAIN"}
       isLoading={currentIndex ? false : true}
       {...sharedProps}
-      tooltip="The current index tracks the amount of sOHM accumulated since the beginning of staking. Basically, how much sOHM one would have if they staked and held a single OHM from day 1."
+      tooltip="The current index tracks the amount of XCHAIN accumulated since the beginning of staking. Basically, how much sOHM one would have if they staked and held a single XCHAIN from day 1."
     />
   );
 };
@@ -75,8 +75,8 @@ export const GOHMPrice = () => {
   const gOhmPrice = useSelector(state => state.app.marketPrice * state.app.currentIndex);
   return (
     <Metric
-      className="metric wsoprice"
-      label={t`gOHM Price`}
+      className="metric XCHAIN Price"
+      label={t`XCHAIN Price`}
       metric={gOhmPrice && formatCurrency(gOhmPrice, 2)}
       isLoading={gOhmPrice ? false : true}
       {...sharedProps}
