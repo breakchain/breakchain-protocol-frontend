@@ -38,7 +38,7 @@ const TreasuryDashboard = memo(() => {
             </MetricCollection>
           </Paper>
         </Box>
-        <Box className="hero-metrics" style={{ marginTop: "20px" }}>
+        {/* <Box className="hero-metrics" style={{ marginTop: "20px" }}>
           <Alert
             variant="filled"
             icon={false}
@@ -55,7 +55,7 @@ const TreasuryDashboard = memo(() => {
               </Typography>
             </Box>
           </Alert>
-        </Box>
+        </Box> */}
 
         <Zoom in={true}>
           <Grid container spacing={2} className="data-grid">

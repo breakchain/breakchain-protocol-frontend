@@ -17,7 +17,7 @@ function Airdrop() {
       <Grid container>
         <Grid item xs={3}>
           <Card className="airdropitem">
-            <Typography component="h5">Diamond Hands</Typography>
+            <Typography component="h5">Airdrop</Typography>
             <Typography component="h5">0</Typography>
             <Button variant="contained" color="primary">
               Claim

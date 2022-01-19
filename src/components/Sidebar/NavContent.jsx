@@ -136,6 +136,7 @@ function NavContent({ handleDrawerToggle }) {
 
               <Link
                 id="bond-nav"
+                target="_blank"
                 href="https://quickswap.exchange/#/swap"
                 className={`button-dapp-menu ${isActive ? "active" : ""}`}
               >
@@ -192,81 +193,6 @@ function NavContent({ handleDrawerToggle }) {
                   <Trans>Bonds</Trans>
                 </Typography>
               </Link>
-
-              <div className="dapp-menu-data discounts">
-                <div className="bond-discounts">
-                  <Accordion className="discounts-accordion" square defaultExpanded="true">
-                    <AccordionSummary
-                      expandIcon={
-                        <ExpandMore
-                          className="discounts-expand"
-                          viewbox="0 0 12 12"
-                          style={{ width: "18px", height: "18px" }}
-                        />
-                      }
-                    >
-                      <Typography variant="body2">
-                        <Trans>Highest ROI</Trans>
-                      </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      {sortedBonds.map((bond, i) => {
-                        return (
-                          <Link
-                            component={NavLink}
-                            to={`/bonds/${bond.index}`}
-                            key={i}
-                            className={"bond"}
-                            onClick={handleDrawerToggle}
-                          >
-                            <Typography variant="body2">
-                              {bond.displayName}
-                              <span className="bond-pair-roi">{`${
-                                bond.discount && trim(bond.discount * 100, 2)
-                              }%`}</span>
-                            </Typography>
-                          </Link>
-                        );
-                      })}
-                      <Box className="menu-divider">
-                        <Divider />
-                      </Box>
-                      {bonds.map((bond, i) => {
-                        if (bond.getBondability(networkId) || bond.getLOLability(networkId)) {
-                          return (
-                            <Link
-                              component={NavLink}
-                              to={`/bonds-v1/${bond.name}`}
-                              key={i}
-                              className={"bond"}
-                              onClick={handleDrawerToggle}
-                            >
-                              {!bond.bondDiscount ? (
-                                <Skeleton variant="text" width={"150px"} />
-                              ) : (
-                                <Typography variant="body2">
-                                  {`${bond.displayName} (v1)`}
-
-                                  <span className="bond-pair-roi">
-                                    {bond.isLOLable[networkId]
-                                      ? "--"
-                                      : !bond.isBondable[networkId]
-                                      ? "Sold Out"
-                                      : `${bond.bondDiscount && trim(bond.bondDiscount * 100, 2)}%`}
-                                    {/* {!bond.isBondable[networkId]
-                                  ? "Sold Out"
-                                  : `${bond.bondDiscount && trim(bond.bondDiscount * 100, 2)}%`} */}
-                                  </span>
-                                </Typography>
-                              )}
-                            </Link>
-                          );
-                        }
-                      })}
-                    </AccordionDetails>
-                  </Accordion>
-                </div>
-              </div>
             </div>
           </div>
         </div>
