@@ -300,7 +300,11 @@ function Stake() {
               <Grid item style={{ marginLeft: "auto" }}>
                 <div className="card-header">
                   <Typography variant="h5">Position</Typography>
-                  <Typography variant="h5">${(Number(trimmedBalance) * Number(sOhmPrice)).toFixed(2)}</Typography>
+                  <Typography variant="h6">${(Number(trimmedBalance) * Number(sOhmPrice)).toFixed(2)}</Typography>
+                </div>
+                <div className="card-header">
+                  <Typography variant="h5">Your Earnings Per Day</Typography>
+                  <Typography variant="h6">{`$${Number(nextRewardValue) * 3 * Number(sOhmPrice)}`}</Typography>
                 </div>
               </Grid>
             </Grid>
