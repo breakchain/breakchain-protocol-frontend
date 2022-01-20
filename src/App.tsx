@@ -283,10 +283,10 @@ function App() {
     setIsSidebarExpanded(false);
   };
 
-  let themeMode = theme === "light" ? lightTheme : theme === "dark" ? darkTheme : gTheme;
+  let themeMode = theme === "light" ? lightTheme : theme === "dark" ? lightTheme : gTheme;
 
   useEffect(() => {
-    themeMode = theme === "light" ? lightTheme : darkTheme;
+    themeMode = theme === "light" ? lightTheme : lightTheme;
   }, [theme]);
 
   useEffect(() => {
@@ -310,7 +310,6 @@ function App() {
         <CssBaseline />
         {/* {isAppLoading && <LoadingSplash />} */}
         <div className={`app ${isSmallerScreen && "tablet"} ${isSmallScreen && "mobile"} ${theme}`}>
-          <Messages />
           <TopBar theme={theme} toggleTheme={toggleTheme} handleDrawerToggle={handleDrawerToggle} />
 
           <nav className={classes.drawer}>
