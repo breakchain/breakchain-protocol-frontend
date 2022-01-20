@@ -290,11 +290,19 @@ function Stake() {
       <Zoom in={true} onEntered={() => setZoomed(true)}>
         <Paper className={`ohm-card`}>
           <Grid container direction="column" spacing={2}>
-            <Grid item direction="row">
-              <div className="card-header">
-                <Typography variant="h5">Single Staking</Typography>
-                <RebaseTimer />
-              </div>
+            <Grid item container direction="row">
+              <Grid item>
+                <div className="card-header">
+                  <Typography variant="h5">Single Staking</Typography>
+                  <RebaseTimer />
+                </div>
+              </Grid>
+              <Grid item style={{ marginLeft: "auto" }}>
+                <div className="card-header">
+                  <Typography variant="h5">Position</Typography>
+                  <Typography variant="h5">${(Number(trimmedBalance) * Number(sOhmPrice)).toFixed(2)}</Typography>
+                </div>
+              </Grid>
             </Grid>
 
             <Grid item>
@@ -609,11 +617,11 @@ function Stake() {
                       balance={`$${Number(nextRewardValue) * 3 * Number(sOhmPrice)}`}
                       isLoading={isAppLoading}
                     />
-                    <DataRow
+                    {/* <DataRow
                       title="Position"
                       balance={`${(Number(stakingTVL) / Number(currentIndex)).toFixed(2)}`}
                       isLoading={isAppLoading}
-                    />
+                    /> */}
                   </div>
                 </>
               )}
