@@ -271,7 +271,7 @@ export const useBuy = (
   providerInitialized: Boolean,
 ): Record<string, IToken> => {
   // default to mainnet while not initialized
-  const networkId = providerInitialized ? chainId : NetworkId.MAINNET;
+  const networkId = providerInitialized ? chainId : NetworkId.POLYGON;
 
   const connectedChainBalances = useAppSelector(s => s.account.balances);
   const ohmPrice = useAppSelector(s => s.app.marketPrice);
