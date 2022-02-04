@@ -71,17 +71,17 @@ const TreasuryDashboard = memo(() => {
               </Paper>
             </Grid>
 
-            <Grid item lg={6} md={6} sm={12} xs={12}>
+            {/* <Grid item lg={6} md={6} sm={12} xs={12}>
               <Paper className="ohm-card ohm-chart-card">
                 <RiskFreeValueGraph />
               </Paper>
-            </Grid>
+            </Grid> */}
 
-            <Grid item lg={6} md={6} sm={12} xs={12}>
+            {/* <Grid item lg={6} md={6} sm={12} xs={12}>
               <Paper className="ohm-card ohm-chart-card">
                 <ProtocolOwnedLiquidityGraph />
               </Paper>
-            </Grid>
+            </Grid> */}
 
             {/*  Temporarily removed until correct data is in the graph */}
             {/* <Grid item lg={6} md={12} sm={12} xs={12}>

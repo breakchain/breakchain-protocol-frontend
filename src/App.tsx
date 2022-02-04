@@ -88,7 +88,7 @@ const useStyles = makeStyles(theme => ({
     height: "100%",
     overflow: "auto",
     marginLeft: drawerWidth,
-    background: "lightgray",
+    background: "linear-gradient(#AFCDE9,lightgray)",
   },
   contentShift: {
     transition: theme.transitions.create("margin", {
@@ -98,7 +98,7 @@ const useStyles = makeStyles(theme => ({
     marginLeft: 0,
   },
   // necessary for content to be below app bar
-  toolbar: theme.mixins.toolbar,
+  toolbar: theme.mixins.toolbar, 
   drawerPaper: {
     width: drawerWidth,
   },
