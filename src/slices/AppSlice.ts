@@ -1,4 +1,5 @@
 import { ethers } from "ethers";
+
 import { addresses, NetworkId } from "../constants";
 import { abi as sOHMv2 } from "../abi/sOhmv2.json";
 import { setAll, getTokenPrice, getMarketPrice } from "../helpers";
@@ -7,7 +8,7 @@ import apollo from "../lib/apolloClient";
 import { createSlice, createSelector, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "src/store";
 import { IBaseAsyncThunk } from "./interfaces";
-import { OlympusStakingv2__factory, OlympusStaking__factory, SOhmv2 } from "../typechain";
+import { OlympusStakingv2__factory, OlympusStaking__factory, SOhmv2, SOHM__factory } from "../typechain";
 
 interface IProtocolMetrics {
   readonly timestamp: string;
@@ -47,9 +48,9 @@ export const loadAppDetails = createAsyncThunk(
       }
     `;
 
-    if (networkID !== NetworkId.MAINNET) {
+    if (networkID !== NetworkId.POLYGON) {
       provider = NodeHelper.getMainnetStaticProvider();
-      networkID = NetworkId.MAINNET;
+      networkID = NetworkId.POLYGON;
     }
     const graphData = await apollo<{ protocolMetrics: IProtocolMetrics[] }>(protocolMetricsQuery);
 
@@ -92,38 +93,48 @@ export const loadAppDetails = createAsyncThunk(
     }
     const currentBlock = await provider.getBlockNumber();
 
-    const stakingContract = OlympusStakingv2__factory.connect(addresses[networkID].STAKING_V2, provider);
+    const stakingContract = OlympusStakingv2__factory.connect(addresses[networkID].STAKING_ADDRESS, provider);
     const stakingContractV1 = OlympusStaking__factory.connect(addresses[networkID].STAKING_ADDRESS, provider);
 
-    const sohmMainContract = new ethers.Contract(addresses[networkID].SOHM_V2 as string, sOHMv2, provider) as SOhmv2;
+    const sohmMainContract = SOHM__factory.connect(addresses[networkID].SOHM_ADDRESS as string, provider);
 
     // Calculating staking
-    const epoch = await stakingContract.epoch();
-    const secondsToEpoch = Number(await stakingContract.secondsToNextEpoch());
-    const stakingReward = epoch.distribute;
-    const circ = await sohmMainContract.circulatingSupply();
-    const stakingRebase = Number(stakingReward.toString()) / Number(circ.toString());
-    const fiveDayRate = Math.pow(1 + stakingRebase, 5 * 3) - 1;
-    const stakingAPY = Math.pow(1 + stakingRebase, 365 * 3) - 1;
+    try {
+      const epoch = await stakingContract.epoch();
+      //const secondsToEpoch = Number(await stakingContract.secondsToNextEpoch());
 
-    // Current index
-    const currentIndex = await stakingContract.index();
-    const currentIndexV1 = await stakingContractV1.index();
-    return {
-      currentIndex: ethers.utils.formatUnits(currentIndex, "gwei"),
-      currentIndexV1: ethers.utils.formatUnits(currentIndexV1, "gwei"),
-      currentBlock,
-      fiveDayRate,
-      stakingAPY,
-      stakingTVL,
-      stakingRebase,
-      marketCap,
-      marketPrice,
-      circSupply,
-      totalSupply,
-      treasuryMarketValue,
-      secondsToEpoch,
-    } as IAppData;
+      const stakingReward = epoch.distribute;
+
+      const circ = await sohmMainContract.circulatingSupply();
+
+      // console.log("circ", Number(stakingReward.toString()));
+
+      const stakingRebase =
+        Number(circ.toString()) > 0 ? Number(stakingReward.toString()) / Number(circ.toString()) : 0;
+      const fiveDayRate = Math.pow(1 + stakingRebase, 5 * 3) - 1;
+      const stakingAPY = Math.pow(1 + stakingRebase, 365 * 3) - 1;
+
+      // Current index
+      const currentIndex = await stakingContract.index();
+      const currentIndexV1 = await stakingContractV1.index();
+
+      return {
+        currentIndex: ethers.utils.formatUnits(currentIndex, "gwei"),
+        currentIndexV1: ethers.utils.formatUnits(currentIndexV1, "gwei"),
+        currentBlock,
+        fiveDayRate,
+        stakingAPY,
+        stakingTVL,
+        stakingRebase,
+        marketCap,
+        marketPrice,
+        circSupply,
+        totalSupply,
+        treasuryMarketValue,
+      } as IAppData;
+    } catch (e: any) {
+      console.log("errormessage", e.message);
+    }
   },
 );
 

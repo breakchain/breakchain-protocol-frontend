@@ -130,7 +130,7 @@ function MigrationModal({ open, handleClose }: { open: boolean; handleClose: any
   useEffect(() => {
     if (
       networkId &&
-      (networkId === NetworkId.MAINNET || networkId === NetworkId.TESTNET_RINKEBY) &&
+      (networkId === NetworkId.POLYGON || networkId === NetworkId.POLYGON_TESTNET) &&
       isAllApproved &&
       (currentOhmBalance || currentSOhmBalance || currentWSOhmBalance)
     ) {

@@ -748,6 +748,10 @@ export const ohm_wethOld = new CustomBond({
       bondAddress: "0xcF449dA417cC36009a1C6FbA78918c31594B9377",
       reserveAddress: "0x8D5a22Fb6A1840da602E56D1a260E56770e0bCE2",
     },
+    [NetworkId.POLYGON]: {
+      bondAddress: "0x7a34885066E4D8Ebefa74b6e2b3862CF93550858",
+      reserveAddress: "0x3219d64dD1674Ee698EB6270181FFf136b91147B",
+    },
   },
   bondType: BondType.LP,
   lpUrl:

@@ -12,6 +12,7 @@ const useENS = (address: string) => {
       if (ethers.utils.isAddress(address)) {
         try {
           let ensName = await provider.lookupAddress(address);
+
           let avatar = ensName ? await provider.getAvatar(ensName) : null;
           setENSName(ensName);
           setENSAvatar(avatar);

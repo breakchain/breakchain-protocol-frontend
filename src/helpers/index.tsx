@@ -24,7 +24,7 @@ import { NodeHelper } from "../helpers/NodeHelper";
 export async function getMarketPrice() {
   const mainnetProvider = NodeHelper.getMainnetStaticProvider();
   // v2 price
-  const ohm_dai_address = ohm_dai.getAddressForReserve(NetworkId.MAINNET);
+  const ohm_dai_address = ohm_dai.getAddressForReserve(NetworkId.POLYGON);
   const pairContract = new ethers.Contract(ohm_dai_address || "", PairContractABI, mainnetProvider) as PairContract;
   const reserves = await pairContract.getReserves();
 
@@ -36,8 +36,8 @@ export async function getMarketPrice() {
 export async function getMarketPriceFromWeth() {
   const mainnetProvider = NodeHelper.getMainnetStaticProvider();
   // v2 price
-  const ohm_weth_address = ohm_weth.getAddressForReserve(NetworkId.MAINNET);
-  const wethBondContract = ohm_weth.getContractForBond(NetworkId.MAINNET, mainnetProvider);
+  const ohm_weth_address = ohm_weth.getAddressForReserve(NetworkId.POLYGON);
+  const wethBondContract = ohm_weth.getContractForBond(NetworkId.POLYGON, mainnetProvider);
   const pairContract = new ethers.Contract(ohm_weth_address || "", PairContractABI, mainnetProvider) as PairContract;
   const reserves = await pairContract.getReserves();
 
@@ -51,7 +51,7 @@ export async function getMarketPriceFromWeth() {
 export async function getV1MarketPrice() {
   const mainnetProvider = NodeHelper.getMainnetStaticProvider();
   // v1 price
-  const ohm_dai_address = ohm_daiOld.getAddressForReserve(NetworkId.MAINNET);
+  const ohm_dai_address = ohm_daiOld.getAddressForReserve(NetworkId.POLYGON);
   const pairContract = new ethers.Contract(ohm_dai_address || "", PairContractABI, mainnetProvider) as PairContract;
   const reserves = await pairContract.getReserves();
   const marketPrice = Number(reserves[1].toString()) / Number(reserves[0].toString()) / 10 ** 9;

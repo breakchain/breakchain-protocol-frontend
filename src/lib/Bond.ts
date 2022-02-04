@@ -102,6 +102,7 @@ export abstract class Bond {
 
   getContractForBond(NetworkId: NetworkId, provider: StaticJsonRpcProvider | JsonRpcSigner) {
     const bondAddress = this.getAddressForBond(NetworkId) || "";
+
     return new ethers.Contract(bondAddress, this.bondContractABI, provider) as EthContract;
   }
 

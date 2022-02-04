@@ -2,6 +2,7 @@ import { EnvHelper } from "./Environment";
 
 // Pushing data to segment analytics
 export function segmentUA(data) {
+  console.log("data", data);
   const analytics = (window.analytics = window.analytics);
 
   // NOTE (appleseed): the analytics object may not exist (if there is no SEGMENT_API_KEY)

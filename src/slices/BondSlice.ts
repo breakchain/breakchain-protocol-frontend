@@ -93,6 +93,7 @@ export const calcBondDetails = createAsyncThunk(
     const terms = await bondContract.terms();
     const maxBondPrice = await bondContract.maxPayout();
     let debtRatio: BigNumberish;
+
     try {
       // TODO (appleseed): improve this logic
       if (bond.name === "cvx") {
@@ -102,6 +103,7 @@ export const calcBondDetails = createAsyncThunk(
       }
       debtRatio = Number(debtRatio.toString()) / Math.pow(10, 9);
     } catch (e) {
+      console.log("error", e);
       debtRatio = BigNumber.from("0");
     }
 
@@ -183,6 +185,17 @@ export const calcBondDetails = createAsyncThunk(
     // Calculate bonds purchased
     let purchased = await bond.getTreasuryBalance(networkID, provider);
 
+    console.log("errorbond", {
+      bond: bond.name,
+      bondDiscount,
+      debtRatio: Number(debtRatio.toString()),
+      bondQuote: Number(bondQuote.toString()),
+      purchased,
+      vestingTerm: Number(terms.vestingTerm.toString()),
+      maxBondPrice: Number(maxBondPrice.toString()) / Math.pow(10, 9),
+      bondPrice: Number(bondPrice.toString()) / Math.pow(10, 18),
+      marketPrice: marketPrice,
+    });
     return {
       bond: bond.name,
       bondDiscount,

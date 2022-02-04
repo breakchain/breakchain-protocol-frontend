@@ -89,8 +89,8 @@ export const addresses: IAddresses = {
   },
   [NetworkId.MAINNET]: {
     DAI_ADDRESS: "0x6b175474e89094c44da98b954eedeac495271d0f", // duplicate
-    OHM_ADDRESS: "0x383518188c0c6d7730d91b2c03a03c837814a899",
-    STAKING_ADDRESS: "0xfd31c7d00ca47653c6ce64af53c1571f9c36566a", // The new staking contract
+    OHM_ADDRESS: "0x189745afBBcB5D4Dd639880397f4bD1bE25673ff",
+    STAKING_ADDRESS: "0x2e9a174bF59D0283C52d25F30cAE102ea1CABF59", // The new staking contract
     STAKING_HELPER_ADDRESS: "0xc8c436271f9a6f10a5b80c8b8ed7d0e8f37a612d", // Helper contract used for Staking only
     OLD_STAKING_ADDRESS: "0x0822F3C03dcc24d200AFF33493Dc08d0e1f274A2",
     SOHM_ADDRESS: "0x04F2694C8fcee23e8Fd0dfEA1d4f5Bb8c352111F",
@@ -207,7 +207,42 @@ export const addresses: IAddresses = {
     MIGRATOR_ADDRESS: "0xB10209BFbb37d38EC1B5F0c964e489564e223ea7",
   }, // TODO: Avalanche Mainnet addresses
   [NetworkId.POLYGON]: {
-    GOHM_ADDRESS: "0xd8cA34fd379d9ca3C6Ee3b3905678320F5b45195",
+    DAI_ADDRESS: "0x7e827FC90FfF424477661De7B87B0b8cf99eE6db", // duplicate
+    OHM_ADDRESS: "0x189745afBBcB5D4Dd639880397f4bD1bE25673ff",
+    STAKING_ADDRESS: "0x2e9a174bF59D0283C52d25F30cAE102ea1CABF59", // The new staking contract
+    STAKING_HELPER_ADDRESS: "0xFaF1ad8D26C44672AEbd94FeB72cB002eA7C7C54", // Helper contract used for Staking only
+    OLD_STAKING_ADDRESS: "0x0822F3C03dcc24d200AFF33493Dc08d0e1f274A2",
+    SOHM_ADDRESS: "0x51672171A2D64d371fD3BD4326748dFfF50AbE15",
+    WSOHM_ADDRESS: "0xDbbdf3E5D9d52cB7A491C5B845FF794227096d20",
+    OLD_SOHM_ADDRESS: "0x31932E6e45012476ba3A3A4953cbA62AeE77Fbbe",
+    PRESALE_ADDRESS: "0xcBb60264fe0AC96B0EFa0145A9709A825afa17D8",
+    AOHM_ADDRESS: "0x24ecfd535675f36ba1ab9c5d39b50dc097b0792e",
+    MIGRATE_ADDRESS: "0xba498138bCF486a56c25A87B16dB53cC8b658344",
+    DISTRIBUTOR_ADDRESS: "0x6570E8717112Cb28F1BF7360b4213FEc496042A1",
+    BONDINGCALC_ADDRESS: "0x5827C53A149312416698447d068F878BC4da0ae7",
+    CIRCULATING_SUPPLY_ADDRESS: "0x0efff9199aa1ac3c3e34e957567c1be8bf295034",
+    TREASURY_ADDRESS: "0x92F8175F2dca775bE06A18165dB95280b0a733d9",
+    CRUCIBLE_OHM_LUSD: "0x2230ad29920D61A535759678191094b74271f373",
+    LQTY: "0x6dea81rec8171d0ba574754ef6f8b412f2ed88c54d",
+    MIST: "0x88acdd2a6425c3faae4bc9650fd7e27e0bebb7ab",
+    REDEEM_HELPER_ADDRESS: "0xE1e83825613DE12E8F0502Da939523558f0B819E",
+    FUSE_6_SOHM: "0x59bd6774c22486d9f4fab2d448dce4f892a9ae25", // Tetranode's Locker
+    FUSE_18_SOHM: "0x6eDa4b59BaC787933A4A21b65672539ceF6ec97b", // Olympus Pool Party
+    FUSE_36_SOHM: "0x252d447c54F33e033AD04048baEAdE7628cB1274", // Fraximalist Money Market
+    PT_TOKEN_ADDRESS: "0x0E930b8610229D74Da0A174626138Deb732cE6e9", // 33T token address, taken from `ticket` function on PRIZE_STRATEGY_ADDRESS
+    PT_PRIZE_POOL_ADDRESS: "0xEaB695A8F5a44f583003A8bC97d677880D528248", // NEW
+    PT_PRIZE_STRATEGY_ADDRESS: "0xf3d253257167c935f8C62A02AEaeBB24c9c5012a", // NEW
+    ZAPPER_POOL_V1: "0x51672171A2D64d371fD3BD4326748dFfF50AbE15",
+    BONDINGCALC_V2: "0x7b1a5649145143F4faD8504712ca9c614c3dA2Ae",
+    MIGRATOR_ADDRESS: "0x184f3FAd8618a6F458C16bae63F70C426fE784B3",
+    GOHM_ADDRESS: "0x0A4f2532d1Bcf50cACDDc9Dcd3B9edf0721e3325",
+    OHM_V2: "0x189745afBBcB5D4Dd639880397f4bD1bE25673ff",
+    TREASURY_V2: "0x9a315bdf513367c0377fb36545857d12e85813ef",
+    SOHM_V2: "0x51672171A2D64d371fD3BD4326748dFfF50AbE15",
+    STAKING_V2: "0xB63cac384247597756545b500253ff8E607a8020",
+    FIATDAO_WSOHM_ADDRESS: "0xe98ae8cD25CDC06562c29231Db339d17D02Fd486",
+    GIVING_ADDRESS: "0xDDA7472b9EB3b26817A712f7dCCF264EE3c480d6",
+    BOND_DEPOSITORY: "0xC98cCE825863c76DA92E6d5cD2b248e7f09037A5",
   },
   [NetworkId.FANTOM]: {
     GOHM_ADDRESS: "0x91fa20244fb509e8289ca630e5db3e9166233fdc",
@@ -237,7 +272,7 @@ interface INetwork {
 
 // These networks will be available for users to select. Other networks may be functional
 // (e.g. testnets, or mainnets being prepared for launch) but need to be selected directly via the wallet.
-export const USER_SELECTABLE_NETWORKS = [NetworkId.MAINNET, NetworkId.ARBITRUM, NetworkId.AVALANCHE];
+export const USER_SELECTABLE_NETWORKS = [NetworkId.POLYGON, NetworkId.POLYGON_TESTNET];
 
 // Set this to the chain number of the most recently added network in order to enable the 'Now supporting X network'
 // message in the UI. Set to -1 if we don't want to display the message at the current time.
@@ -433,6 +468,16 @@ export const VIEWS_FOR_NETWORK: { [key: number]: IViewsForNetwork } = {
     network: true,
     bondsV2: false,
   },
+  [NetworkId.POLYGON]: {
+    dashboard: true,
+    stake: true,
+    wrap: true,
+    zap: true,
+    threeTogether: true,
+    bonds: true,
+    network: true,
+    bondsV2: true,
+  },
 };
 
 // VIEWS FOR NETWORK is used to denote which paths should be viewable on each network
@@ -561,6 +606,13 @@ export const v2BondDetails: { [key: number]: { [key: string]: V2BondDetails } } 
     ["0x80edbf2f58c7b130df962bb485c28188f6b5ed29"]: OhmDaiDetails,
   },
   [NetworkId.MAINNET]: {
+    ["0x6b175474e89094c44da98b954eedeac495271d0f"]: DaiDetails,
+    ["0x853d955acef822db058eb8505911ed77f175b99e"]: FraxDetails,
+    ["0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"]: EthDetails,
+    ["0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b"]: CvxDetails,
+    ["0x69b81152c5a8d35a67b32a4d3772795d96cae4da"]: OhmEthDetails,
+  },
+  [NetworkId.POLYGON]: {
     ["0x6b175474e89094c44da98b954eedeac495271d0f"]: DaiDetails,
     ["0x853d955acef822db058eb8505911ed77f175b99e"]: FraxDetails,
     ["0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"]: EthDetails,
