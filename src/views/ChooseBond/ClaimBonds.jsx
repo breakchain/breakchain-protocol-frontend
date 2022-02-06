@@ -63,7 +63,7 @@ function ClaimBonds({ activeBonds }) {
       {numberOfBonds > 0 && (
         <Zoom in={true}>
           <Paper className="ohm-card claim-bonds-card">
-            <CardHeader title="Your Bonds (1,1)" />
+            <CardHeader title="Your Bonds" />
             <ClaimBondsSubComponent activeBonds={activeBonds} />
           </Paper>
         </Zoom>

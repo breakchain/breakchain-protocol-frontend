@@ -97,10 +97,10 @@ function ChooseBondV2() {
         <Paper className="ohm-card">
           <Box className="card-header">
             <Typography variant="h5" data-testid="t">
-              <Trans>Bond</Trans> (1,1)
+              <Trans>Bonds</Trans>
             </Typography>
 
-            <ButtonBase>
+            {/* <ButtonBase>
               <Typography style={{ lineHeight: "33px" }}>
                 <b>
                   <Link to="/bonds-v1" style={{ textDecoration: "none", color: "inherit" }}>
@@ -113,7 +113,7 @@ function ChooseBondV2() {
                   </Link>
                 </b>
               </Typography>
-            </ButtonBase>
+            </ButtonBase> */}
           </Box>
 
           <MetricCollection>

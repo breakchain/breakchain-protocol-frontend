@@ -129,7 +129,7 @@ function NavContent({ handleDrawerToggle }) {
                 onClick={handleDrawerToggle}
               >
                 <Typography variant="h6">
-                  <SvgIcon color="primary" component={DashboardIcon} />
+                  {/* <SvgIcon color="primary" component={DashboardIcon} /> */}
                   <Trans>Dashboard</Trans>
                 </Typography>
               </Link>
@@ -141,7 +141,7 @@ function NavContent({ handleDrawerToggle }) {
                 className={`button-dapp-menu ${isActive ? "active" : ""}`}
               >
                 <Typography variant="h6">
-                  <BuyIcon />
+                  {/* <BuyIcon /> */}
                   <Trans>Buy</Trans>
                 </Typography>
               </Link>
@@ -152,7 +152,7 @@ function NavContent({ handleDrawerToggle }) {
                 className={`button-dapp-menu ${isActive ? "active" : ""}`}
               >
                 <Typography variant="h6">
-                  <SvgIcon color="primary" component={StakeIcon} />
+                  {/* <SvgIcon color="primary" component={StakeIcon} /> */}
                   <Trans>Staking</Trans>
                 </Typography>
               </Link>
@@ -163,7 +163,7 @@ function NavContent({ handleDrawerToggle }) {
                 className={`button-dapp-menu ${isActive ? "active" : ""}`}
               >
                 <Typography variant="h6">
-                  <SvgIcon color="primary" component={InfoIcon} />
+                  {/* <SvgIcon color="primary" component={InfoIcon} /> */}
                   <Trans>ROI Projections</Trans>
                 </Typography>
               </Link>
@@ -174,7 +174,7 @@ function NavContent({ handleDrawerToggle }) {
                 className={`button-dapp-menu ${isActive ? "active" : ""}`}
               >
                 <Typography variant="h6">
-                  <SvgIcon color="primary" component={ZapIcon} />
+                  {/* <SvgIcon color="primary" component={ZapIcon} /> */}
                   <Trans>Rewards</Trans>
                 </Typography>
               </Link>
@@ -189,14 +189,14 @@ function NavContent({ handleDrawerToggle }) {
                 onClick={handleDrawerToggle}
               >
                 <Typography variant="h6">
-                  <SvgIcon color="primary" component={BondIcon} />
+                  {/* <SvgIcon color="primary" component={BondIcon} /> */}
                   <Trans>Bonds</Trans>
                 </Typography>
               </Link>
             </div>
           </div>
         </div>
-        {/* <Box className="dapp-menu-bottom" display="flex" justifyContent="space-between" flexDirection="column">
+        <Box className="dapp-menu-bottom" display="flex" justifyContent="space-between" flexDirection="column">
           <div className="dapp-menu-external-links">
             {Object.keys(externalUrls).map((link, i) => {
               return (
@@ -217,7 +217,7 @@ function NavContent({ handleDrawerToggle }) {
           <div className="dapp-menu-social">
             <Social />
           </div>
-        </Box> */}
+        </Box>
       </Box>
     </Paper>
   );

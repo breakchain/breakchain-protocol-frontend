@@ -53,8 +53,8 @@ function TopBar({ theme, toggleTheme, handleDrawerToggle }) {
           <Wallet />
           {/ <ConnectMenu /> */}
           <Wallet />
-          <ThemeSwitcher theme={theme} toggleTheme={toggleTheme} />
-          <LocaleSwitcher />
+          {/* <ThemeSwitcher theme={theme} toggleTheme={toggleTheme} /> */}
+          {/* <LocaleSwitcher /> */}
         </Box>
       </Toolbar>
     </AppBar>

@@ -103,7 +103,7 @@ const Bond = ({ bond }: { bond: IAllBondData }) => {
                 <Tab
                   aria-label="bond-tab-button"
                   label={t({
-                    id: "do_bond",
+                    id: "Bond",
                     comment: "The action of bonding (verb)",
                   })}
                   {...a11yProps(0)}

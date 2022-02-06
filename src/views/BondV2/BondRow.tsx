@@ -121,7 +121,7 @@ export function BondTableData({ bond }: { bond: IBondV2 }) {
           <Button variant="outlined" color="primary" style={{ width: "100%" }}>
             {/* NOTE (appleseed): temporary for ONHOLD MIGRATION */}
             {/* <Typography variant="h6">{!bond.isBondable[networkId] ? t`Sold Out` : t`do_bond`}</Typography> */}
-            <Typography variant="h6">{t`do_bond`}</Typography>
+            <Typography variant="h6">{t`BOND`}</Typography>
           </Button>
         </Link>
       </TableCell>

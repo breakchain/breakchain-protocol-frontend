@@ -293,11 +293,11 @@ function Stake() {
             <Grid item container direction="row">
               <Grid item>
                 <div className="card-header">
-                  <Typography variant="h5">Single Staking</Typography>
+                  <Typography variant="h5">Staking</Typography>
                   <RebaseTimer />
                 </div>
               </Grid>
-              <Grid item style={{ marginLeft: "auto" }}>
+              {/* <Grid item style={{ marginLeft: "auto" }}>
                 <div className="card-header">
                   <Typography variant="h5">Position</Typography>
                   <Typography variant="h6">${(Number(trimmedBalance) * Number(sOhmPrice)).toFixed(2)}</Typography>
@@ -306,7 +306,7 @@ function Stake() {
                   <Typography variant="h5">Your Earnings Per Day</Typography>
                   <Typography variant="h6">{`$${Number(nextRewardValue) * 3 * Number(sOhmPrice)}`}</Typography>
                 </div>
-              </Grid>
+              </Grid> */}
             </Grid>
 
             <Grid item>
@@ -358,7 +358,7 @@ function Stake() {
                     >
                       <Tab
                         label={t({
-                          id: "do_stake",
+                          id: "Stake",
                           comment: "The action of staking (verb)",
                         })}
                         {...a11yProps(0)}
@@ -617,8 +617,13 @@ function Stake() {
                       isLoading={isAppLoading}
                     />
                     <DataRow
-                      title="Earnings Per Day"
+                      title="Your Earnings Per Day"
                       balance={`$${Number(nextRewardValue) * 3 * Number(sOhmPrice)}`}
+                      isLoading={isAppLoading}
+                    />
+                    <DataRow
+                      title="Position"
+                      balance={`${(Number(trimmedBalance) * Number(sOhmPrice)).toFixed(2)}`}
                       isLoading={isAppLoading}
                     />
                     {/* <DataRow

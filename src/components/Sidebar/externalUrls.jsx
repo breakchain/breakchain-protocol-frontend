@@ -7,11 +7,11 @@ import { SvgIcon } from "@material-ui/core";
 import { Trans } from "@lingui/macro";
 
 const externalUrls = [
-  {
-    title: <Trans>Forum</Trans>,
-    url: "https://forum.olympusdao.finance/",
-    icon: <SvgIcon color="primary" component={ForumIcon} />,
-  },
+  // {
+  //   title: <Trans>Forum</Trans>,
+  //   url: "https://forum.olympusdao.finance/",
+  //   icon: <SvgIcon color="primary" component={ForumIcon} />,
+  // },
   {
     title: <Trans>Governance</Trans>,
     url: "https://vote.olympusdao.finance/",
@@ -22,11 +22,11 @@ const externalUrls = [
     url: "https://docs.olympusdao.finance/",
     icon: <SvgIcon color="primary" component={DocsIcon} />,
   },
-  {
-    title: <Trans>Bug Bounty</Trans>,
-    url: "https://immunefi.com/bounty/olympus/",
-    icon: <SvgIcon color="primary" component={BugReportIcon} />,
-  },
+  // {
+  //   title: <Trans>Bug Bounty</Trans>,
+  //   url: "https://immunefi.com/bounty/olympus/",
+  //   icon: <SvgIcon color="primary" component={BugReportIcon} />,
+  // },
   // {
   //   title: "Feedback",
   //   url: "https://olympusdao.canny.io/",

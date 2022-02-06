@@ -37,8 +37,8 @@ If you would like to run the frontend in a Docker image (e.g. to isolate depende
 
 ## Rinkeby Testing
 
-**Rinkeby faucet for sOHM:**
-[Lives here](https://rinkeby.etherscan.io/address/0x800B3d87b77361F0D1d903246cA1F51b5acb43c9#writeContract), to retrieve test sOHM click `Connect to Web3` and use function #3: `dripSOHM`. After connecting to web3, click `Write` to execute and 10 sOHM will automatically be transferred to your connected wallet.
+**Rinkeby faucet for sXCHAIN:**
+[Lives here](https://rinkeby.etherscan.io/address/0x800B3d87b77361F0D1d903246cA1F51b5acb43c9#writeContract), to retrieve test sXCHAIN click `Connect to Web3` and use function #3: `dripsXCHAIN`. After connecting to web3, click `Write` to execute and 10 sXCHAIN will automatically be transferred to your connected wallet.
 
 Note: The faucet is limited to one transfer per wallet every 6500 blocks (~1 day)
 
@@ -117,7 +117,7 @@ In order to mark text for translation you can use:
 
 ```
 t({
- id: "do_bond",
+ id: "BOND",
  comment: "The action of bonding (verb)",
 })
 ```
