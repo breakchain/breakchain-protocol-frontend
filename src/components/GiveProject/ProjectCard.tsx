@@ -275,7 +275,7 @@ export default function ProjectCard({ project, mode }: ProjectDetailsProps) {
             title={
               !address
                 ? t`Connect your wallet to view the fundraising progress`
-                : `${totalDebt} of ${depositGoal} sOHM raised`
+                : `${totalDebt} of ${depositGoal} sXCHAIN raised`
             }
             arrow
           >
@@ -313,7 +313,7 @@ export default function ProjectCard({ project, mode }: ProjectDetailsProps) {
               </Typography>
             </div>
             <div className="subtext">
-              <Trans>sOHM Donated</Trans>
+              <Trans>sXCHAIN Donated</Trans>
             </div>
           </Grid>
           <Grid item xs={4} />
@@ -330,7 +330,7 @@ export default function ProjectCard({ project, mode }: ProjectDetailsProps) {
               </Typography>
             </div>
             <div className="subtext">
-              <Trans>sOHM Goal</Trans>
+              <Trans>sXCHAIN Goal</Trans>
             </div>
           </Grid>
         </Grid>

@@ -163,7 +163,7 @@ export const bulletpoints = {
 };
 
 export const tooltipItems = {
-  tvl: ["Total Value Deposited"],
+  tvl: ["Total Value Locked"],
   coin: ["DAI", "FRAX", "ETH", "SUSHI", "LUSD"],
   rfv: ["DAI", "FRAX", "LUSD"],
   holder: ["XCHAINies"],
@@ -173,9 +173,9 @@ export const tooltipItems = {
 };
 
 export const tooltipInfoMessages = {
-  tvl: "Total Value Deposited, is the dollar amount of all XCHAIN staked in the protocol. This metric is often used as growth or health indicator in DeFi projects.",
-  mvt: "Market Value of Treasury Assets, is the sum of the value (in dollars) of all assets held by the treasury.",
-  rfv: "Risk Free Value, is the amount of funds the treasury guarantees to use for backing XCHAIN.",
+  tvl: "Total Value Locked, is the dollar amount of all XCHAIN staked in the protocol. This metric is often used as growth or health indicator in DeFi projects.",
+  mvt: "Treasury Assets, is the sum of the value (in dollars) of all assets held by the treasury.",
+  rfv: "Treasury Backing, is the amount of funds the treasury guarantees to use for backing XCHAIN.",
   pol: "Protocol Owned Liquidity, is the amount of LP the treasury owns and controls. The more POL the better for the protocol and its users.",
   holder: "Holders, represents the total number of XCHAINies (sXCHAIN holders)",
   staked: "XCHAIN Staked, is the ratio of sXCHAIN to XCHAIN (staked vs unstaked)",

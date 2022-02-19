@@ -190,7 +190,7 @@ export default function RedeemYield() {
                     <Trans>Redeem Yield</Trans>
                   </Typography>
                   <InfoTooltip
-                    message={t`If other wallets have directed their sOHM rebases to you, you can transfer that yield into your wallet.`}
+                    message={t`If other wallets have directed their sXCHAIN rebases to you, you can transfer that yield into your wallet.`}
                     children={null}
                   />
                 </div>
@@ -206,18 +206,18 @@ export default function RedeemYield() {
               </div>
               <Box>
                 <DataRow
-                  title={t`Donated sOHM Generating Yield`}
-                  balance={`${getTrimmedBigNumber(totalDeposit)} ${t`sOHM`}`}
+                  title={t`Donated sXCHAIN Generating Yield`}
+                  balance={`${getTrimmedBigNumber(totalDeposit)} ${t`sXCHAIN`}`}
                   isLoading={isRecipientInfoLoading}
                 />
                 <DataRow
                   title={t`Redeemable Amount`}
-                  balance={`${getTrimmedBigNumber(redeemableBalanceNumber)} ${t`sOHM`}`}
+                  balance={`${getTrimmedBigNumber(redeemableBalanceNumber)} ${t`sXCHAIN`}`}
                   isLoading={isRecipientInfoLoading}
                 />
                 <DataRow
                   title={t`Next Reward Amount`}
-                  balance={`${getTrimmedBigNumber(nextRewardValue)} ${t`sOHM`}`}
+                  balance={`${getTrimmedBigNumber(nextRewardValue)} ${t`sXCHAIN`}`}
                   isLoading={isAppLoading}
                 />
                 <DataRow

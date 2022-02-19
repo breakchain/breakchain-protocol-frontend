@@ -195,12 +195,12 @@ export function RecipientModal({
 
     if (sOhmBalanceNumber.isEqualTo(0)) {
       setIsDepositAmountValid(false);
-      setIsDepositAmountValidError(t`You must have a balance of sOHM (staked OHM) to continue`);
+      setIsDepositAmountValidError(t`You must have a balance of sXCHAIN (staked XCHAIN) to continue`);
     }
 
     if (valueNumber.isGreaterThan(getMaximumDepositAmount())) {
       setIsDepositAmountValid(false);
-      setIsDepositAmountValidError(t`Value cannot be more than your sOHM balance of ` + getMaximumDepositAmount());
+      setIsDepositAmountValidError(t`Value cannot be more than your sXCHAIN balance of ` + getMaximumDepositAmount());
       return;
     }
 
@@ -532,7 +532,7 @@ export function RecipientModal({
                 <Trans>sOHM Allocation</Trans>
               </Typography>
               <InfoTooltip
-                message={t`Your sOHM will be tansferred into the vault when you submit. You will need to approve the transaction and pay for gas fees.`}
+                message={t`Your sXCHAIN will be tansferred into the vault when you submit. You will need to approve the transaction and pay for gas fees.`}
                 children={null}
               />
             </div>
@@ -566,7 +566,7 @@ export function RecipientModal({
                   <Trans>Your Staked Balance (depositable)</Trans>
                 </Typography>
                 <Typography variant="body2" align="right">
-                  <Trans>{getSOhmBalance().toFixed(4)} sOHM</Trans>
+                  <Trans>{getSOhmBalance().toFixed(4)} sXCHAIN</Trans>
                 </Typography>
               </div>
             </FormControl>
@@ -614,7 +614,7 @@ export function RecipientModal({
               </FormControl>
               <FormControl className="ohm-modal-submit">
                 <Button variant="contained" color="primary" disabled={!canSubmit()} onClick={handleSubmit}>
-                  {txnButtonText(pendingTransactions, PENDING_TXN_GIVE, t`Confirm sOHM`)}
+                  {txnButtonText(pendingTransactions, PENDING_TXN_GIVE, t`Confirm sXCHAIN`)}
                 </Button>
               </FormControl>
             </>

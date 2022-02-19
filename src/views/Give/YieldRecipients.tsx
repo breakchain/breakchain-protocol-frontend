@@ -190,7 +190,7 @@ export default function YieldRecipients() {
           </Typography>
           <Typography variant="h6">
             <Trans>Deposit</Trans>
-            <InfoTooltip message={t`The amount of sOHM deposited`} children={null} />
+            <InfoTooltip message={t`The amount of sXCHAIN deposited`} children={null} />
           </Typography>
         </Grid>
         {isLoading ? (

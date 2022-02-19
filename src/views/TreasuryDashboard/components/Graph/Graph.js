@@ -17,7 +17,7 @@ export const TotalValueDepositedGraph = () => {
       itemType={itemType.dollar}
       itemNames={tooltipItems.tvl}
       dataKey={["totalValueLocked"]}
-      headerText="Total Value Deposited"
+      headerText="Total Value Locked"
       stopColor={[["#768299", "#98B3E9"]]}
       bulletpointColors={bulletpoints.tvl}
       infoTooltipMessage={tooltipInfoMessages.tvl}
@@ -49,7 +49,7 @@ export const MarketValueGraph = () => {
         ["#8BFF4D", "#4C8C2A"],
         ["#ff758f", "#c9184a"],
       ]}
-      headerText="Market Value of Treasury Assets"
+      headerText="Treasury Assets"
       headerSubText={`${data && formatCurrency(data[0].treasuryMarketValue)}`}
       bulletpointColors={bulletpoints.coin}
       itemNames={tooltipItems.coin}
@@ -60,56 +60,56 @@ export const MarketValueGraph = () => {
   );
 };
 
-export const RiskFreeValueGraph = () => {
-  const theme = useTheme();
-  const { data } = useTreasuryMetrics({ refetchOnMount: false });
+// export const RiskFreeValueGraph = () => {
+//   const theme = useTheme();
+//   const { data } = useTreasuryMetrics({ refetchOnMount: false });
 
-  return (
-    <Chart
-      type="stack"
-      data={data}
-      format="currency"
-      dataKey={["treasuryDaiRiskFreeValue", "treasuryFraxRiskFreeValue", "treasuryLusdRiskFreeValue"]}
-      stopColor={[
-        ["#F5AC37", "#EA9276"],
-        ["#768299", "#98B3E9"],
-        ["#ff758f", "#c9184a"],
-        ["#000", "#fff"],
-        ["#000", "#fff"],
-      ]}
-      headerText="Risk Free Value of Treasury Assets"
-      headerSubText={`${data && formatCurrency(data[0].treasuryRiskFreeValue)}`}
-      bulletpointColors={bulletpoints.rfv}
-      itemNames={tooltipItems.rfv}
-      itemType={itemType.dollar}
-      infoTooltipMessage={tooltipInfoMessages.rfv}
-      expandedGraphStrokeColor={theme.palette.graphStrokeColor}
-    />
-  );
-};
+//   return (
+//     <Chart
+//       type="stack"
+//       data={data}
+//       format="currency"
+//       dataKey={["treasuryDaiRiskFreeValue", "treasuryFraxRiskFreeValue", "treasuryLusdRiskFreeValue"]}
+//       stopColor={[
+//         ["#F5AC37", "#EA9276"],
+//         ["#768299", "#98B3E9"],
+//         ["#ff758f", "#c9184a"],
+//         ["#000", "#fff"],
+//         ["#000", "#fff"],
+//       ]}
+//       headerText="Treasury Backing"
+//       headerSubText={`${data && formatCurrency(data[0].treasuryRiskFreeValue)}`}
+//       bulletpointColors={bulletpoints.rfv}
+//       itemNames={tooltipItems.rfv}
+//       itemType={itemType.dollar}
+//       infoTooltipMessage={tooltipInfoMessages.rfv}
+//       expandedGraphStrokeColor={theme.palette.graphStrokeColor}
+//     />
+//   );
+// };
 
-export const ProtocolOwnedLiquidityGraph = () => {
-  const theme = useTheme();
-  const { data } = useTreasuryMetrics({ refetchOnMount: false });
+// export const ProtocolOwnedLiquidityGraph = () => {
+//   const theme = useTheme();
+//   const { data } = useTreasuryMetrics({ refetchOnMount: false });
 
-  return (
-    <Chart
-      isPOL
-      type="area"
-      data={data}
-      dataFormat="percent"
-      itemNames={tooltipItems.pol}
-      itemType={itemType.percentage}
-      dataKey={["treasuryOhmDaiPOL"]}
-      bulletpointColors={bulletpoints.pol}
-      infoTooltipMessage={tooltipInfoMessages.pol}
-      headerText="Protocol Owned Liquidity XCHAIN-DAI"
-      expandedGraphStrokeColor={theme.palette.graphStrokeColor}
-      headerSubText={`${data && trim(data[0].treasuryOhmDaiPOL, 2)}% `}
-      stopColor={[["rgba(128, 204, 131, 1)", "rgba(128, 204, 131, 0)"]]}
-    />
-  );
-};
+//   return (
+//     <Chart
+//       isPOL
+//       type="area"
+//       data={data}
+//       dataFormat="percent"
+//       itemNames={tooltipItems.pol}
+//       itemType={itemType.percentage}
+//       dataKey={["treasuryOhmDaiPOL"]}
+//       bulletpointColors={bulletpoints.pol}
+//       infoTooltipMessage={tooltipInfoMessages.pol}
+//       headerText="Protocol Owned Liquidity XCHAIN-DAI"
+//       expandedGraphStrokeColor={theme.palette.graphStrokeColor}
+//       headerSubText={`${data && trim(data[0].treasuryOhmDaiPOL, 2)}% `}
+//       stopColor={[["rgba(128, 204, 131, 1)", "rgba(128, 204, 131, 0)"]]}
+//     />
+//   );
+// };
 
 export const OHMStakedGraph = () => {
   const theme = useTheme();

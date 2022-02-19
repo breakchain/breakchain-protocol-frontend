@@ -85,7 +85,9 @@ export function RedeemYieldModal({
           <RedeemGraphic quantity={redeemableBalance.toFixed(2)} />
         </div>
         <Typography variant="body1" align="center">
-          <Trans>Any sOHM directed towards you will continue to rebase and earn additional yield on your behalf.</Trans>
+          <Trans>
+            Any sXCHAIN directed towards you will continue to rebase and earn additional yield on your behalf.
+          </Trans>
         </Typography>
         <FormControl className="ohm-modal-submit">
           <Button variant="contained" color="primary" disabled={!canSubmit()} onClick={() => handleSubmit()}>

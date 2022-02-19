@@ -44,7 +44,7 @@ export const redeemBalance = createAsyncThunk(
       redeemTx = await giving.redeem();
       const pendingTxnType = "redeeming";
       uaData.txHash = redeemTx.hash;
-      dispatch(fetchPendingTxns({ txnHash: redeemTx.hash, text: "Redeeming sOHM", type: pendingTxnType }));
+      dispatch(fetchPendingTxns({ txnHash: redeemTx.hash, text: "Redeeming sXCHAIN", type: pendingTxnType }));
       await redeemTx.wait();
     } catch (e: unknown) {
       uaData.approved = false;
@@ -98,7 +98,7 @@ export const redeemMockBalance = createAsyncThunk(
       redeemTx = await giving.redeem();
       const pendingTxnType = "redeeming";
       uaData.txHash = redeemTx.hash;
-      dispatch(fetchPendingTxns({ txnHash: redeemTx.hash, text: "Redeeming sOHM", type: pendingTxnType }));
+      dispatch(fetchPendingTxns({ txnHash: redeemTx.hash, text: "Redeeming sXCHAIN", type: pendingTxnType }));
       await redeemTx.wait();
     } catch (e: unknown) {
       uaData.approved = false;

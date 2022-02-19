@@ -8,7 +8,7 @@ const lightTheme = {
   gray: "#A3A3A3",
   blueish_gray: "#768299",
   textHighlightColor: "#93AEBC", // "#F4D092",
-  backgroundColor: "#AFCDE9",
+  backgroundColor: "lightgray",
   // background:
   // "radial-gradient(circle at 25% 0%, rgba(227,255,240,.5), rgba(227,255,240,0) 50%), radial-gradient(circle at 80% 80%, rgba(131,165,203,.5), rgba(131,165,203,0) 50%)",
   background: "gray",

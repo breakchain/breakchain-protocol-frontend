@@ -55,7 +55,7 @@ function ZapCta() {
             <Link component={NavLink} to="/zap">
               <Button component="div" variant="outlined" color="secondary" className="learn-more-button">
                 <Typography variant="body1">
-                  <Trans>Swap into sOHM</Trans>
+                  <Trans>Swap into sXCHAIN</Trans>
                 </Typography>
               </Button>
             </Link>
