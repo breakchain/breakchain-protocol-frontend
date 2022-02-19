@@ -117,3 +117,23 @@ export const RunwayAvailableGraph = () => {
     />
   );
 };
+export const TotalValueDepositedGraph = () => {
+  const { data } = useTreasuryMetrics({ refetchOnMount: false });
+  return (
+    <Metric
+      label={t`Total Value Locked`}
+      metric={`${data && formatCurrency(data[0].totalValueLocked)}`}
+      {...sharedProps}
+    />
+  );
+};
+export const MarketValueGraph = () => {
+  const { data } = useTreasuryMetrics({ refetchOnMount: false });
+  return (
+    <Metric
+      label={t`Treasury Assets`}
+      metric={`${data && formatCurrency(data[0].treasuryMarketValue)}`}
+      {...sharedProps}
+    />
+  );
+};
