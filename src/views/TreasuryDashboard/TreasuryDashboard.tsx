@@ -7,15 +7,20 @@ import {
   OHMPrice,
   GOHMPrice,
   CircSupply,
-  BackingPerOHM,
-  OHMStakedGraph,
-  RunwayAvailableGraph,
-  TotalValueDepositedGraph,
-  MarketValueGraph,
+  PriceFloor,
+  TotalValueLocked,
+  TreasuryAssets,
+  TreasuryBacking,
 } from "./components/Metric/Metric";
 import { ReactComponent as InfoIcon } from "../../assets/icons/info-fill.svg";
 
-// import { TotalValueDepositedGraph, MarketValueGraph } from "./components/Graph/Graph";
+import {
+  RunwayAvailableGraph,
+  XCHAINStakedGraph,
+  TotalValueLockedGraph,
+  TreasuryAssetsGraph,
+  TreasuryBackingGraph,
+} from "./components/Graph/Graph";
 import { MetricCollection } from "@olympusdao/component-library";
 const TreasuryDashboard = memo(() => {
   const isSmallScreen = useMediaQuery("(max-width: 650px)");
@@ -34,14 +39,14 @@ const TreasuryDashboard = memo(() => {
             <MetricCollection>
               <OHMPrice />
               <MarketCap />
-              <BackingPerOHM />
+              <PriceFloor />
             </MetricCollection>
           </Paper>
         </Box>
         <Box className="hero-metrics">
           <Paper className="ohm-card">
             <MetricCollection>
-              <OHMStakedGraph />
+              <XCHAINStakedGraph />
               <CircSupply />
               <RunwayAvailableGraph />
               {/* <CurrentIndex /> */}
@@ -51,9 +56,9 @@ const TreasuryDashboard = memo(() => {
         <Box className="hero-metrics">
           <Paper className="ohm-card">
             <MetricCollection>
-              <TotalValueDepositedGraph />
-              <MarketValueGraph />
-              {/* <RiskFreeValueGraph /> */}
+              <TotalValueLockedGraph />
+              <TreasuryAssetsGraph />
+              <TreasuryBackingGraph />
               {/* <CurrentIndex /> */}
             </MetricCollection>
           </Paper>

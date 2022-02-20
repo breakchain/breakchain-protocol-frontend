@@ -1,4 +1,4 @@
-import Chart from "src/components/Chart/Chart.jsx";
+import ChartSmall from "src/components/Chart/ChartSmall.jsx";
 import { useTheme } from "@material-ui/core/styles";
 import { trim, formatCurrency } from "../../../../helpers";
 import { useTreasuryMetrics } from "../../hooks/useTreasuryMetrics";
@@ -6,12 +6,12 @@ import { bulletpoints, tooltipItems, tooltipInfoMessages, itemType } from "../..
 
 export const Graph = ({ children }) => <>{children}</>;
 
-export const TotalValueDepositedGraph = () => {
+export const TotalValueLockedGraph = () => {
   const theme = useTheme();
   const { data } = useTreasuryMetrics({ refetchOnMount: false });
 
   return (
-    <Chart
+    <ChartSmall
       type="area"
       data={data}
       itemType={itemType.dollar}
@@ -27,12 +27,12 @@ export const TotalValueDepositedGraph = () => {
   );
 };
 
-export const MarketValueGraph = () => {
+export const TreasuryAssetsGraph = () => {
   const theme = useTheme();
   const { data } = useTreasuryMetrics({ refetchOnMount: false });
 
   return (
-    <Chart
+    <ChartSmall
       type="stack"
       data={data}
       dataKey={[
@@ -60,40 +60,40 @@ export const MarketValueGraph = () => {
   );
 };
 
-// export const RiskFreeValueGraph = () => {
-//   const theme = useTheme();
-//   const { data } = useTreasuryMetrics({ refetchOnMount: false });
+export const TreasuryBackingGraph = () => {
+  const theme = useTheme();
+  const { data } = useTreasuryMetrics({ refetchOnMount: false });
 
-//   return (
-//     <Chart
-//       type="stack"
-//       data={data}
-//       format="currency"
-//       dataKey={["treasuryDaiRiskFreeValue", "treasuryFraxRiskFreeValue", "treasuryLusdRiskFreeValue"]}
-//       stopColor={[
-//         ["#F5AC37", "#EA9276"],
-//         ["#768299", "#98B3E9"],
-//         ["#ff758f", "#c9184a"],
-//         ["#000", "#fff"],
-//         ["#000", "#fff"],
-//       ]}
-//       headerText="Treasury Backing"
-//       headerSubText={`${data && formatCurrency(data[0].treasuryRiskFreeValue)}`}
-//       bulletpointColors={bulletpoints.rfv}
-//       itemNames={tooltipItems.rfv}
-//       itemType={itemType.dollar}
-//       infoTooltipMessage={tooltipInfoMessages.rfv}
-//       expandedGraphStrokeColor={theme.palette.graphStrokeColor}
-//     />
-//   );
-// };
+  return (
+    <ChartSmall
+      type="stack"
+      data={data}
+      format="currency"
+      dataKey={["treasuryDaiRiskFreeValue", "treasuryFraxRiskFreeValue", "treasuryLusdRiskFreeValue"]}
+      stopColor={[
+        ["#F5AC37", "#EA9276"],
+        ["#768299", "#98B3E9"],
+        ["#ff758f", "#c9184a"],
+        ["#000", "#fff"],
+        ["#000", "#fff"],
+      ]}
+      headerText="Treasury Backing"
+      headerSubText={`${data && formatCurrency(data[0].treasuryRiskFreeValue)}`}
+      bulletpointColors={bulletpoints.rfv}
+      itemNames={tooltipItems.rfv}
+      itemType={itemType.dollar}
+      infoTooltipMessage={tooltipInfoMessages.rfv}
+      expandedGraphStrokeColor={theme.palette.graphStrokeColor}
+    />
+  );
+};
 
 // export const ProtocolOwnedLiquidityGraph = () => {
 //   const theme = useTheme();
 //   const { data } = useTreasuryMetrics({ refetchOnMount: false });
 
 //   return (
-//     <Chart
+//     <ChartSmall
 //       isPOL
 //       type="area"
 //       data={data}
@@ -111,7 +111,7 @@ export const MarketValueGraph = () => {
 //   );
 // };
 
-export const OHMStakedGraph = () => {
+export const XCHAINStakedGraph = () => {
   const theme = useTheme();
   const { data } = useTreasuryMetrics({ refetchOnMount: false });
 
@@ -125,7 +125,7 @@ export const OHMStakedGraph = () => {
       .filter(metric => metric.staked < 100);
 
   return (
-    <Chart
+    <ChartSmall
       isStaked
       type="area"
       data={staked}
@@ -152,7 +152,7 @@ export const RunwayAvailableGraph = () => {
   const colors = runwayBulletpoints.map(b => b.background);
 
   return (
-    <Chart
+    <ChartSmall
       type="multi"
       data={runway}
       dataKey={["runwayCurrent", "runway7dot5k", "runway5k", "runway2dot5k"]}

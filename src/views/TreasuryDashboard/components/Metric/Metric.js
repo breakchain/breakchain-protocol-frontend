@@ -3,6 +3,7 @@ import { trim, formatCurrency } from "../../../../helpers";
 import { Metric } from "@olympusdao/component-library";
 import { t } from "@lingui/macro";
 import { useTreasuryMetrics } from "../../hooks/useTreasuryMetrics";
+import { bulletpoints, tooltipItems, tooltipInfoMessages, itemType } from "../../treasuryData";
 
 const sharedProps = {
   labelVariant: "h6",
@@ -33,7 +34,7 @@ export const MarketCap = () => {
   );
 };
 
-export const BackingPerOHM = () => {
+export const PriceFloor = () => {
   const backingPerOhm = useSelector(state => state.app.treasuryMarketValue / state.app.circSupply);
   return (
     <Metric
@@ -86,7 +87,7 @@ export const GOHMPrice = () => {
   );
 };
 
-export const OHMStakedGraph = () => {
+export const XCHAINStaked = () => {
   const { data } = useTreasuryMetrics({ refetchOnMount: false });
   const staked =
     data &&
@@ -102,6 +103,7 @@ export const OHMStakedGraph = () => {
       metric={formatCurrency(staked, 0)}
       isLoading={staked ? false : true}
       {...sharedProps}
+      tooltip={tooltipInfoMessages.staked}
     />
   );
 };
@@ -114,26 +116,40 @@ export const RunwayAvailableGraph = () => {
       metric={`${data && trim(data[0].runwayCurrent, 1)} Days`}
       isLoading={runway ? false : true}
       {...sharedProps}
+      tooltip={tooltipInfoMessages.runway}
     />
   );
 };
-export const TotalValueDepositedGraph = () => {
+export const TotalValueLocked = () => {
   const { data } = useTreasuryMetrics({ refetchOnMount: false });
   return (
     <Metric
       label={t`Total Value Locked`}
       metric={`${data && formatCurrency(data[0].totalValueLocked)}`}
       {...sharedProps}
+      tooltip={tooltipInfoMessages.tvl}
     />
   );
 };
-export const MarketValueGraph = () => {
+export const TreasuryAssets = () => {
   const { data } = useTreasuryMetrics({ refetchOnMount: false });
   return (
     <Metric
       label={t`Treasury Assets`}
       metric={`${data && formatCurrency(data[0].treasuryMarketValue)}`}
       {...sharedProps}
+      tooltip={tooltipInfoMessages.mvt}
+    />
+  );
+};
+export const TreasuryBacking = () => {
+  const { data } = useTreasuryMetrics({ refetchOnMount: false });
+  return (
+    <Metric
+      label={t`Treasury Backing`}
+      metric={`${data && formatCurrency(data[0].treasuryRiskFreeValue)}`}
+      {...sharedProps}
+      tooltip={tooltipInfoMessages.rfv}
     />
   );
 };
