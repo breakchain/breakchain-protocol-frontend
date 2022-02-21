@@ -18,7 +18,7 @@ const externalUrls = [
     icon: <SvgIcon color="primary" component={GovIcon} />,
   },
   {
-    title: <Trans>Docs</Trans>,
+    title: <Trans>Documents</Trans>,
     url: "https://docs.olympusdao.finance/",
     icon: <SvgIcon color="primary" component={DocsIcon} />,
   },

@@ -306,7 +306,7 @@ function Wrap() {
                       <>
                         <DataRow
                           title={`XCHAIN Balance`}
-                          balance={`${trim(sohmBalance, 4)} sOHM`}
+                          balance={`${trim(sohmBalance, 4)} sXCHAIN`}
                           isLoading={isAppLoading}
                         />
 

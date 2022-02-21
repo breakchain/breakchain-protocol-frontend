@@ -139,11 +139,11 @@ function V1Stake({ oldAssetsDetected, setMigrationModalOpen, hasActiveV1Bonds })
     // 1st catch if quantity > balance
     let gweiValue = ethers.utils.parseUnits(quantity, "gwei");
     if (action === "stake" && gweiValue.gt(ethers.utils.parseUnits(ohmBalance, "gwei"))) {
-      return dispatch(error("You cannot stake more than your OHM balance."));
+      return dispatch(error("You cannot stake more than your XCHAIN balance."));
     }
 
     if (action === "unstake" && gweiValue.gt(ethers.utils.parseUnits(sohmBalance, "gwei"))) {
-      return dispatch(error("You cannot unstake more than your sOHM balance."));
+      return dispatch(error("You cannot unstake more than your sXCHAIN balance."));
     }
 
     await dispatch(
@@ -288,9 +288,9 @@ function V1Stake({ oldAssetsDetected, setMigrationModalOpen, hasActiveV1Bonds })
                           <Box className="help-text">
                             <Typography variant="body1" className="stake-note" color="textSecondary">
                               <>
-                                <Trans>First time unstaking</Trans> <b>sOHM</b>?
+                                <Trans>First time unstaking</Trans> <b>sXCHAIN</b>?
                                 <br />
-                                <Trans>Please approve Olympus Dao to use your</Trans> <b>sOHM </b>
+                                <Trans>Please approve Breakchain Protocol to use your</Trans> <b>sXchain </b>
                                 <Trans> for unstaking</Trans>.
                               </>
                             </Typography>

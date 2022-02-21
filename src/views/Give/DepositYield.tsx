@@ -56,7 +56,7 @@ export default function DepositYield() {
                     <Trans>My Donations</Trans>
                   </Typography>
                   <InfoTooltip
-                    message={t`Direct yield from your deposited sOHM to other recipients. Your sOHM is deposited in a vault, but you can withdraw it or change the deposited amount at any time.`}
+                    message={t`Direct yield from your deposited sXCHAIN to other recipients. Your sXCHAIN is deposited in a vault, but you can withdraw it or change the deposited amount at any time.`}
                     children={null}
                   />
                 </div>

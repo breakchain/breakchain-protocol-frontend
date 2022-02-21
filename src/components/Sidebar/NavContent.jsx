@@ -134,17 +134,16 @@ function NavContent({ handleDrawerToggle }) {
                 </Typography>
               </Link>
 
-              <Link
+              {/* <Link
                 id="bond-nav"
                 target="_blank"
                 href="https://quickswap.exchange/#/swap"
                 className={`button-dapp-menu ${isActive ? "active" : ""}`}
               >
                 <Typography variant="h6">
-                  {/* <BuyIcon /> */}
                   <Trans>Buy</Trans>
                 </Typography>
-              </Link>
+              </Link> */}
               <Link
                 id="stake"
                 component={NavLink}
@@ -196,6 +195,9 @@ function NavContent({ handleDrawerToggle }) {
             </div>
           </div>
         </div>
+        <br></br>
+        <br></br>
+        <br></br>
         <Box className="dapp-menu-bottom" display="flex" justifyContent="space-between" flexDirection="column">
           <div className="dapp-menu-external-links">
             {Object.keys(externalUrls).map((link, i) => {

@@ -319,7 +319,7 @@ function Stake() {
                 />
                 <Metric
                   className="stake-tvl"
-                  label={t`Total Value Deposited`}
+                  label={t`Total Value Locked`}
                   metric={formattedStakingTVL}
                   isLoading={stakingTVL ? false : true}
                 />
@@ -377,14 +377,14 @@ function Stake() {
                                   <>
                                     <Trans>First time staking</Trans> <b>XCHAIN</b>?
                                     <br />
-                                    <Trans>Please approve Olympus Dao to use your</Trans> <b>XCHAIN</b>{" "}
+                                    <Trans>Please approve Breakchain Protocol to use your</Trans> <b>XCHAIN</b>{" "}
                                     <Trans>for staking</Trans>.
                                   </>
                                 ) : (
                                   <>
                                     <Trans>First time unstaking</Trans> <b>XCHAIN</b>?
                                     <br />
-                                    <Trans>Please approve Olympus Dao to use your</Trans> <b>XCHAIN</b>{" "}
+                                    <Trans>Please approve Breakchain Protocol to use your</Trans> <b>XCHAIN</b>{" "}
                                     <Trans>for unstaking</Trans>.
                                   </>
                                 )}

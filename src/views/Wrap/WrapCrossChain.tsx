@@ -214,7 +214,7 @@ function WrapCrossChain() {
                   <Grid item xs={12} sm={4} md={4} lg={4}>
                     <div className="wrap-sOHM">
                       <Typography variant="h5" color="textSecondary">
-                        sOHM Price
+                        sXCHAIN Price
                       </Typography>
                       <Typography variant="h4">
                         {sOhmPrice ? formatCurrency(sOhmPrice, 2) : <Skeleton width="150px" />}

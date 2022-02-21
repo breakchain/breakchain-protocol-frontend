@@ -383,7 +383,7 @@ function ZapStakeAction(props) {
         <Typography>
           <Trans>Minimum You Get</Trans>
         </Typography>
-        <Typography>{trim(Number(outputQuantity) * 0.98, 2)} sOHM</Typography>
+        <Typography>{trim(Number(outputQuantity) * 0.98, 2)} sXCHAIN</Typography>
       </Box>
       {initialTokenAllowance ? (
         <Button

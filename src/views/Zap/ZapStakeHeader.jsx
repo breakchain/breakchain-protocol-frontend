@@ -37,7 +37,7 @@ export default function ZapStakeHeader({ images }) {
                 icons={[CircleZapIcon]}
               />
               <Typography color="textSecondary">
-                <Trans>Swap for sOHM</Trans>
+                <Trans>Swap for sXCHAIN</Trans>
               </Typography>
             </Box>
           </Grid>
@@ -47,7 +47,7 @@ export default function ZapStakeHeader({ images }) {
               <Box alignItems="center" display="flex" flexDirection="column" marginX={1}>
                 <MultiLogo icons={[CircleZapIcon]} />
                 <Typography color="textSecondary">
-                  <Trans>Swap for OHM</Trans>
+                  <Trans>Swap for XCHAIN</Trans>
                 </Typography>
               </Box>
             </Grid>
