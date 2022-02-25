@@ -476,7 +476,7 @@ function ChartSmall({
             component={Fullscreen}
             color="primary"
             onClick={handleOpen}
-            style={{ fontSize: "1rem", cursor: "pointer" }}
+            style={{ fontSize: "2rem", cursor: "pointer" }}
           />
           <ExpandedChart
             open={open}
@@ -502,15 +502,6 @@ function ChartSmall({
           </Box>
         )}
       </div>
-      {/* <Box width="100%" minHeight={260} minWidth={310} className="ohm-chart">
-        {loading || (data && data.length > 0) ? (
-          <ResponsiveContainer minHeight={260} width="100%">
-            {renderChart(type, false)}
-          </ResponsiveContainer>
-        ) : (
-          <Skeleton variant="rect" width="100%" height={260} />
-        )}
-      </Box> */}
     </Box>
   );
 }

@@ -375,17 +375,15 @@ function Stake() {
                               <Typography variant="body1" className="stake-note" color="textSecondary">
                                 {view === 0 ? (
                                   <>
-                                    <Trans>First time staking</Trans> <b>XCHAIN</b>?
+                                    <Trans>Please approve Breakchain Protocol</Trans>
                                     <br />
-                                    <Trans>Please approve Breakchain Protocol to use your</Trans> <b>XCHAIN</b>{" "}
-                                    <Trans>for staking</Trans>.
+                                    <Trans>to use your</Trans> <b>XCHAIN</b> <Trans>for staking</Trans>.
                                   </>
                                 ) : (
                                   <>
-                                    <Trans>First time unstaking</Trans> <b>XCHAIN</b>?
+                                    <Trans>Please approve Breakchain Protocol</Trans>
                                     <br />
-                                    <Trans>Please approve Breakchain Protocol to use your</Trans> <b>XCHAIN</b>{" "}
-                                    <Trans>for unstaking</Trans>.
+                                    <Trans>to use your</Trans> <b>XCHAIN</b> <Trans>for unstaking</Trans>.
                                   </>
                                 )}
                               </Typography>

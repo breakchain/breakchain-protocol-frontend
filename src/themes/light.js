@@ -65,7 +65,7 @@ export const light = responsiveFontSizes(
         graphStrokeColor: lightTheme.graphStrokeColor,
       },
       typography: {
-        fontFamily: "Square",
+        fontFamily: "poppins",
       },
       overrides: {
         MuiSwitch: {
