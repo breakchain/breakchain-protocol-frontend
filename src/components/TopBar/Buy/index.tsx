@@ -1,19 +1,19 @@
 import { useState } from "react";
 
-import { ReactComponent as WalletIcon } from "src/assets/icons/wallet.svg";
+import { ReactComponent as BuyIcon } from "src/assets/icons/Buy.svg";
 import { useWeb3Context } from "src/hooks/web3Context";
-import InitialWalletView from "./InitialWalletView";
+import InitialBuyView from "./InitialBuyView";
 import { SwipeableDrawer, SvgIcon, Button, Typography, useTheme, withStyles } from "@material-ui/core";
 import { t } from "@lingui/macro";
 
-const WalletButton = ({ openWallet }: { openWallet: () => void }) => {
+const BuyButton = ({ openBuy }: { openBuy: () => void }) => {
   const { connect, connected } = useWeb3Context();
-  const onClick = connected ? openWallet : connect;
-  const label = connected ? t`Wallet` : t`Connect Wallet`;
+  const onClick = connected ? openBuy : connect;
+  const label = connected ? t`Buy XCHAIN` : t`Buy XCHAIN`;
   const theme = useTheme();
   return (
     <Button id="ohm-menu-button" variant="contained" color="secondary" onClick={onClick}>
-      <SvgIcon component={WalletIcon} style={{ marginRight: theme.spacing(1) }} />
+      <SvgIcon component={BuyIcon} style={{ marginRight: theme.spacing(1) }} />
       <Typography>{label}</Typography>
     </Button>
   );
@@ -29,10 +29,10 @@ const StyledSwipeableDrawer = withStyles(theme => ({
   },
 }))(SwipeableDrawer);
 
-export function Wallet() {
-  const [isWalletOpen, setWalletOpen] = useState(false);
-  const closeWallet = () => setWalletOpen(false);
-  const openWallet = () => setWalletOpen(true);
+export function Buy() {
+  const [isBuyOpen, setBuyOpen] = useState(false);
+  const closeBuy = () => setBuyOpen(false);
+  const openBuy = () => setBuyOpen(true);
 
   // only enable backdrop transition on ios devices,
   // because we can assume IOS is hosted on hight-end devices and will not drop frames
@@ -41,19 +41,19 @@ export function Wallet() {
 
   return (
     <>
-      <WalletButton openWallet={openWallet} />
+      <BuyButton openBuy={openBuy} />
       <StyledSwipeableDrawer
         disableBackdropTransition={!isIOS}
         disableDiscovery={isIOS}
         anchor="right"
-        open={isWalletOpen}
-        onOpen={openWallet}
-        onClose={closeWallet}
+        open={isBuyOpen}
+        onOpen={openBuy}
+        onClose={closeBuy}
       >
-        <InitialWalletView onClose={closeWallet} />
+        <InitialBuyView onClose={closeBuy} />
       </StyledSwipeableDrawer>
     </>
   );
 }
 
-export default Wallet;
+export default Buy;

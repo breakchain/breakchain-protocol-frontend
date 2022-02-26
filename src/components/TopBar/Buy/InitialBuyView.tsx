@@ -25,9 +25,9 @@ import useCurrentTheme from "src/hooks/useTheme";
 
 import { dai, frax } from "src/helpers/AllBonds";
 
-import { IToken, Tokens, useWallet } from "./Token";
+import { IToken, Tokens, useBuy } from "./Token";
 import { Trans } from "@lingui/macro";
-import WalletAddressEns from "./WalletAddressEns";
+import BuyAddressEns from "./BuyAddressEns";
 import { addresses } from "src/constants";
 
 const Borrow = ({
@@ -126,35 +126,35 @@ const CloseButton = withStyles(theme => ({
   },
 }))(IconButton);
 
-const WalletTotalValue = () => {
+const BuyTotalValue = () => {
   const { address: userAddress, networkId, providerInitialized } = useWeb3Context();
-  const tokens = useWallet(userAddress, networkId, providerInitialized);
+  const tokens = useBuy(userAddress, networkId, providerInitialized);
   const isLoading = useAppSelector(s => s.account.loading || s.app.loadingMarketPrice || s.app.loading);
   const marketPrice = useAppSelector(s => s.app.marketPrice || 0);
   const [currency, setCurrency] = useState<"USD" | "OHM">("USD");
 
-  const walletTotalValueUSD = Object.values(tokens).reduce(
+  const BuyTotalValueUSD = Object.values(tokens).reduce(
     (totalValue, token) => totalValue + parseFloat(token.totalBalance) * token.price,
     0,
   );
-  const walletValue = {
-    USD: walletTotalValueUSD,
-    OHM: walletTotalValueUSD / marketPrice,
+  const BuyValue = {
+    USD: BuyTotalValueUSD,
+    OHM: BuyTotalValueUSD / marketPrice,
   };
   return (
     <Box onClick={() => setCurrency(currency === "USD" ? "OHM" : "USD")}>
       <Typography style={{ lineHeight: 1.1, fontWeight: 600, fontSize: "0.975rem" }} color="textSecondary">
-        MY WALLET
+        MY Buy
       </Typography>
       <Typography style={{ fontWeight: 700, cursor: "pointer" }} variant="h3">
-        {!isLoading ? formatCurrency(walletValue[currency], 2, currency) : <Skeleton variant="text" width={100} />}
+        {!isLoading ? formatCurrency(BuyValue[currency], 2, currency) : <Skeleton variant="text" width={100} />}
       </Typography>
-      <WalletAddressEns />
+      <BuyAddressEns />
     </Box>
   );
 };
 
-function InitialWalletView({ onClose }: { onClose: () => void }) {
+function InitialBuyView({ onClose }: { onClose: () => void }) {
   const theme = useTheme();
   const [currentTheme] = useCurrentTheme();
   const { networkId } = useWeb3Context();
@@ -164,8 +164,8 @@ function InitialWalletView({ onClose }: { onClose: () => void }) {
     <Paper>
       <Box sx={{ padding: theme.spacing(0, 3), display: "flex", flexDirection: "column", minHeight: "100vh" }}>
         <Box sx={{ display: "flex", justifyContent: "space-between", padding: theme.spacing(3, 0) }}>
-          <WalletTotalValue />
-          <CloseButton size="small" onClick={onClose} aria-label="close wallet">
+          <BuyTotalValue />
+          <CloseButton size="small" onClick={onClose} aria-label="close Buy">
             <SvgIcon component={CloseIcon} color="primary" style={{ width: "15px", height: "15px" }} />
           </CloseButton>
         </Box>
@@ -209,7 +209,7 @@ function InitialWalletView({ onClose }: { onClose: () => void }) {
             Icon1={wsOhmTokenImg}
           />
           <Box sx={{ display: "flex", flexDirection: "column" }} style={{ gap: theme.spacing(1.5) }}>
-            <ExternalLink href={`https://dune.xyz/0xrusowsky/Olympus-Wallet-History`}>
+            <ExternalLink href={`https://dune.xyz/0xrusowsky/Olympus-Buy-History`}>
               <Typography>Rusowsky's dashboard</Typography>
             </ExternalLink>
             <ExternalLink href={`https://dune.xyz/shadow/Olympus-(OHM)`}>
@@ -226,4 +226,4 @@ function InitialWalletView({ onClose }: { onClose: () => void }) {
   );
 }
 
-export default InitialWalletView;
+export default InitialBuyView;
