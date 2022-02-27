@@ -3,6 +3,7 @@ import { InfoTooltip } from "@olympusdao/component-library";
 import ExpandedChart from "./ExpandedChart";
 import { useEffect, useState } from "react";
 import { ReactComponent as Fullscreen } from "../../assets/icons/fullscreen.svg";
+import { ReactComponent as Chart646 } from "../../assets/icons/chart-646c.svg";
 import {
   Area,
   AreaChart,
@@ -451,7 +452,7 @@ function ChartSmall({
       <CircularProgress />
     </Box>
   ) : (
-    <Box style={{ width: "100%", height: "100%" }}>
+    <Box style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
       <div className="chart-card-header">
         <Box
           display="flex"
@@ -469,15 +470,14 @@ function ChartSmall({
               {headerText}
             </Typography>
             <InfoTooltip message={infoTooltipMessage} />
+            <SvgIcon
+              component={Chart646}
+              inheritViewBox="true"
+              color="primary"
+              onClick={handleOpen}
+              style={{ fontSize: "2rem", cursor: "pointer", marginLeft: "10px" }}
+            />
           </Box>
-          {/* could make this svgbutton */}
-
-          <SvgIcon
-            component={Fullscreen}
-            color="primary"
-            onClick={handleOpen}
-            style={{ fontSize: "2rem", cursor: "pointer" }}
-          />
           <ExpandedChart
             open={open}
             handleClose={handleClose}

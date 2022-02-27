@@ -27,15 +27,14 @@ const TreasuryDashboard = memo(() => {
   const isVerySmallScreen = useMediaQuery("(max-width: 379px)");
 
   return (
-    <div id="treasury-dashboard-view" className={`${isSmallScreen && "smaller"} ${isVerySmallScreen && "very-small"}`}>
+    <Box id="treasury-dashboard-view" className={`${isSmallScreen && "smaller"} ${isVerySmallScreen && "very-small"}`}>
       <Container
-        className="containerCenter"
         style={{
           paddingLeft: isSmallScreen || isVerySmallScreen ? "0" : "3.3rem",
           paddingRight: isSmallScreen || isVerySmallScreen ? "0" : "3.3rem",
         }}
       >
-        <Box className="hero-metrics mystart">
+        <Box className="hero-metrics">
           <Paper className="ohm-card">
             <MetricCollection>
               <OHMPrice />
@@ -54,7 +53,7 @@ const TreasuryDashboard = memo(() => {
             </MetricCollection>
           </Paper>
         </Box>
-        <Box className="hero-metrics myend">
+        <Box className="hero-metrics">
           <Paper className="ohm-card">
             <MetricCollection>
               <TotalValueLockedGraph />
@@ -65,7 +64,7 @@ const TreasuryDashboard = memo(() => {
           </Paper>
         </Box>
       </Container>
-    </div>
+    </Box>
   );
 });
 

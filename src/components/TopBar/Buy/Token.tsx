@@ -264,7 +264,7 @@ export const MigrateToken = ({ symbol, icon, balance = "0.0", price = 0 }: IToke
 const sumObjValues = (obj: Record<string, string> = {}) =>
   Object.values(obj).reduce((sum, b = "0.0") => sum + (parseFloat(b) || 0), 0);
 
-export const useWallet = (
+export const useBuy = (
   userAddress: string,
   chainId: NetworkId,
   providerInitialized: Boolean,
@@ -369,7 +369,7 @@ export const useCrossChainBalances = (address: string) => {
 
 export const Tokens = () => {
   const { address: userAddress, networkId, providerInitialized } = useWeb3Context();
-  const tokens = useWallet(userAddress, networkId, providerInitialized);
+  const tokens = useBuy(userAddress, networkId, providerInitialized);
   const isLoading = useAppSelector(s => s.account.loading || s.app.loadingMarketPrice || s.app.loading);
   const [expanded, setExpanded] = useState<string | null>(null);
 
