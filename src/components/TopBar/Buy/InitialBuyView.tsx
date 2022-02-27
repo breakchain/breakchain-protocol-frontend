@@ -169,55 +169,19 @@ function InitialBuyView({ onClose }: { onClose: () => void }) {
             <SvgIcon component={CloseIcon} color="primary" style={{ width: "15px", height: "15px" }} />
           </CloseButton>
         </Box>
-
-        <Box sx={{ display: "flex", flexDirection: "column" }} style={{ gap: theme.spacing(1) }}>
-          <Tokens />
-        </Box>
+        <ExternalLink
+          color={currentTheme === "dark" ? "primary" : undefined}
+          href={`https://app.uniswap.org/#/swap?inputCurrency=${frax.getAddressForReserve(networkId)}&outputCurrency=${
+            addresses[networkId].OHM_V2
+          }`}
+        >
+          <Typography>Get on QuickSwap</Typography>
+        </ExternalLink>
 
         <Box sx={{ margin: theme.spacing(2, -3) }}>
           <Divider color="secondary" />
         </Box>
-
-        <Box
-          sx={{
-            ...(isSmallScreen
-              ? { display: "flex", flexDirection: "column" }
-              : { display: "grid", gridTemplateRows: "min-content", gridTemplateColumns: "repeat(2, minmax(0, 1fr))" }),
-          }}
-          style={{ gap: theme.spacing(1.5) }}
-        >
-          <ExternalLink
-            color={currentTheme === "dark" ? "primary" : undefined}
-            href={`https://app.sushi.com/swap?inputCurrency=${dai.getAddressForReserve(networkId)}&outputCurrency=${
-              addresses[networkId].OHM_V2
-            }`}
-          >
-            <Typography>Get on Sushiswap</Typography>
-          </ExternalLink>
-          <ExternalLink
-            color={currentTheme === "dark" ? "primary" : undefined}
-            href={`https://app.uniswap.org/#/swap?inputCurrency=${frax.getAddressForReserve(
-              networkId,
-            )}&outputCurrency=${addresses[networkId].OHM_V2}`}
-          >
-            <Typography>Get on Uniswap</Typography>
-          </ExternalLink>
-          <Borrow
-            href={`https://app.rari.capital/fuse/pool/18`}
-            borrowOn="Rari Capital"
-            borrowableTokensIcons={[wethTokenImg, daiTokenImg, fraxTokenImg]}
-            Icon1={wsOhmTokenImg}
-          />
-          <Box sx={{ display: "flex", flexDirection: "column" }} style={{ gap: theme.spacing(1.5) }}>
-            <ExternalLink href={`https://dune.xyz/0xrusowsky/Olympus-Buy-History`}>
-              <Typography>Rusowsky's dashboard</Typography>
-            </ExternalLink>
-            <ExternalLink href={`https://dune.xyz/shadow/Olympus-(OHM)`}>
-              <Typography>Shadow's dashboard</Typography>
-            </ExternalLink>
-          </Box>
-        </Box>
-
+        {/* <ImageComponent url={myimage} /> */}
         <Box sx={{ marginTop: "auto", marginX: "auto", padding: theme.spacing(2) }}>
           <DisconnectButton />
         </Box>

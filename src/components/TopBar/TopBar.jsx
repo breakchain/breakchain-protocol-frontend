@@ -7,6 +7,7 @@ import ThemeSwitcher from "./ThemeSwitch.jsx";
 import LocaleSwitcher from "./LocaleSwitch.tsx";
 import "./topbar.scss";
 import Wallet from "./Wallet";
+import Buy from "./Buy";
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -53,6 +54,7 @@ function TopBar({ theme, toggleTheme, handleDrawerToggle }) {
           <Wallet />
           {/ <ConnectMenu /> */}
           <Wallet />
+          <Buy />
           {/* <ThemeSwitcher theme={theme} toggleTheme={toggleTheme} /> */}
           {/* <LocaleSwitcher /> */}
         </Box>

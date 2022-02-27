@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { ReactComponent as BuyIcon } from "src/assets/icons/Buy.svg";
+import { ReactComponent as BuyIcon } from "src/assets/icons/buy.svg";
 import { useWeb3Context } from "src/hooks/web3Context";
 import InitialBuyView from "./InitialBuyView";
 import { SwipeableDrawer, SvgIcon, Button, Typography, useTheme, withStyles } from "@material-ui/core";
@@ -12,8 +12,14 @@ const BuyButton = ({ openBuy }: { openBuy: () => void }) => {
   const label = connected ? t`Buy XCHAIN` : t`Buy XCHAIN`;
   const theme = useTheme();
   return (
-    <Button id="ohm-menu-button" variant="contained" color="secondary" onClick={onClick}>
-      <SvgIcon component={BuyIcon} style={{ marginRight: theme.spacing(1) }} />
+    <Button
+      id="ohm-menu-button"
+      variant="contained"
+      color="secondary"
+      onClick={onClick}
+      style={{ color: "white", backgroundColor: "blue" }}
+    >
+      {/* <SvgIcon component={BuyIcon} style={{ marginRight: theme.spacing(1) }} /> */}
       <Typography>{label}</Typography>
     </Button>
   );

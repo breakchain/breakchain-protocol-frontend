@@ -51,7 +51,7 @@ export const girth = responsiveFontSizes(
         highlight: girthTheme.textHighlightColor,
       },
       typography: {
-        fontFamily: "poppins",
+        fontFamily: "Poppins",
       },
       props: {
         MuiSvgIcon: {
