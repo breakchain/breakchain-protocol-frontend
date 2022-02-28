@@ -19,6 +19,7 @@ import { ReactComponent as fraxTokenImg } from "src/assets/tokens/FRAX.svg";
 import { ReactComponent as daiTokenImg } from "src/assets/tokens/DAI.svg";
 import { ReactComponent as wsOhmTokenImg } from "src/assets/tokens/token_wsOHM.svg";
 import { ReactComponent as arrowDown } from "src/assets/icons/arrow-down.svg";
+import xchainCoin from "src/assets/images/coinicon.png";
 import { formatCurrency } from "src/helpers";
 import { useAppSelector, useWeb3Context } from "src/hooks";
 import useCurrentTheme from "src/hooks/useTheme";
@@ -180,6 +181,13 @@ function InitialBuyView({ onClose }: { onClose: () => void }) {
 
         <Box sx={{ margin: theme.spacing(2, -3) }}>
           <Divider color="secondary" />
+        </Box>
+        <Box>
+          <Typography>Add Token to Wallet</Typography>
+        </Box>
+        <Box>
+          <img src={xchainCoin} alt="xchain coin" />
+          <img src={xchainCoin} alt="sxchain coin" />
         </Box>
         {/* <ImageComponent url={myimage} /> */}
         <Box sx={{ marginTop: "auto", marginX: "auto", padding: theme.spacing(2) }}>

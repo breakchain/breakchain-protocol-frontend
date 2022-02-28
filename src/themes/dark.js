@@ -72,7 +72,7 @@ export const dark = responsiveFontSizes(
         highlight: darkTheme.textHighlightColor,
       },
       typography: {
-        fontFamily: "Square",
+        fontFamily: "Poppins",
       },
       overrides: {
         MuiSwitch: {

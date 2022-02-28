@@ -33,7 +33,7 @@ const commonSettings = {
   direction: "ltr",
   typography: {
     fontSize: 16,
-    fontFamily: "Square",
+    fontFamily: "Poppins",
     h1: {
       fontSize: "3.3rem",
     },
