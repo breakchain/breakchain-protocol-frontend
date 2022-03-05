@@ -2,7 +2,6 @@ import { Component, ReactElement, useState } from "react";
 import {
   useTheme,
   useMediaQuery,
-  withStyles,
   SvgIcon,
   Button,
   Typography,
@@ -11,17 +10,9 @@ import {
   IconButton,
   Paper,
 } from "@material-ui/core";
-import { Skeleton } from "@material-ui/lab";
-import { ReactComponent as CloseIcon } from "src/assets/icons/x.svg";
 import { ReactComponent as ArrowUpIcon } from "src/assets/icons/arrow-up.svg";
-import { ReactComponent as wethTokenImg } from "src/assets/tokens/wETH.svg";
-import { ReactComponent as fraxTokenImg } from "src/assets/tokens/FRAX.svg";
-import { ReactComponent as daiTokenImg } from "src/assets/tokens/DAI.svg";
-import { ReactComponent as wsOhmTokenImg } from "src/assets/tokens/token_wsOHM.svg";
-import { ReactComponent as arrowDown } from "src/assets/icons/arrow-down.svg";
 import xchainCoin from "src/assets/images/coinicon.png";
-import { formatCurrency } from "src/helpers";
-import { useAppSelector, useWeb3Context } from "src/hooks";
+import { useWeb3Context } from "src/hooks";
 import useCurrentTheme from "src/hooks/useTheme";
 
 import { dai, frax } from "src/helpers/AllBonds";
@@ -30,44 +21,6 @@ import { IToken, Tokens, useBuy } from "./Token";
 import { Trans } from "@lingui/macro";
 import BuyAddressEns from "./BuyAddressEns";
 import { addresses } from "src/constants";
-
-const Borrow = ({
-  Icon1,
-  borrowableTokensIcons,
-  borrowOn,
-  href,
-}: {
-  Icon1: typeof Component;
-  borrowableTokensIcons: typeof Component[];
-  borrowOn: string;
-  href: string;
-}) => {
-  const theme = useTheme();
-  return (
-    <ExternalLink href={href}>
-      <Box sx={{ display: "flex", flexDirection: "column" }}>
-        <Box sx={{ display: "flex", alignItems: "center", flexDirection: "row-reverse", justifyContent: "flex-end" }}>
-          {borrowableTokensIcons.map((Icon, i, arr) => (
-            <Icon style={{ height: "24px", width: "24px", ...(arr.length !== i + 1 && { marginLeft: "-8px" }) }} />
-          ))}
-          <SvgIcon
-            component={arrowDown}
-            viewBox="-12 -12 48 48"
-            style={{ height: "24px", width: "24px", transform: "rotate(270deg)" }}
-          />
-          <Icon1 style={{ height: "24px", width: "24px" }} />
-        </Box>
-        <Box sx={{ display: "flex", alignItems: "center", marginTop: theme.spacing(1) }}>
-          <Box sx={{ display: "flex", flexDirection: "column", textAlign: "right", marginRight: theme.spacing(0.5) }}>
-            <Typography align="left" style={{ maxWidth: "90px", whiteSpace: "break-spaces" }}>
-              Borrow on {borrowOn}
-            </Typography>
-          </Box>
-        </Box>
-      </Box>
-    </ExternalLink>
-  );
-};
 
 const ExternalLink = ({ href, children, color }: { href: string; children: ReactElement; color?: any }) => {
   const theme = useTheme();
@@ -110,50 +63,42 @@ const ExternalLink = ({ href, children, color }: { href: string; children: React
   );
 };
 
-const DisconnectButton = () => {
-  const { disconnect } = useWeb3Context();
-  return (
-    <Button onClick={disconnect} variant="contained" size="large" color="secondary">
-      <Trans>Disconnect</Trans>
-    </Button>
-  );
-};
+// const DisconnectButton = () => {
+//   const { disconnect } = useWeb3Context();
+//   return (
+//     <Button onClick={disconnect} variant="contained" size="large" color="secondary">
+//       <Trans>Disconnect</Trans>
+//     </Button>
+//   );
+// };
 
-const CloseButton = withStyles(theme => ({
-  root: {
-    ...theme.overrides?.MuiButton?.containedSecondary,
-    width: "30px",
-    height: "30px",
-  },
-}))(IconButton);
+// const BuyTotalValue = () => {
+//   const { address: userAddress, networkId, providerInitialized } = useWeb3Context();
+//   const tokens = useBuy(userAddress, networkId, providerInitialized);
+//   const isLoading = useAppSelector(s => s.account.loading || s.app.loadingMarketPrice || s.app.loading);
+//   const marketPrice = useAppSelector(s => s.app.marketPrice || 0);
+//   const [currency, setCurrency] = useState<"USD" | "OHM">("USD");
 
-const BuyTotalValue = () => {
-  const { address: userAddress, networkId, providerInitialized } = useWeb3Context();
-  const tokens = useBuy(userAddress, networkId, providerInitialized);
-  const isLoading = useAppSelector(s => s.account.loading || s.app.loadingMarketPrice || s.app.loading);
-  const marketPrice = useAppSelector(s => s.app.marketPrice || 0);
-  const [currency, setCurrency] = useState<"USD" | "OHM">("USD");
-
-  const BuyTotalValueUSD = Object.values(tokens).reduce(
-    (totalValue, token) => totalValue + parseFloat(token.totalBalance) * token.price,
-    0,
-  );
-  const BuyValue = {
-    USD: BuyTotalValueUSD,
-    OHM: BuyTotalValueUSD / marketPrice,
-  };
-  return (
-    <Box onClick={() => setCurrency(currency === "USD" ? "OHM" : "USD")}>
-      <Typography style={{ lineHeight: 1.1, fontWeight: 600, fontSize: "0.975rem" }} color="textSecondary">
-        MY Buy
-      </Typography>
-      <Typography style={{ fontWeight: 700, cursor: "pointer" }} variant="h3">
-        {!isLoading ? formatCurrency(BuyValue[currency], 2, currency) : <Skeleton variant="text" width={100} />}
-      </Typography>
-      <BuyAddressEns />
-    </Box>
-  );
-};
+//   const BuyTotalValueUSD = Object.values(tokens).reduce(
+//     (totalValue, token) => totalValue + parseFloat(token.totalBalance) * token.price,
+//     0,
+//   );
+//   const BuyValue = {
+//     USD: BuyTotalValueUSD,
+//     OHM: BuyTotalValueUSD / marketPrice,
+//   };
+//   return (
+//     <Box onClick={() => setCurrency(currency === "USD" ? "OHM" : "USD")}>
+//       <Typography style={{ lineHeight: 1.1, fontWeight: 600, fontSize: "0.975rem" }} color="textSecondary">
+//         MY Buy
+//       </Typography>
+//       <Typography style={{ fontWeight: 700, cursor: "pointer" }} variant="h3">
+//         {!isLoading ? formatCurrency(BuyValue[currency], 2, currency) : <Skeleton variant="text" width={100} />}
+//       </Typography>
+//       <BuyAddressEns />
+//     </Box>
+//   );
+// };
 
 function InitialBuyView({ onClose }: { onClose: () => void }) {
   const theme = useTheme();
@@ -163,13 +108,14 @@ function InitialBuyView({ onClose }: { onClose: () => void }) {
 
   return (
     <Paper>
-      <Box sx={{ padding: theme.spacing(0, 3), display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-        <Box sx={{ display: "flex", justifyContent: "space-between", padding: theme.spacing(3, 0) }}>
+      <Box sx={{ padding: theme.spacing(0, 3), display: "block", height: "40px", width: "60px" }}>
+        {/* <Box sx={{ display: "flex", justifyContent: "space-between", padding: theme.spacing(3, 0) }}>
           <BuyTotalValue />
           <CloseButton size="small" onClick={onClose} aria-label="close Buy">
             <SvgIcon component={CloseIcon} color="primary" style={{ width: "15px", height: "15px" }} />
           </CloseButton>
-        </Box>
+        </Box> */}
+
         <ExternalLink
           color={currentTheme === "dark" ? "primary" : undefined}
           href={`https://app.uniswap.org/#/swap?inputCurrency=${frax.getAddressForReserve(networkId)}&outputCurrency=${
@@ -182,6 +128,7 @@ function InitialBuyView({ onClose }: { onClose: () => void }) {
         <Box sx={{ margin: theme.spacing(2, -3) }}>
           <Divider color="secondary" />
         </Box>
+
         <Box>
           <Typography>Add Token to Wallet</Typography>
         </Box>
@@ -190,9 +137,9 @@ function InitialBuyView({ onClose }: { onClose: () => void }) {
           <img src={xchainCoin} alt="sxchain coin" />
         </Box>
         {/* <ImageComponent url={myimage} /> */}
-        <Box sx={{ marginTop: "auto", marginX: "auto", padding: theme.spacing(2) }}>
+        {/* <Box sx={{ marginTop: "auto", marginX: "auto", padding: theme.spacing(2) }}>
           <DisconnectButton />
-        </Box>
+        </Box> */}
       </Box>
     </Paper>
   );
