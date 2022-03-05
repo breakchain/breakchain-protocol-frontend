@@ -5,7 +5,7 @@ import { useWeb3Context } from "src/hooks/web3Context";
 import { SvgIcon, Button, Typography, useTheme } from "@material-ui/core";
 import { t } from "@lingui/macro";
 
-const WalletButton = ({ openWallet, close }: { openWallet: () => void; close: () => void }) => {
+const WalletButton = ({ openWallet }: { openWallet: () => void }) => {
   const { connect, connected, disconnect } = useWeb3Context();
   const onClick = connected ? disconnect : connect;
   const label = connected ? t`Disconnect Wallet` : t`Connect Wallet`;
@@ -18,14 +18,14 @@ const WalletButton = ({ openWallet, close }: { openWallet: () => void; close: ()
   );
 };
 
-export function Wallet({ closeDrop }: { closeDrop: () => void }) {
+export function Wallet() {
   const [isWalletOpen, setWalletOpen] = useState(false);
   const closeWallet = () => setWalletOpen(false);
   const openWallet = () => setWalletOpen(true);
 
   return (
     <>
-      <WalletButton openWallet={openWallet} close={closeDrop} />
+      <WalletButton openWallet={openWallet} />
     </>
   );
 }
