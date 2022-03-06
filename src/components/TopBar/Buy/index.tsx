@@ -17,7 +17,7 @@ const BuyButton = ({ openBuy, closeBuy }: { openBuy: () => void; closeBuy: () =>
       variant="contained"
       color="secondary"
       onMouseEnter={onClick}
-      onMouseLeave={closeBuy}
+      // onMouseLeave={closeBuy}
       style={{ color: "white", backgroundColor: "blue" }}
     >
       {/* <SvgIcon component={BuyIcon} style={{ marginRight: theme.spacing(1) }} /> */}
@@ -34,21 +34,21 @@ export function Buy() {
   return (
     <>
       <BuyButton openBuy={openBuy} closeBuy={closeBuy} />
-      {/* {isBuyOpen && ( */}
-      <Box
-        sx={{
-          position: "absolute",
-          display: "block",
-          width: "300px",
-          height: "200px",
-          top: "0px",
-          right: "0px",
-        }}
-        onMouseLeave={closeBuy}
-      >
-        <InitialBuyView onClose={closeBuy} />
-      </Box>
-      {/* )} */}
+      {isBuyOpen && (
+        <Box
+          sx={{
+            position: "absolute",
+            display: "block",
+            width: "225px",
+            height: "210px",
+            top: "55px",
+            right: "0px",
+          }}
+          onMouseLeave={closeBuy}
+        >
+          <InitialBuyView onClose={closeBuy} />
+        </Box>
+      )}
     </>
   );
 }

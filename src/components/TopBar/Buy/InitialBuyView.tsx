@@ -9,6 +9,7 @@ import {
   Divider,
   IconButton,
   Paper,
+  ListItemSecondaryAction,
 } from "@material-ui/core";
 import { ReactComponent as ArrowUpIcon } from "src/assets/icons/arrow-up.svg";
 import xchainCoin from "src/assets/images/coinicon.png";
@@ -105,10 +106,38 @@ function InitialBuyView({ onClose }: { onClose: () => void }) {
   const [currentTheme] = useCurrentTheme();
   const { networkId } = useWeb3Context();
   const isSmallScreen = useMediaQuery("(max-width: 600px)");
+  const addTokenToWallet = async (token: IToken, userAddress: string) => {
+    if (!window.ethereum) return;
+    const host = window.location.origin;
+    try {
+      await window.ethereum.request({
+        method: "wallet_watchAsset",
+        params: {
+          type: "ERC20",
+          options: {
+            address: token.address,
+            symbol: token.symbol,
+            decimals: token.decimals,
+            image: `${host}/${token.icon}`,
+          },
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
-    <Paper>
-      <Box sx={{ padding: theme.spacing(0, 3), display: "block", height: "40px", width: "60px" }}>
+    <Paper elevation={3}>
+      <Box
+        sx={{
+          padding: theme.spacing(0, 2),
+          display: "block",
+          height: "210px",
+          width: "225px",
+          top: "0px",
+        }}
+      >
         {/* <Box sx={{ display: "flex", justifyContent: "space-between", padding: theme.spacing(3, 0) }}>
           <BuyTotalValue />
           <CloseButton size="small" onClick={onClose} aria-label="close Buy">
@@ -129,12 +158,49 @@ function InitialBuyView({ onClose }: { onClose: () => void }) {
           <Divider color="secondary" />
         </Box>
 
-        <Box>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
           <Typography>Add Token to Wallet</Typography>
         </Box>
-        <Box>
-          <img src={xchainCoin} alt="xchain coin" />
-          <img src={xchainCoin} alt="sxchain coin" />
+        {/* <Box sx={{ display: "flex", flexDirection: "column" }} style={{ gap: theme.spacing(1) }}>
+          <Tokens />
+        </Box> */}
+        <Box
+          sx={{
+            padding: theme.spacing(2, 2),
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+        >
+          <Box
+            component="button"
+            sx={{
+              width: "60px",
+              height: "70px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
+            <img src={xchainCoin} width="50" height="50" alt="xchain coin" />
+            <Typography>XCHAIN</Typography>
+          </Box>
+          <Box
+            component="button"
+            sx={{
+              width: "60px",
+              height: "70px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
+            <img src={xchainCoin} width="50" height="50" alt="sxchain coin" />
+            <Typography>sXCHAIN</Typography>
+          </Box>
         </Box>
         {/* <ImageComponent url={myimage} /> */}
         {/* <Box sx={{ marginTop: "auto", marginX: "auto", padding: theme.spacing(2) }}>

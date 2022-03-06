@@ -20,6 +20,7 @@ import { RootState } from "src/store";
 import { NetworkId } from "src/constants";
 
 import { ReactComponent as MoreIcon } from "src/assets/icons/more.svg";
+import xchainCoin from "src/assets/images/coinicon.png";
 import OhmImg from "src/assets/tokens/token_OHM.svg";
 import SOhmImg from "src/assets/tokens/token_sOHM.svg";
 import WsOhmImg from "src/assets/tokens/token_wsOHM.svg";
@@ -279,69 +280,24 @@ export const useBuy = (
   const { gohm, wsohm, isLoading } = useCrossChainBalances(userAddress);
 
   const tokens = {
-    ohmV1: {
-      symbol: "OHM V1",
-      address: addresses[networkId].OHM_ADDRESS,
-      balance: connectedChainBalances.ohmV1,
-      price: ohmPrice || 0,
-      icon: OhmImg,
-      decimals: 9,
-    },
-    sohmV1: {
-      symbol: "sOHM V1",
-      address: addresses[networkId].SOHM_ADDRESS,
-      balance: connectedChainBalances.sohmV1,
-      price: ohmPrice || 0,
-      icon: SOhmImg,
-      decimals: 9,
-    },
-    ohm: {
-      symbol: "OHM",
+    XCHAIN: {
+      symbol: "XCHAIN",
       address: addresses[networkId].OHM_V2,
       balance: connectedChainBalances.ohm,
       price: ohmPrice || 0,
-      icon: OhmImg,
+      icon: xchainCoin,
       decimals: 9,
     },
-    sohm: {
-      symbol: "sOHM",
+    sXCHAIN: {
+      symbol: "sXCHAIN",
       address: addresses[networkId].SOHM_V2,
       balance: connectedChainBalances.sohm,
       price: ohmPrice || 0,
       vaultBalances: {
         "Fuse Olympus Pool Party": connectedChainBalances.fsohm,
       },
-      icon: SOhmImg,
+      icon: xchainCoin,
       decimals: 9,
-    },
-    wsohm: {
-      symbol: "wsOHM",
-      address: addresses[networkId].WSOHM_ADDRESS,
-      balance: connectedChainBalances.wsohm,
-      price: (ohmPrice || 0) * Number(currentIndex || 0),
-      crossChainBalances: { balances: wsohm, isLoading },
-      icon: WsOhmImg,
-      decimals: 18,
-    },
-    pool: {
-      symbol: "33T",
-      address: addresses[networkId].PT_TOKEN_ADDRESS,
-      balance: connectedChainBalances.pool,
-      price: ohmPrice || 0,
-      icon: Token33tImg,
-      decimals: 9,
-    },
-    gohm: {
-      symbol: "gOHM",
-      address: addresses[networkId].GOHM_ADDRESS,
-      balance: connectedChainBalances.gohm,
-      price: (ohmPrice || 0) * Number(currentIndex || 0),
-      crossChainBalances: { balances: gohm, isLoading },
-      vaultBalances: {
-        "Fuse Olympus Pool Party": connectedChainBalances.fgohm,
-      },
-      icon: GOhmImg,
-      decimals: 18,
     },
   } as Record<string, Omit<IToken, "totalBalance">>;
 
