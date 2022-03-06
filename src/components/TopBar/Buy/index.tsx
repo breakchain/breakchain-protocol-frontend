@@ -3,7 +3,7 @@ import { useState } from "react";
 import { ReactComponent as BuyIcon } from "src/assets/icons/buy.svg";
 import { useWeb3Context } from "src/hooks/web3Context";
 import InitialBuyView from "./InitialBuyView";
-import { SwipeableDrawer, SvgIcon, Button, Typography, useTheme, withStyles } from "@material-ui/core";
+import { Box, SvgIcon, Button, Typography, useTheme, withStyles } from "@material-ui/core";
 import { t } from "@lingui/macro";
 
 const BuyButton = ({ openBuy, closeBuy }: { openBuy: () => void; closeBuy: () => void }) => {
@@ -26,16 +26,6 @@ const BuyButton = ({ openBuy, closeBuy }: { openBuy: () => void; closeBuy: () =>
   );
 };
 
-const StyledSwipeableDrawer = withStyles(theme => ({
-  root: {
-    width: "460px",
-    maxWidth: "100%",
-  },
-  paper: {
-    maxWidth: "100%",
-  },
-}))(SwipeableDrawer);
-
 export function Buy() {
   const [isBuyOpen, setBuyOpen] = useState(false);
   const closeBuy = () => setBuyOpen(false);
@@ -44,12 +34,21 @@ export function Buy() {
   return (
     <>
       <BuyButton openBuy={openBuy} closeBuy={closeBuy} />
-      {isBuyOpen && (
-        <div onMouseLeave={closeBuy}>
-          {/* I'll appear when you hover over the button. */}
-          <InitialBuyView onClose={closeBuy} />
-        </div>
-      )}
+      {/* {isBuyOpen && ( */}
+      <Box
+        sx={{
+          position: "absolute",
+          display: "block",
+          width: "300px",
+          height: "200px",
+          top: "0px",
+          right: "0px",
+        }}
+        onMouseLeave={closeBuy}
+      >
+        <InitialBuyView onClose={closeBuy} />
+      </Box>
+      {/* )} */}
     </>
   );
 }
