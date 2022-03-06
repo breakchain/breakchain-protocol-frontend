@@ -458,14 +458,14 @@ function ChartSmall({
           display="flex"
           justifyContent="space-between"
           alignItems="center"
-          style={{ width: "100%", overflow: "hidden" }}
+          style={{ width: "100%", overflow: "visible" }}
         >
           <Box display="flex" width="90%" alignItems="center">
             <Typography
               variant="h6"
               color="textSecondary"
               className="card-title-text"
-              style={{ fontWeight: 400, overflow: "hidden" }}
+              style={{ fontWeight: 400, overflow: "visible" }}
             >
               {headerText}
             </Typography>
