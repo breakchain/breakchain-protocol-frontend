@@ -8,6 +8,7 @@ import LocaleSwitcher from "./LocaleSwitch.tsx";
 import "./topbar.scss";
 import Wallet from "./Wallet";
 import Buy from "./Buy";
+import { useState } from "react";
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -32,7 +33,13 @@ const useStyles = makeStyles(theme => ({
 function TopBar({ theme, toggleTheme, handleDrawerToggle }) {
   const classes = useStyles();
   const isVerySmallScreen = useMediaQuery("(max-width: 355px)");
-
+  const [openMenu, setMenuState] = useState(false);
+  const closeDropMenu = () => {
+    setMenuState(true);
+    setTimeout(() => {
+      setMenuState(false);
+    }, 300);
+  };
   return (
     <AppBar position="sticky" className={classes.appBar} elevation={0}>
       <Toolbar disableGutters className="dapp-topbar">
@@ -53,8 +60,8 @@ function TopBar({ theme, toggleTheme, handleDrawerToggle }) {
           {/* {!isVerySmallScreen && <OhmMenu />} /}
           <Wallet />
           {/ <ConnectMenu /> */}
-          <Wallet />
-          <Buy />
+          <Wallet closeDrop={closeDropMenu} />
+          <Buy dropState={openMenu} />
           {/* <ThemeSwitcher theme={theme} toggleTheme={toggleTheme} /> */}
           {/* <LocaleSwitcher /> */}
         </Box>

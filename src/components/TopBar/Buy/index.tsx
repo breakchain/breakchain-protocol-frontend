@@ -1,14 +1,34 @@
-import { useState } from "react";
-
-import { ReactComponent as BuyIcon } from "src/assets/icons/buy.svg";
+import { useEffect, useState } from "react";
 import { useWeb3Context } from "src/hooks/web3Context";
 import InitialBuyView from "./InitialBuyView";
-import { Box, SvgIcon, Button, Typography, useTheme, withStyles } from "@material-ui/core";
 import { t } from "@lingui/macro";
+import { Box, Button, Typography, useTheme, makeStyles } from "@material-ui/core";
 
-const BuyButton = ({ openBuy, closeBuy }: { openBuy: () => void; closeBuy: () => void }) => {
-  const { connect, connected } = useWeb3Context();
-  const onClick = connected ? openBuy : connect;
+const useStyles = makeStyles(theme => ({
+  button: {
+    backgroundColor: "blue",
+    color: "white",
+    border: "1px solid blue",
+    "&:hover": {
+      backgroundColor: "#fff !important",
+      color: "blue",
+    },
+  },
+  dropDownMenu: {
+    position: "absolute",
+    display: "block",
+    width: "225px",
+    top: "54px",
+    right: "0px",
+    marginTop: theme.spacing(2.25),
+    borderRadius: theme.spacing(1.5),
+  },
+}));
+
+const BuyButton = ({ openBuy }: { openBuy: () => void }) => {
+  const classes = useStyles();
+  const { connected } = useWeb3Context();
+  const onClick = openBuy;
   const label = connected ? t`Buy XCHAIN` : t`Buy XCHAIN`;
   const theme = useTheme();
   return (
@@ -17,35 +37,30 @@ const BuyButton = ({ openBuy, closeBuy }: { openBuy: () => void; closeBuy: () =>
       variant="contained"
       color="secondary"
       onMouseEnter={onClick}
-      // onMouseLeave={closeBuy}
-      style={{ color: "white", backgroundColor: "blue" }}
+      className={classes.button}
     >
-      {/* <SvgIcon component={BuyIcon} style={{ marginRight: theme.spacing(1) }} /> */}
       <Typography>{label}</Typography>
     </Button>
   );
 };
 
-export function Buy() {
+export function Buy(dropState: boolean) {
+  const classes = useStyles();
   const [isBuyOpen, setBuyOpen] = useState(false);
   const closeBuy = () => setBuyOpen(false);
   const openBuy = () => setBuyOpen(true);
 
+  useEffect(() => {
+    if (dropState) {
+      setBuyOpen(false);
+    }
+  }, [dropState]);
+
   return (
     <>
-      <BuyButton openBuy={openBuy} closeBuy={closeBuy} />
+      <BuyButton openBuy={openBuy} />
       {isBuyOpen && (
-        <Box
-          sx={{
-            position: "absolute",
-            display: "block",
-            width: "225px",
-            height: "210px",
-            top: "55px",
-            right: "0px",
-          }}
-          onMouseLeave={closeBuy}
-        >
+        <Box className={classes.dropDownMenu} onMouseLeave={closeBuy}>
           <InitialBuyView onClose={closeBuy} />
         </Box>
       )}

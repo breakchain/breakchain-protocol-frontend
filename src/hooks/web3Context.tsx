@@ -6,7 +6,7 @@ import { IFrameEthereumProvider } from "@ledgerhq/iframe-provider";
 import { NodeHelper } from "src/helpers/NodeHelper";
 import { NETWORKS } from "../constants";
 import { initNetworkFunc, idFromHexString } from "src/helpers/NetworkHelper";
-
+import { providers } from "ethers";
 /**
  * determine if in IFrame for Ledger Live
  */
@@ -80,6 +80,7 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
   const [connected, setConnected] = useState(false);
   const [address, setAddress] = useState("");
   // NOTE (appleseed): loading eth mainnet as default rpc provider for a non-connected wallet
+  const [web3Provider, setWeb3Provider] = useState<any>();
   const [provider, setProvider] = useState<JsonRpcProvider>(NodeHelper.getMainnetStaticProvider());
   const [networkId, setNetworkId] = useState(137);
   const [networkName, setNetworkName] = useState("");
@@ -129,12 +130,13 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
     } else {
       rawProvider = await web3Modal.connect();
     }
+    setWeb3Provider(rawProvider);
 
     // new _initListeners implementation matches Web3Modal Docs
     // ... see here: https://github.com/Web3Modal/web3modal/blob/2ff929d0e99df5edf6bb9e88cff338ba6d8a3991/example/src/App.tsx#L185
-    _initListeners(rawProvider);
+    // _initListeners(rawProvider);
 
-    const connectedProvider = new Web3Provider(rawProvider, "any");
+    const connectedProvider = new providers.Web3Provider(rawProvider);
     setProvider(connectedProvider);
     const connectedAddress = await connectedProvider.getSigner().getAddress();
 
@@ -151,16 +153,63 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
     setConnected(true);
 
     return connectedProvider;
-  }, [provider, web3Modal, connected]);
+  }, [web3Modal]);
 
   const disconnect = useCallback(async () => {
-    web3Modal.clearCachedProvider();
+    await web3Modal.clearCachedProvider();
+    if (web3Provider?.disconnnect && typeof web3Provider.disconnect === "function") {
+      await web3Provider.disconnect();
+    }
+    setProvider({} as JsonRpcProvider);
     setConnected(false);
 
     setTimeout(() => {
       window.location.reload();
     }, 1);
-  }, [provider, web3Modal, connected]);
+  }, [web3Provider, setProvider]);
+
+  useEffect(() => {
+    if (web3Modal.cachedProvider) {
+      connect();
+    }
+  }, [connect]);
+
+  useEffect(() => {
+    if (web3Provider?.on) {
+      const handleAccountsChanged = (accounts: string[]) => {
+        console.log("accountsChanged", accounts);
+      };
+
+      const handleChainChanged = async (_hexChainId: string) => {
+        const newChainId = idFromHexString(_hexChainId);
+        const networkHash = await initNetworkFunc({ provider });
+        if (newChainId !== networkHash.networkId) {
+          // then provider is out of sync, reload per metamask recommendation
+          setTimeout(() => window.location.reload(), 1);
+        } else {
+          setNetworkId(networkHash.networkId);
+        }
+      };
+
+      const handleDisconnect = (error: { code: number; message: string }) => {
+        // eslint-disable-next-line no-console
+        console.log("disconnect", error);
+        disconnect();
+      };
+      web3Provider.on("accountsChanged", handleAccountsChanged);
+      web3Provider.on("chainChanged", handleChainChanged);
+      web3Provider.on("disconnect", handleDisconnect);
+
+      // Subscription Cleanup
+      return () => {
+        if (web3Provider.removeListener) {
+          web3Provider.removeListener("accountsChanged", handleAccountsChanged);
+          web3Provider.removeListener("chainChanged", handleChainChanged);
+          web3Provider.removeListener("disconnect", handleDisconnect);
+        }
+      };
+    }
+  }, [web3Provider, disconnect]);
 
   const onChainProvider = useMemo(
     () => ({
