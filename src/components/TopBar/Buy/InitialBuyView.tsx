@@ -1,27 +1,11 @@
-import { Component, ReactElement, useState } from "react";
-import {
-  useTheme,
-  useMediaQuery,
-  SvgIcon,
-  Button,
-  Typography,
-  Box,
-  Divider,
-  IconButton,
-  Paper,
-  ListItemSecondaryAction,
-  makeStyles,
-} from "@material-ui/core";
+import { ReactElement } from "react";
+import { useTheme, SvgIcon, Button, Typography, Box, Divider, Paper, makeStyles } from "@material-ui/core";
 import { ReactComponent as ArrowUpIcon } from "src/assets/icons/arrow-up.svg";
 import xchainCoin from "src/assets/images/coinicon.png";
 import { useWeb3Context } from "src/hooks";
 import useCurrentTheme from "src/hooks/useTheme";
 
-import { dai, frax } from "src/helpers/AllBonds";
-
-import { IToken, Tokens, useBuy } from "./Token";
-import { Trans } from "@lingui/macro";
-import BuyAddressEns from "./BuyAddressEns";
+import { frax } from "src/helpers/AllBonds";
 import { addresses } from "src/constants";
 
 const useStyles = makeStyles(theme => ({
@@ -88,6 +72,31 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+export interface Token {
+  type: string;
+  address: string;
+  symbol: string;
+  decimals: number;
+  image: string;
+}
+
+const tokens = [
+  {
+    type: "ERC20",
+    address: "0xE4576a1e7bfC649c94654A3157cdD6B2A286Dad1",
+    symbol: "XCHAIN",
+    decimals: 18,
+    image: "https://atlas-content-cdn.pixelsquid.com/stock-images/gold-bitcoin-symbol-PxlkYo6-600.jpg",
+  },
+  {
+    type: "ERC20",
+    address: "0xD750DEB4052F7e846e8f5a102C8fFC719AcDc45B",
+    symbol: "sXCHAIN",
+    decimals: 18,
+    image: "https://atlas-content-cdn.pixelsquid.com/stock-images/gold-bitcoin-symbol-PxlkYo6-600.jpg",
+  },
+];
+
 const ExternalLink = ({ href, children, color }: { href: string; children: ReactElement; color?: any }) => {
   const theme = useTheme();
   const classes = useStyles();
@@ -115,67 +124,28 @@ const ExternalLink = ({ href, children, color }: { href: string; children: React
   );
 };
 
-// const DisconnectButton = () => {
-//   const { disconnect } = useWeb3Context();
-//   return (
-//     <Button onClick={disconnect} variant="contained" size="large" color="secondary">
-//       <Trans>Disconnect</Trans>
-//     </Button>
-//   );
-// };
-
-// const BuyTotalValue = () => {
-//   const { address: userAddress, networkId, providerInitialized } = useWeb3Context();
-//   const tokens = useBuy(userAddress, networkId, providerInitialized);
-//   const isLoading = useAppSelector(s => s.account.loading || s.app.loadingMarketPrice || s.app.loading);
-//   const marketPrice = useAppSelector(s => s.app.marketPrice || 0);
-//   const [currency, setCurrency] = useState<"USD" | "OHM">("USD");
-
-//   const BuyTotalValueUSD = Object.values(tokens).reduce(
-//     (totalValue, token) => totalValue + parseFloat(token.totalBalance) * token.price,
-//     0,
-//   );
-//   const BuyValue = {
-//     USD: BuyTotalValueUSD,
-//     OHM: BuyTotalValueUSD / marketPrice,
-//   };
-//   return (
-//     <Box onClick={() => setCurrency(currency === "USD" ? "OHM" : "USD")}>
-//       <Typography style={{ lineHeight: 1.1, fontWeight: 600, fontSize: "0.975rem" }} color="textSecondary">
-//         MY Buy
-//       </Typography>
-//       <Typography style={{ fontWeight: 700, cursor: "pointer" }} variant="h3">
-//         {!isLoading ? formatCurrency(BuyValue[currency], 2, currency) : <Skeleton variant="text" width={100} />}
-//       </Typography>
-//       <BuyAddressEns />
-//     </Box>
-//   );
-// };
-
 function InitialBuyView({ onClose }: { onClose: () => void }) {
   const theme = useTheme();
   const classes = useStyles();
   const [currentTheme] = useCurrentTheme();
   const { networkId } = useWeb3Context();
-  const isSmallScreen = useMediaQuery("(max-width: 600px)");
-  const addTokenToWallet = async (token: IToken, userAddress: string) => {
-    if (!window.ethereum) return;
-    const host = window.location.origin;
+
+  const addTokenToWallet = async (token: Token) => {
     try {
       await window.ethereum.request({
         method: "wallet_watchAsset",
         params: {
-          type: "ERC20",
+          type: token.type,
           options: {
             address: token.address,
             symbol: token.symbol,
             decimals: token.decimals,
-            image: `${host}/${token.icon}`,
+            image: token.image,
           },
         },
       });
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -199,11 +169,11 @@ function InitialBuyView({ onClose }: { onClose: () => void }) {
               <Typography>Add Token to Wallet</Typography>
             </Box>
             <Box className={classes.buttonGroup}>
-              <Box component="button" className={classes.button}>
+              <Box component="button" className={classes.button} onClick={() => addTokenToWallet(tokens[0])}>
                 <img src={xchainCoin} width="35" height="35" alt="xchain coin" />
                 <Typography style={{ marginTop: theme.spacing(1) }}>XCHAIN</Typography>
               </Box>
-              <Box component="button" className={classes.button}>
+              <Box component="button" className={classes.button} onClick={() => addTokenToWallet(tokens[1])}>
                 <img src={xchainCoin} width="35" height="35" alt="sxchain coin" />
                 <Typography style={{ marginTop: theme.spacing(1) }}>sXCHAIN</Typography>
               </Box>
