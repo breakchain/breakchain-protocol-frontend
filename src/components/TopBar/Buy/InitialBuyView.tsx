@@ -1,5 +1,17 @@
-import { ReactElement } from "react";
-import { useTheme, SvgIcon, Button, Typography, Box, Divider, Paper, makeStyles } from "@material-ui/core";
+import { Component, ReactElement, useState } from "react";
+import {
+  useTheme,
+  useMediaQuery,
+  SvgIcon,
+  Button,
+  Typography,
+  Box,
+  Divider,
+  IconButton,
+  Paper,
+  ListItemSecondaryAction,
+  makeStyles,
+} from "@material-ui/core";
 import { ReactComponent as ArrowUpIcon } from "src/assets/icons/arrow-up.svg";
 import xchainCoin from "src/assets/images/coinicon.png";
 import { useWeb3Context } from "src/hooks";
