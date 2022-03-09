@@ -5,9 +5,9 @@
   min-width: 300px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   overflow-y: auto;
+  padding-top: 20px;
   -ms-overflow-style: none !important; /* IE and Edge */
   scrollbar-width: none !important; /* Firefox */
   &::-webkit-scrollbar {

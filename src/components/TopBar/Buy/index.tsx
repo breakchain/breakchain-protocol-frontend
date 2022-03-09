@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
     display: "block",
     width: "225px",
     top: "54px",
-    right: "0px",
+    right: theme.spacing(0.7),
     marginTop: theme.spacing(2.25),
     borderRadius: theme.spacing(1.5),
   },

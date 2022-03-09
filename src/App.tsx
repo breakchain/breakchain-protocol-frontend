@@ -110,6 +110,8 @@ function App() {
   const location = useLocation();
   const dispatch = useDispatch();
   const [theme, toggleTheme, mounted] = useTheme();
+  // only for mobile
+  const [tapState, setTap] = useState(false);
   const currentPath = location.pathname + location.hash + location.search;
   const trimmedPath = location.pathname + location.hash;
   const classes = useStyles();
@@ -305,13 +307,21 @@ function App() {
   });
   const hasActiveV1Bonds = accountBonds.length > 0;
 
+  //for mobile token menu
+  const updateTapState = useCallback(() => {
+    setTap(true);
+    setTimeout(() => {
+      setTap(false);
+    }, 300);
+  }, [setTap]);
+
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={themeMode}>
         <CssBaseline />
         {/* {isAppLoading && <LoadingSplash />} */}
         <div className={`app ${isSmallerScreen && "tablet"} ${isSmallScreen && "mobile"} ${theme}`}>
-          <TopBar theme={theme} toggleTheme={toggleTheme} handleDrawerToggle={handleDrawerToggle} />
+          <TopBar theme={theme} toggleTheme={toggleTheme} handleDrawerToggle={handleDrawerToggle} tap={tapState} />
 
           <nav className={classes.drawer}>
             {isSmallerScreen ? (
@@ -321,7 +331,10 @@ function App() {
             )}
           </nav>
 
-          <div className={`${classes.content} ${isSmallerScreen && classes.contentShift}`}>
+          <div
+            className={`${classes.content} ${isSmallerScreen && classes.contentShift}`}
+            onClick={() => updateTapState()}
+          >
             <Switch>
               <Route exact path="/dashboard">
                 <TreasuryDashboard />
