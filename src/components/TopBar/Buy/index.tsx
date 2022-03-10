@@ -1,59 +1,71 @@
-import { useState } from "react";
-
-import { ReactComponent as WalletIcon } from "src/assets/icons/wallet.svg";
+import { useEffect, useState } from "react";
 import { useWeb3Context } from "src/hooks/web3Context";
-import InitialWalletView from "./InitialWalletView";
-import { SwipeableDrawer, SvgIcon, Button, Typography, useTheme, withStyles } from "@material-ui/core";
+import InitialBuyView from "./InitialBuyView";
 import { t } from "@lingui/macro";
+import { Box, Button, Typography, useTheme, makeStyles } from "@material-ui/core";
 
-const WalletButton = ({ openWallet }: { openWallet: () => void }) => {
-  const { connect, connected } = useWeb3Context();
-  const onClick = connected ? openWallet : connect;
-  const label = connected ? t`Wallet` : t`Connect Wallet`;
+const useStyles = makeStyles(theme => ({
+  button: {
+    backgroundColor: "blue",
+    color: "white",
+    border: "1px solid blue",
+    "&:hover": {
+      backgroundColor: "#fff !important",
+      color: "blue",
+    },
+  },
+  dropDownMenu: {
+    position: "absolute",
+    display: "block",
+    width: "225px",
+    top: "54px",
+    right: theme.spacing(0.7),
+    marginTop: theme.spacing(2.25),
+    borderRadius: theme.spacing(1.5),
+  },
+}));
+
+const BuyButton = ({ openBuy }: { openBuy: () => void }) => {
+  const classes = useStyles();
+  const { connected } = useWeb3Context();
+  const onClick = openBuy;
+  const label = connected ? t`Buy XCHAIN` : t`Buy XCHAIN`;
   const theme = useTheme();
   return (
-    <Button id="ohm-menu-button" variant="contained" color="secondary" onClick={onClick}>
-      <SvgIcon component={WalletIcon} style={{ marginRight: theme.spacing(1) }} />
+    <Button
+      id="ohm-menu-button"
+      variant="contained"
+      color="secondary"
+      onMouseEnter={onClick}
+      className={classes.button}
+    >
       <Typography>{label}</Typography>
     </Button>
   );
 };
 
-const StyledSwipeableDrawer = withStyles(theme => ({
-  root: {
-    width: "460px",
-    maxWidth: "100%",
-  },
-  paper: {
-    maxWidth: "100%",
-  },
-}))(SwipeableDrawer);
+export function Buy(dropState: boolean) {
+  const classes = useStyles();
+  const [isBuyOpen, setBuyOpen] = useState(false);
+  const closeBuy = () => setBuyOpen(false);
+  const openBuy = () => setBuyOpen(true);
 
-export function Wallet() {
-  const [isWalletOpen, setWalletOpen] = useState(false);
-  const closeWallet = () => setWalletOpen(false);
-  const openWallet = () => setWalletOpen(true);
-
-  // only enable backdrop transition on ios devices,
-  // because we can assume IOS is hosted on hight-end devices and will not drop frames
-  // also disable discovery on IOS, because of it's 'swipe to go back' feat
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  useEffect(() => {
+    if (dropState) {
+      setBuyOpen(false);
+    }
+  }, [dropState]);
 
   return (
     <>
-      <WalletButton openWallet={openWallet} />
-      <StyledSwipeableDrawer
-        disableBackdropTransition={!isIOS}
-        disableDiscovery={isIOS}
-        anchor="right"
-        open={isWalletOpen}
-        onOpen={openWallet}
-        onClose={closeWallet}
-      >
-        <InitialWalletView onClose={closeWallet} />
-      </StyledSwipeableDrawer>
+      <BuyButton openBuy={openBuy} />
+      {isBuyOpen && (
+        <Box className={classes.dropDownMenu} onMouseLeave={closeBuy}>
+          <InitialBuyView onClose={closeBuy} />
+        </Box>
+      )}
     </>
   );
 }
 
-export default Wallet;
+export default Buy;

@@ -5,9 +5,9 @@
   min-width: 300px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: center;
   overflow-y: auto;
+  padding-top: 20px;
   -ms-overflow-style: none !important; /* IE and Edge */
   scrollbar-width: none !important; /* Firefox */
   &::-webkit-scrollbar {
@@ -29,9 +29,15 @@
       height: 355px;
     }
   }
+  .mystart {
+    align-self: flex-start;
+  }
+  .myend {
+    align-self: flex-end;
+  }
   .hero-metrics {
     width: 100%;
-    margin-bottom: 23px;
+    margin-bottom: 53px;
     text-align: center;
     .ohm-card {
       max-width: unset !important;
@@ -62,6 +68,12 @@
       text-align: left !important;
     }
   }
+}
+
+.containerCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .mobile {

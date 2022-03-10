@@ -3,6 +3,7 @@ import { InfoTooltip } from "@olympusdao/component-library";
 import ExpandedChart from "./ExpandedChart";
 import { useEffect, useState } from "react";
 import { ReactComponent as Fullscreen } from "../../assets/icons/fullscreen.svg";
+import { ReactComponent as Chart646 } from "../../assets/icons/chart-646c.svg";
 import {
   Area,
   AreaChart,
@@ -451,33 +452,32 @@ function ChartSmall({
       <CircularProgress />
     </Box>
   ) : (
-    <Box style={{ width: "100%", height: "100%" }}>
+    <Box style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
       <div className="chart-card-header">
         <Box
           display="flex"
           justifyContent="space-between"
           alignItems="center"
-          style={{ width: "100%", overflow: "hidden" }}
+          style={{ width: "100%", overflow: "visible" }}
         >
           <Box display="flex" width="90%" alignItems="center">
             <Typography
               variant="h6"
               color="textSecondary"
               className="card-title-text"
-              style={{ fontWeight: 400, overflow: "hidden" }}
+              style={{ fontWeight: 400, overflow: "visible" }}
             >
               {headerText}
             </Typography>
             <InfoTooltip message={infoTooltipMessage} />
+            <SvgIcon
+              component={Chart646}
+              inheritViewBox="true"
+              color="primary"
+              onClick={handleOpen}
+              style={{ fontSize: "2rem", cursor: "pointer", marginLeft: "10px" }}
+            />
           </Box>
-          {/* could make this svgbutton */}
-
-          <SvgIcon
-            component={Fullscreen}
-            color="primary"
-            onClick={handleOpen}
-            style={{ fontSize: "1rem", cursor: "pointer" }}
-          />
           <ExpandedChart
             open={open}
             handleClose={handleClose}
@@ -502,15 +502,6 @@ function ChartSmall({
           </Box>
         )}
       </div>
-      {/* <Box width="100%" minHeight={260} minWidth={310} className="ohm-chart">
-        {loading || (data && data.length > 0) ? (
-          <ResponsiveContainer minHeight={260} width="100%">
-            {renderChart(type, false)}
-          </ResponsiveContainer>
-        ) : (
-          <Skeleton variant="rect" width="100%" height={260} />
-        )}
-      </Box> */}
     </Box>
   );
 }

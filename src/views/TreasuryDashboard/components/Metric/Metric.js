@@ -13,36 +13,45 @@ const sharedProps = {
 export const OHMPrice = () => {
   const marketPrice = useSelector(state => state.app.marketPrice);
   return (
-    <Metric
-      label={`XCHAIN Price`}
-      metric={marketPrice && formatCurrency(marketPrice, 2)}
-      isLoading={marketPrice ? false : true}
-      {...sharedProps}
-    />
+    <div>
+      <Metric
+        label={`XCHAIN Price`}
+        metric={marketPrice && formatCurrency(marketPrice, 2)}
+        isLoading={marketPrice ? false : true}
+        {...sharedProps}
+      />
+      <br />
+    </div>
   );
 };
 
 export const MarketCap = () => {
   const marketCap = useSelector(state => state.app.marketCap || 0);
   return (
-    <Metric
-      label={t`Market Cap`}
-      metric={formatCurrency(marketCap, 0)}
-      isLoading={marketCap ? false : true}
-      {...sharedProps}
-    />
+    <div>
+      <Metric
+        label={t`Market Cap`}
+        metric={formatCurrency(marketCap, 0)}
+        isLoading={marketCap ? false : true}
+        {...sharedProps}
+      />
+      <br />
+    </div>
   );
 };
 
 export const PriceFloor = () => {
   const backingPerOhm = useSelector(state => state.app.treasuryMarketValue / state.app.circSupply);
   return (
-    <Metric
-      label={t`Price Floor`}
-      metric={!isNaN(backingPerOhm) && formatCurrency(backingPerOhm, 2)}
-      isLoading={backingPerOhm ? false : true}
-      {...sharedProps}
-    />
+    <div>
+      <Metric
+        label={t`Price Floor`}
+        metric={!isNaN(backingPerOhm) && formatCurrency(backingPerOhm, 2)}
+        isLoading={backingPerOhm ? false : true}
+        {...sharedProps}
+      />
+      <br />
+    </div>
   );
 };
 
@@ -51,39 +60,48 @@ export const CircSupply = () => {
   const totalSupply = useSelector(state => state.app.totalSupply);
   const isDataLoaded = circSupply && totalSupply;
   return (
-    <Metric
-      label={t`Circulating Supply / Total Supply`}
-      metric={isDataLoaded && parseInt(circSupply) + " / " + parseInt(totalSupply)}
-      isLoading={isDataLoaded ? false : true}
-      {...sharedProps}
-    />
+    <div>
+      <Metric
+        label={t`Circulating Supply / Total Supply`}
+        metric={isDataLoaded && parseInt(circSupply) + " / " + parseInt(totalSupply)}
+        isLoading={isDataLoaded ? false : true}
+        {...sharedProps}
+      />
+      <br />
+    </div>
   );
 };
 
 export const CurrentIndex = () => {
   const currentIndex = useSelector(state => state.app.currentIndex);
   return (
-    <Metric
-      label={t`Current Index`}
-      metric={currentIndex && trim(currentIndex, 2) + " XCHAIN"}
-      isLoading={currentIndex ? false : true}
-      {...sharedProps}
-      tooltip="The current index tracks the amount of XCHAIN accumulated since the beginning of staking. Basically, how much sXCHAIN one would have if they staked and held a single XCHAIN from day 1."
-    />
+    <div>
+      <Metric
+        label={t`Current Index`}
+        metric={currentIndex && trim(currentIndex, 2) + " XCHAIN"}
+        isLoading={currentIndex ? false : true}
+        {...sharedProps}
+        tooltip="The current index tracks the amount of XCHAIN accumulated since the beginning of staking. Basically, how much sXCHAIN one would have if they staked and held a single XCHAIN from day 1."
+      />
+      <br />
+    </div>
   );
 };
 
 export const GOHMPrice = () => {
   const gOhmPrice = useSelector(state => state.app.marketPrice * state.app.currentIndex);
   return (
-    <Metric
-      className="metric XCHAIN Price"
-      label={t`XCHAIN Price`}
-      metric={gOhmPrice && formatCurrency(gOhmPrice, 2)}
-      isLoading={gOhmPrice ? false : true}
-      {...sharedProps}
-      tooltip={`gOHM = sOHM * index\n\nThe price of gOHM is equal to the price of OHM multiplied by the current index`}
-    />
+    <div>
+      <Metric
+        className="metric XCHAIN Price"
+        label={t`XCHAIN Price`}
+        metric={gOhmPrice && formatCurrency(gOhmPrice, 2)}
+        isLoading={gOhmPrice ? false : true}
+        {...sharedProps}
+        tooltip={`gOHM = sOHM * index\n\nThe price of gOHM is equal to the price of OHM multiplied by the current index`}
+      />
+      <br />
+    </div>
   );
 };
 
@@ -98,58 +116,73 @@ export const XCHAINStaked = () => {
       }))
       .filter(metric => metric.staked < 100);
   return (
-    <Metric
-      label={t`XCHAIN Staked`}
-      metric={formatCurrency(staked, 0)}
-      isLoading={staked ? false : true}
-      {...sharedProps}
-      tooltip={tooltipInfoMessages.staked}
-    />
+    <div>
+      <Metric
+        label={t`XCHAIN Staked`}
+        metric={formatCurrency(staked, 0)}
+        isLoading={staked ? false : true}
+        {...sharedProps}
+        tooltip={tooltipInfoMessages.staked}
+      />
+      <br />
+    </div>
   );
 };
 export const RunwayAvailableGraph = () => {
   const { data } = useTreasuryMetrics({ refetchOnMount: false });
   const runway = data && data.filter(metric => metric.runway10k > 5);
   return (
-    <Metric
-      label={t`Runway Available`}
-      metric={`${data && trim(data[0].runwayCurrent, 1)} Days`}
-      isLoading={runway ? false : true}
-      {...sharedProps}
-      tooltip={tooltipInfoMessages.runway}
-    />
+    <div>
+      <Metric
+        label={t`Runway Available`}
+        metric={`${data && trim(data[0].runwayCurrent, 1)} Days`}
+        isLoading={runway ? false : true}
+        {...sharedProps}
+        tooltip={tooltipInfoMessages.runway}
+      />
+      <br />
+    </div>
   );
 };
 export const TotalValueLocked = () => {
   const { data } = useTreasuryMetrics({ refetchOnMount: false });
   return (
-    <Metric
-      label={t`Total Value Locked`}
-      metric={`${data && formatCurrency(data[0].totalValueLocked)}`}
-      {...sharedProps}
-      tooltip={tooltipInfoMessages.tvl}
-    />
+    <div>
+      <Metric
+        label={t`Total Value Locked`}
+        metric={`${data && formatCurrency(data[0].totalValueLocked)}`}
+        {...sharedProps}
+        tooltip={tooltipInfoMessages.tvl}
+      />
+      <br />
+    </div>
   );
 };
 export const TreasuryAssets = () => {
   const { data } = useTreasuryMetrics({ refetchOnMount: false });
   return (
-    <Metric
-      label={t`Treasury Assets`}
-      metric={`${data && formatCurrency(data[0].treasuryMarketValue)}`}
-      {...sharedProps}
-      tooltip={tooltipInfoMessages.mvt}
-    />
+    <div>
+      <Metric
+        label={t`Treasury Assets`}
+        metric={`${data && formatCurrency(data[0].treasuryMarketValue)}`}
+        {...sharedProps}
+        tooltip={tooltipInfoMessages.mvt}
+      />
+      <br />
+    </div>
   );
 };
 export const TreasuryBacking = () => {
   const { data } = useTreasuryMetrics({ refetchOnMount: false });
   return (
-    <Metric
-      label={t`Treasury Backing`}
-      metric={`${data && formatCurrency(data[0].treasuryRiskFreeValue)}`}
-      {...sharedProps}
-      tooltip={tooltipInfoMessages.rfv}
-    />
+    <div>
+      <Metric
+        label={t`Treasury Backing`}
+        metric={`${data && formatCurrency(data[0].treasuryRiskFreeValue)}`}
+        {...sharedProps}
+        tooltip={tooltipInfoMessages.rfv}
+      />
+      <br />
+    </div>
   );
 };

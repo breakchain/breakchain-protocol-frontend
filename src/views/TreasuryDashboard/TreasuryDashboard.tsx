@@ -1,6 +1,6 @@
 import { memo } from "react";
 import "./treasury-dashboard.scss";
-import { Paper, Grid, Box, Zoom, Container, useMediaQuery, Typography, SvgIcon } from "@material-ui/core";
+import { Paper, Grid, Box, Zoom, Container, useMediaQuery, Typography, SvgIcon, makeStyles } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import {
   MarketCap,
@@ -22,12 +22,13 @@ import {
   TreasuryBackingGraph,
 } from "./components/Graph/Graph";
 import { MetricCollection } from "@olympusdao/component-library";
+
 const TreasuryDashboard = memo(() => {
   const isSmallScreen = useMediaQuery("(max-width: 650px)");
   const isVerySmallScreen = useMediaQuery("(max-width: 379px)");
 
   return (
-    <div id="treasury-dashboard-view" className={`${isSmallScreen && "smaller"} ${isVerySmallScreen && "very-small"}`}>
+    <Box id="treasury-dashboard-view" className={`${isSmallScreen && "smaller"} ${isVerySmallScreen && "very-small"}`}>
       <Container
         style={{
           paddingLeft: isSmallScreen || isVerySmallScreen ? "0" : "3.3rem",
@@ -64,7 +65,7 @@ const TreasuryDashboard = memo(() => {
           </Paper>
         </Box>
       </Container>
-    </div>
+    </Box>
   );
 });
 
