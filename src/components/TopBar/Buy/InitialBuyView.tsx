@@ -105,7 +105,7 @@ const tokens = [
     address: "0xD750DEB4052F7e846e8f5a102C8fFC719AcDc45B",
     symbol: "sXCHAIN",
     decimals: 18,
-    image: "https://breakchain.s3.amazonaws.com/coinicon.png",
+    image: "https://atlas-content-cdn.pixelsquid.com/stock-images/gold-bitcoin-symbol-PxlkYo6-600.jpg",
   },
 ];
 
