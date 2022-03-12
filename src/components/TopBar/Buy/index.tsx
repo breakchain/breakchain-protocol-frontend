@@ -5,15 +5,6 @@ import { t } from "@lingui/macro";
 import { Box, Button, Typography, useTheme, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
-  button: {
-    backgroundColor: "blue",
-    color: "white",
-    border: "1px solid blue",
-    "&:hover": {
-      backgroundColor: "#fff !important",
-      color: "blue",
-    },
-  },
   dropDownMenu: {
     position: "absolute",
     display: "block",
@@ -26,19 +17,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const BuyButton = ({ openBuy }: { openBuy: () => void }) => {
-  const classes = useStyles();
   const { connected } = useWeb3Context();
   const onClick = openBuy;
   const label = connected ? t`Buy XCHAIN` : t`Buy XCHAIN`;
   const theme = useTheme();
   return (
-    <Button
-      id="ohm-menu-button"
-      variant="contained"
-      color="secondary"
-      onMouseEnter={onClick}
-      className={classes.button}
-    >
+    <Button id="ohm-menu-button" variant="contained" color="primary" onMouseEnter={onClick}>
       <Typography>{label}</Typography>
     </Button>
   );

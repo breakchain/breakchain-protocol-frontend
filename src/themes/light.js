@@ -22,10 +22,10 @@ const lightTheme = {
   activeLinkColor: "#222222",
   activeLinkSvgColor: "invert(64%) sepia(11%) saturate(934%) hue-rotate(157deg) brightness(90%) contrast(86%)",
   // primaryButtonBG: "#759AAE",
-  primaryButtonBG: "#93AEBC",
-  primaryButtonHoverBG: "#759AAE",
+  primaryButtonBG: "blue",
+  primaryButtonHoverBG: "#ffffff",
   // these need fixing
-  primaryButtonHoverColor: "#333333",
+  primaryButtonHoverColor: "blue",
   secondaryButtonHoverBG: "rgba(54, 56, 64, 1)",
   outlinedPrimaryButtonHoverBG: "#F8CC82",
   outlinedPrimaryButtonHoverColor: "#333333",
@@ -236,6 +236,7 @@ export const light = responsiveFontSizes(
             "&:hover": {
               backgroundColor: lightTheme.primaryButtonHoverBG,
               color: lightTheme.primaryButtonHoverColor,
+              border: "1px solid blue",
             },
             "@media (hover:none)": {
               color: lightTheme.color,
