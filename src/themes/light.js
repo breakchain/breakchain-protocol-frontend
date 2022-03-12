@@ -7,7 +7,7 @@ const lightTheme = {
   gold: "#F8CC82",
   gray: "#A3A3A3",
   blueish_gray: "#768299",
-  textHighlightColor: "#93AEBC", // "#F4D092",
+  textHighlightColor: "blue", // "#F4D092",
   backgroundColor: "lightgray",
   // background:
   // "radial-gradient(circle at 25% 0%, rgba(227,255,240,.5), rgba(227,255,240,0) 50%), radial-gradient(circle at 80% 80%, rgba(131,165,203,.5), rgba(131,165,203,0) 50%)",
@@ -22,10 +22,10 @@ const lightTheme = {
   activeLinkColor: "#222222",
   activeLinkSvgColor: "invert(64%) sepia(11%) saturate(934%) hue-rotate(157deg) brightness(90%) contrast(86%)",
   // primaryButtonBG: "#759AAE",
-  primaryButtonBG: "#93AEBC",
-  primaryButtonHoverBG: "#759AAE",
+  primaryButtonBG: "blue",
+  primaryButtonHoverBG: "#ffffff",
   // these need fixing
-  primaryButtonHoverColor: "#333333",
+  primaryButtonHoverColor: "blue",
   secondaryButtonHoverBG: "rgba(54, 56, 64, 1)",
   outlinedPrimaryButtonHoverBG: "#F8CC82",
   outlinedPrimaryButtonHoverColor: "#333333",
@@ -133,12 +133,13 @@ export const light = responsiveFontSizes(
               color: lightTheme.textHighlightColor,
               textDecoration: "none",
               "&.active": {
-                color: lightTheme.color,
+                color: lightTheme.textHighlightColor,
+                fontWeight: 600,
               },
             },
             "&.active": {
-              color: lightTheme.color,
-              textDecoration: "underline",
+              color: lightTheme.textHighlightColor,
+              fontWeight: 600,
             },
             "@media (hover:none)": {
               "&:hover": {
@@ -235,6 +236,7 @@ export const light = responsiveFontSizes(
             "&:hover": {
               backgroundColor: lightTheme.primaryButtonHoverBG,
               color: lightTheme.primaryButtonHoverColor,
+              border: "1px solid blue",
             },
             "@media (hover:none)": {
               color: lightTheme.color,
