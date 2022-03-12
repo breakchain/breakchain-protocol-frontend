@@ -98,7 +98,7 @@ const tokens = [
     address: "0xE4576a1e7bfC649c94654A3157cdD6B2A286Dad1",
     symbol: "XCHAIN",
     decimals: 18,
-    image: "https://atlas-content-cdn.pixelsquid.com/stock-images/gold-bitcoin-symbol-PxlkYo6-600.jpg",
+    image: "https://breakchain.s3.amazonaws.com/coinicon.png",
   },
   {
     type: "ERC20",
