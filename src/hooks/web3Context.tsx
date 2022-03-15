@@ -98,28 +98,28 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
   // NOTE (appleseed): none of these listeners are needed for Backend API Providers
   // ... so I changed these listeners so that they only apply to walletProviders, eliminating
   // ... polling to the backend providers for network changes
-  const _initListeners = useCallback(
-    rawProvider => {
-      if (!rawProvider.on) {
-        return;
-      }
-      rawProvider.on("accountsChanged", async (accounts: string[]) => {
-        setTimeout(() => window.location.reload(), 1);
-      });
+  // const _initListeners = useCallback(
+  //   rawProvider => {
+  //     if (!rawProvider.on) {
+  //       return;
+  //     }
+  //     rawProvider.on("accountsChanged", async (accounts: string[]) => {
+  //       setTimeout(() => window.location.reload(), 1);
+  //     });
 
-      rawProvider.on("chainChanged", async (_chainId: string) => {
-        const newChainId = idFromHexString(_chainId);
-        const networkHash = await initNetworkFunc({ provider });
-        if (newChainId !== networkHash.networkId) {
-          // then provider is out of sync, reload per metamask recommendation
-          setTimeout(() => window.location.reload(), 1);
-        } else {
-          setNetworkId(networkHash.networkId);
-        }
-      });
-    },
-    [provider],
-  );
+  //     rawProvider.on("chainChanged", async (_chainId: string) => {
+  //       const newChainId = idFromHexString(_chainId);
+  //       const networkHash = await initNetworkFunc({ provider });
+  //       if (newChainId !== networkHash.networkId) {
+  //         // then provider is out of sync, reload per metamask recommendation
+  //         setTimeout(() => window.location.reload(), 1);
+  //       } else {
+  //         setNetworkId(networkHash.networkId);
+  //       }
+  //     });
+  //   },
+  //   [provider],
+  // );
 
   // connect - only runs for WalletProviders
   const connect = useCallback(async () => {
@@ -145,10 +145,10 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
     setAddress(connectedAddress);
     let networkHash = await initNetworkFunc({ provider: connectedProvider });
     console.log("networkHash", networkHash);
-    setNetworkId(networkHash.networkId);
-    setNetworkName(networkHash.networkName);
-    setProviderUri(networkHash.uri);
-    setProviderInitialized(networkHash.initialized);
+    // setNetworkId(networkHash.networkId);
+    // setNetworkName(networkHash.networkName);
+    // setProviderUri(networkHash.uri);
+    // setProviderInitialized(networkHash.initialized);
     // Keep this at the bottom of the method, to ensure any repaints have the data we need
     setConnected(true);
 
