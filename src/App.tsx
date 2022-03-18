@@ -156,6 +156,7 @@ function App() {
 
     // don't run unless provider is a Wallet...
     if (whichDetails === "account" && address && connected) {
+      console.log("load account detail ==========>", loadProvider);
       loadAccount(loadProvider);
     }
   }
@@ -166,9 +167,9 @@ function App() {
       // NOTE (appleseed) - tech debt - better network filtering for active bonds
 
       if (networkId === NetworkId.POLYGON || networkId === NetworkId.POLYGON_TESTNET) {
-        bonds.map(bond => {
-          dispatch(calcBondDetails({ bond, value: "", provider: loadProvider, networkID: networkId }));
-        });
+        // bonds.map(bond => {
+        //   dispatch(calcBondDetails({ bond, value: "", provider: loadProvider, networkID: networkId }));
+        // });
         dispatch(getAllBonds({ provider: loadProvider, networkID: networkId, address }));
       }
     },
@@ -183,18 +184,18 @@ function App() {
       dispatch(getUserNotes({ networkID: networkId, address, provider: loadProvider }));
       dispatch(loadAccountDetails({ networkID: networkId, address, provider: loadProvider }));
       dispatch(getMigrationAllowances({ address, provider: loadProvider, networkID: networkId }));
-      bonds.map(bond => {
-        // NOTE: get any Claimable bonds, they may not be bondable
-        if (bond.getClaimability(networkId)) {
-          dispatch(calculateUserBondDetails({ address, bond, provider: loadProvider, networkID: networkId }));
-        }
-      });
-      dispatch(getZapTokenBalances({ address, networkID: networkId, provider: loadProvider }));
-      expiredBonds.map(bond => {
-        if (bond.getClaimability(networkId)) {
-          dispatch(calculateUserBondDetails({ address, bond, provider: loadProvider, networkID: networkId }));
-        }
-      });
+      // bonds.map(bond => {
+      //   // NOTE: get any Claimable bonds, they may not be bondable
+      //   if (bond.getClaimability(networkId)) {
+      //     dispatch(calculateUserBondDetails({ address, bond, provider: loadProvider, networkID: networkId }));
+      //   }
+      // });
+      // dispatch(getZapTokenBalances({ address, networkID: networkId, provider: loadProvider }));
+      // expiredBonds.map(bond => {
+      //   if (bond.getClaimability(networkId)) {
+      //     dispatch(calculateUserBondDetails({ address, bond, provider: loadProvider, networkID: networkId }));
+      //   }
+      // });
     },
     [networkId, address, providerInitialized],
   );
@@ -243,6 +244,7 @@ function App() {
     if (hasCachedProvider()) {
       // then user DOES have a wallet
       connect().then(() => {
+        console.log("Wallet Checked =====>");
         setWalletChecked(true);
         segmentUA({
           type: "connect",
@@ -261,6 +263,7 @@ function App() {
 
   // this useEffect fires on state change from above. It will ALWAYS fire AFTER
   useEffect(() => {
+    console.log("effect 1 ==============>", walletChecked, networkId);
     // don't load ANY details until wallet is Checked
     if (walletChecked) {
       if (networkId !== -1) {
@@ -272,6 +275,7 @@ function App() {
 
   // this useEffect picks up any time a user Connects via the button
   useEffect(() => {
+    console.log("effect 2 ==============>", connected, networkId, providerInitialized);
     // don't load ANY details until wallet is Connected
     if (connected && providerInitialized) {
       loadDetails("account");
@@ -415,13 +419,13 @@ function App() {
             </Route> */}
 
               <Route path="/bonds-v1">
-                {(bonds as IAllBondData[]).map(bond => {
+                {/* {(bonds as IAllBondData[]).map(bond => {
                   return (
                     <Route exact key={bond.name} path={`/bonds-v1/${bond.name}`}>
                       <Bond bond={bond} />
                     </Route>
                   );
-                })}
+                })} */}
                 <ChooseBond />
               </Route>
 

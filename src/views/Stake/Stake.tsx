@@ -26,8 +26,8 @@ import { t, Trans } from "@lingui/macro";
 import RebaseTimer from "../../components/RebaseTimer/RebaseTimer";
 import TabPanel from "../../components/TabPanel";
 import { getGohmBalFromSohm, trim, formatCurrency } from "../../helpers";
-import { changeApproval, changeStake } from "../../slices/StakeThunk";
-import { changeApproval as changeGohmApproval } from "../../slices/WrapThunk";
+import { changeApproval, changeStake, stakeApprove } from "../../slices/StakeThunk";
+import { approveStake, changeApproval as changeGohmApproval } from "../../slices/WrapThunk";
 import "./stake.scss";
 import { useWeb3Context } from "src/hooks/web3Context";
 import { isPendingTxn, txnButtonText } from "src/slices/PendingTxnsSlice";
@@ -170,11 +170,14 @@ function Stake() {
   };
 
   const onSeekApproval = async (token: string) => {
-    if (token === "gohm") {
-      await dispatch(changeGohmApproval({ address, token: token.toLowerCase(), provider, networkID: networkId }));
-    } else {
-      await dispatch(changeApproval({ address, token, provider, networkID: networkId, version2: true }));
-    }
+    console.log("============>", address, token, provider, 80001);
+    await dispatch(stakeApprove({ address, token, provider, networkID: 80001, version2: false }));
+    // if (token === "gohm") {
+    //   await dispatch(changeGohmApproval({ address, token: token.toLowerCase(), provider, networkID: networkId }));
+    // } else {
+    //   console.log("=============>");
+    //   await dispatch(changeApproval({ address, token, provider, networkID: networkId, version2: true }));
+    // }
   };
 
   const onChangeStake = async (action: string) => {
@@ -183,20 +186,24 @@ function Stake() {
       // eslint-disable-next-line no-alert
       return dispatch(error(t`Please enter a value!`));
     }
+    console.log("big number check pass:", quantity);
 
     // 1st catch if quantity > balance
     let gweiValue = ethers.utils.parseUnits(quantity.toString(), "gwei");
-    if (action === "stake" && gweiValue.gt(ethers.utils.parseUnits(ohmBalance, "gwei"))) {
-      return dispatch(error(t`You cannot stake more than your XCHAIN balance.`));
-    }
+    console.log("get gwei pass", ohmBalance);
+    // if (action === "stake" && gweiValue.gt(ethers.utils.parseUnits(ohmBalance, "gwei"))) {
+    //   return dispatch(error(t`You cannot stake more than your XCHAIN balance.`));
+    // }
 
-    if (confirmation === false && action === "unstake" && gweiValue.gt(ethers.utils.parseUnits(sohmBalance, "gwei"))) {
-      return dispatch(
-        error(
-          t`You do not have enough XCHAIN to complete this transaction.  To unstake from XCHAIN, please toggle the XCHAIN switch.`,
-        ),
-      );
-    }
+    // if (confirmation === false && action === "unstake" && gweiValue.gt(ethers.utils.parseUnits(sohmBalance, "gwei"))) {
+    //   return dispatch(
+    //     error(
+    //       t`You do not have enough XCHAIN to complete this transaction.  To unstake from XCHAIN, please toggle the XCHAIN switch.`,
+    //     ),
+    //   );
+    // }
+
+    console.log("balance check pass");
 
     /**
      * converts sOHM quantity to gOHM quantity when box is checked for gOHM staking
@@ -205,8 +212,10 @@ function Stake() {
     // const formQuant = checked && currentIndex && view === 1 ? quantity / Number(currentIndex) : quantity;
     const formQuant = async () => {
       if (confirmation && currentIndex && view === 1) {
+        console.log("===========>here");
         return await getGohmBalFromSohm({ provider, networkID: networkId, sOHMbalance: quantity });
       } else {
+        console.log("===========>here2");
         return quantity;
       }
     };
@@ -218,7 +227,7 @@ function Stake() {
         value: await formQuant(),
         provider,
         networkID: networkId,
-        version2: true,
+        version2: false,
         rebase: !confirmation,
       }),
     );
@@ -227,8 +236,8 @@ function Stake() {
   const hasAllowance = useCallback(
     token => {
       if (token === "ohm") return stakeAllowance > 0;
-      if (token === "sohm") return unstakeAllowance > 0;
-      if (token === "gohm") return directUnstakeAllowance > 0;
+      // if (token === "sohm") return unstakeAllowance > 0;
+      // if (token === "gohm") return directUnstakeAllowance > 0;
       return 0;
     },
     [stakeAllowance, unstakeAllowance, directUnstakeAllowance],
@@ -431,7 +440,7 @@ function Stake() {
                                 {txnButtonText(
                                   pendingTransactions,
                                   "staking",
-                                  `${t`Stake to`} ${confirmation ? " gOHM" : " sOHM"}`,
+                                  `${t`Stake to`} ${confirmation ? " xCHAIN" : " xCHAIN"}`,
                                 )}
                               </Button>
                             ) : (

@@ -53,7 +53,7 @@ export const loadAppDetails = createAsyncThunk(
       networkID = NetworkId.POLYGON;
     }
     const graphData = await apollo<{ protocolMetrics: IProtocolMetrics[] }>(protocolMetricsQuery);
-
+    console.log("graph data =========>", graphData);
     if (!graphData || graphData == null) {
       console.error("Returned a null response when querying TheGraph");
       return;
