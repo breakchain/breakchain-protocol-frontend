@@ -7,6 +7,15 @@ import { frax } from "src/helpers/AllBonds";
 import { addresses } from "src/constants";
 
 const useStyles = makeStyles(theme => ({
+  button: {
+    backgroundColor: "blue",
+    color: "white",
+    border: "1px solid blue",
+    "&:hover": {
+      backgroundColor: "#fff !important",
+      color: "blue",
+    },
+  },
   dropDownMenu: {
     position: "absolute",
     display: "block",
@@ -20,9 +29,9 @@ const useStyles = makeStyles(theme => ({
 
 const BuyButton = ({ openBuy, href }: { openBuy: () => void; href: string }) => {
   const { connected } = useWeb3Context();
+  const classes = useStyles();
   const onClick = openBuy;
   const label = connected ? t`Buy XCHAIN` : t`Buy XCHAIN`;
-  const theme = useTheme();
   return (
     <Button
       id="ohm-menu-button"
