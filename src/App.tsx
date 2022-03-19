@@ -156,7 +156,6 @@ function App() {
 
     // don't run unless provider is a Wallet...
     if (whichDetails === "account" && address && connected) {
-      console.log("load account detail ==========>", loadProvider);
       loadAccount(loadProvider);
     }
   }
@@ -263,7 +262,6 @@ function App() {
 
   // this useEffect fires on state change from above. It will ALWAYS fire AFTER
   useEffect(() => {
-    console.log("effect 1 ==============>", walletChecked, networkId);
     // don't load ANY details until wallet is Checked
     if (walletChecked) {
       if (networkId !== -1) {
@@ -275,7 +273,6 @@ function App() {
 
   // this useEffect picks up any time a user Connects via the button
   useEffect(() => {
-    console.log("effect 2 ==============>", connected, networkId, providerInitialized);
     // don't load ANY details until wallet is Connected
     if (connected && providerInitialized) {
       loadDetails("account");

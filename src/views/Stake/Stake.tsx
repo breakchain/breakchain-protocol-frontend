@@ -170,7 +170,6 @@ function Stake() {
   };
 
   const onSeekApproval = async (token: string) => {
-    console.log("============>", address, token, provider, 80001);
     await dispatch(stakeApprove({ address, token, provider, networkID: 80001, version2: false }));
     // if (token === "gohm") {
     //   await dispatch(changeGohmApproval({ address, token: token.toLowerCase(), provider, networkID: networkId }));
@@ -212,10 +211,8 @@ function Stake() {
     // const formQuant = checked && currentIndex && view === 1 ? quantity / Number(currentIndex) : quantity;
     const formQuant = async () => {
       if (confirmation && currentIndex && view === 1) {
-        console.log("===========>here");
         return await getGohmBalFromSohm({ provider, networkID: networkId, sOHMbalance: quantity });
       } else {
-        console.log("===========>here2");
         return quantity;
       }
     };

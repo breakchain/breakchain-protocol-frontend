@@ -24,48 +24,47 @@ interface IUAData {
 export const approveStake = createAsyncThunk(
   "wrap/changeApproval",
   async ({ token, provider, address, networkID }: IChangeApprovalAsyncThunk, { dispatch }) => {
-    if (!provider) {
-      dispatch(error("Please connect your wallet!"));
-      return;
-    }
-    const signer = provider.getSigner();
-    console.log("singer ============+>", signer);
-    const stakeContract = new ethers.Contract("0x58D81C972445556E4d9013f6aBF7bfE7EBE8a080", olympusABI, signer);
-    console.log("stacke Contract ===========>", stakeContract);
-    let approveTx;
-    let stakeAllowance = await stakeContract.allowance(address, "0xCD3D16D089F1f04428BDb510008c7855eE989eac");
-    try {
-      approveTx = await stakeContract.approve(
-        "0xCD3D16D089F1f04428BDb510008c7855eE989eac",
-        ethers.utils.parseUnits("1000000000", "gwei"),
-      );
-      console.log("===============>", approveTx);
-      const text = "Approve " + "Wrapping";
-      // const pendingTxnType = token === "sohm" ? "approve_wrapping" : "approve_unwrapping";
-      const pendingTxnType = "approve_wrapping";
-      if (approveTx) {
-        dispatch(fetchPendingTxns({ txnHash: approveTx.hash, text, type: pendingTxnType }));
-        await approveTx.wait();
-        dispatch(info("Successfully Approved!"));
-      }
-    } catch (err) {
-      dispatch(error((err as IJsonRPCError).message));
-      console.log("errro ===========>", err);
-      return;
-    } finally {
-      if (approveTx) {
-        dispatch(clearPendingTxn(approveTx.hash));
-      }
-    }
-
-    stakeAllowance = await stakeContract.allowance(address, "0xCD3D16D089F1f04428BDb510008c7855eE989eac");
-    return dispatch(
-      fetchAccountSuccess({
-        wrapping: {
-          xChain: Number(ethers.utils.formatUnits(stakeAllowance, "gwei")),
-        },
-      }),
-    );
+    // if (!provider) {
+    //   dispatch(error("Please connect your wallet!"));
+    //   return;
+    // }
+    // const signer = provider.getSigner();
+    // console.log("singer ============+>", signer);
+    // const stakeContract = new ethers.Contract("0x58D81C972445556E4d9013f6aBF7bfE7EBE8a080", olympusABI, signer);
+    // console.log("stacke Contract ===========>", stakeContract);
+    // let approveTx;
+    // let stakeAllowance = await stakeContract.allowance(address, "0xCD3D16D089F1f04428BDb510008c7855eE989eac");
+    // try {
+    //   approveTx = await stakeContract.approve(
+    //     "0xCD3D16D089F1f04428BDb510008c7855eE989eac",
+    //     ethers.utils.parseUnits("1000000000", "gwei"),
+    //   );
+    //   console.log("===============>", approveTx);
+    //   const text = "Approve " + "Wrapping";
+    //   // const pendingTxnType = token === "sohm" ? "approve_wrapping" : "approve_unwrapping";
+    //   const pendingTxnType = "approve_wrapping";
+    //   if (approveTx) {
+    //     dispatch(fetchPendingTxns({ txnHash: approveTx.hash, text, type: pendingTxnType }));
+    //     await approveTx.wait();
+    //     dispatch(info("Successfully Approved!"));
+    //   }
+    // } catch (err) {
+    //   dispatch(error((err as IJsonRPCError).message));
+    //   console.log("errro ===========>", err);
+    //   return;
+    // } finally {
+    //   if (approveTx) {
+    //     dispatch(clearPendingTxn(approveTx.hash));
+    //   }
+    // }
+    // stakeAllowance = await stakeContract.allowance(address, "0xCD3D16D089F1f04428BDb510008c7855eE989eac");
+    // return dispatch(
+    //   fetchAccountSuccess({
+    //     wrapping: {
+    //       xChain: Number(ethers.utils.formatUnits(stakeAllowance, "gwei")),
+    //     },
+    //   }),
+    // );
   },
 );
 

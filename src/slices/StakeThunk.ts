@@ -70,7 +70,6 @@ export const stakeApprove = createAsyncThunk(
     let approveTx;
     let stakeAllowance = await stakeContract.allowance(address, addresses[networkID].STAKING_ADDRESS);
     // if (alreadyApprovedToken(stakeAllowance)) {
-    //   console.log("approved ===========+>");
     //   dispatch(info("Approval completed."));
     //   return dispatch(
     //     fetchAccountSuccess({
@@ -82,7 +81,6 @@ export const stakeApprove = createAsyncThunk(
     // }
 
     try {
-      console.log("=============>", token);
       if (token === "ohm") {
         approveTx = await stakeContract.approve(
           addresses[networkID].STAKING_ADDRESS,
@@ -108,14 +106,15 @@ export const stakeApprove = createAsyncThunk(
     } finally {
       if (approveTx) {
         dispatch(clearPendingTxn(approveTx.hash));
+        dispatch(info("Successfully Approved!"));
       }
     }
 
-    stakeAllowance = await stakeContract.allowance(address, addresses[networkID].STAKING_HELPER_ADDRESS);
+    stakeAllowance = await stakeContract.allowance(address, addresses[networkID].STAKING_ADDRESS);
     return dispatch(
       fetchAccountSuccess({
         staking: {
-          ohmStakeV1: +stakeAllowance,
+          ohmStake: +stakeAllowance,
         },
       }),
     );
@@ -264,10 +263,8 @@ export const changeStake = createAsyncThunk(
       // }
       // } else {
       if (action === "stake") {
-        console.log("=================>");
         uaData.type = "stake";
-        stakeTx = await stakingHelper.stake(value);
-        console.log("===========+>", stakeTx);
+        stakeTx = await stakingHelper.stake(ethers.utils.parseUnits(value, "gwei"), { gasLimit: 500000 });
       } else {
         uaData.type = "unstake";
         stakeTx = await staking.unstake(ethers.utils.parseUnits(value, "gwei"), true);
@@ -291,14 +288,6 @@ export const changeStake = createAsyncThunk(
     } finally {
       if (stakeTx) {
         segmentUA(uaData);
-        // ReactGA.event({
-        //   category: "Staking",
-        //   action: uaData.type ?? "unknown",
-        //   value: parseFloat(uaData.value),
-        //   label: uaData.txHash ?? "unknown",
-        //   dimension1: uaData.txHash ?? "unknown",
-        //   dimension2: uaData.address,
-        // });
         dispatch(clearPendingTxn(stakeTx.hash));
       }
     }
