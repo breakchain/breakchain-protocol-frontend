@@ -110,7 +110,7 @@ function NavContent({ handleDrawerToggle }) {
         <div className="dapp-menu-top">
           <Box className="branding-header">
             <Link href="https://olympusdao.finance" target="_blank">
-              <img src={OlympusIcon} style={{ minWdth: "151px", minHeight: "98px", width: "151px" }} />
+              <img src={OlympusIcon} style={{ minWdth: "200px", minHeight: "125px", width: "200px" }} />
             </Link>
 
             <WalletAddressEns />
@@ -118,6 +118,17 @@ function NavContent({ handleDrawerToggle }) {
 
           <div className="dapp-menu-links">
             <div className="dapp-nav" id="navbarNav">
+              <Link
+                component={NavLink}
+                id="dash-nav"
+                to="/home"
+                className={`button-dapp-menu ${isActive ? "active" : ""}`}
+                onClick={handleDrawerToggle}
+              >
+                <Typography variant="h6">
+                  <Trans>Home</Trans>
+                </Typography>
+              </Link>
               <Link
                 component={NavLink}
                 id="dash-nav"

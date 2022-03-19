@@ -3,6 +3,8 @@ import { useWeb3Context } from "src/hooks/web3Context";
 import InitialBuyView from "./InitialBuyView";
 import { t } from "@lingui/macro";
 import { Box, Button, Typography, useTheme, makeStyles } from "@material-ui/core";
+import { frax } from "src/helpers/AllBonds";
+import { addresses } from "src/constants";
 
 const useStyles = makeStyles(theme => ({
   dropDownMenu: {
@@ -16,13 +18,20 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const BuyButton = ({ openBuy }: { openBuy: () => void }) => {
+const BuyButton = ({ openBuy, href }: { openBuy: () => void; href: string }) => {
   const { connected } = useWeb3Context();
   const onClick = openBuy;
   const label = connected ? t`Buy XCHAIN` : t`Buy XCHAIN`;
   const theme = useTheme();
   return (
-    <Button id="ohm-menu-button" variant="contained" color="primary" onMouseEnter={onClick}>
+    <Button
+      id="ohm-menu-button"
+      variant="contained"
+      color="primary"
+      onMouseEnter={onClick}
+      href={href}
+      target={`_blank`}
+    >
       <Typography>{label}</Typography>
     </Button>
   );
@@ -30,6 +39,7 @@ const BuyButton = ({ openBuy }: { openBuy: () => void }) => {
 
 export function Buy(dropState: boolean) {
   const classes = useStyles();
+  const { networkId } = useWeb3Context();
   const [isBuyOpen, setBuyOpen] = useState(false);
   const closeBuy = () => setBuyOpen(false);
   const openBuy = () => setBuyOpen(true);
@@ -42,7 +52,12 @@ export function Buy(dropState: boolean) {
 
   return (
     <>
-      <BuyButton openBuy={openBuy} />
+      <BuyButton
+        openBuy={openBuy}
+        href={`https://app.uniswap.org/#/swap?inputCurrency=${frax.getAddressForReserve(networkId)}&outputCurrency=${
+          addresses[networkId].OHM_V2
+        }`}
+      />
       {isBuyOpen && (
         <Box className={classes.dropDownMenu} onMouseLeave={closeBuy}>
           <InitialBuyView onClose={closeBuy} />
