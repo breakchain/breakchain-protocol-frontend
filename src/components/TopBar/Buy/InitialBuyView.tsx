@@ -170,7 +170,7 @@ function InitialBuyView({ onClose }: { onClose: () => void }) {
             addresses[networkId].OHM_V2
           }`}
         >
-          <Typography>Get on QuickSwap</Typography>
+          <Typography>Buy on QuickSwap</Typography>
         </ExternalLink>
         {window.ethereum && (
           <>

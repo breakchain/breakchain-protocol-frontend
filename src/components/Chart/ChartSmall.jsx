@@ -496,9 +496,9 @@ function ChartSmall({
             <Typography variant="h5" style={{ fontWeight: 600, marginRight: 5 }}>
               {headerSubText}
             </Typography>
-            <Typography variant="h5" color="textSecondary" style={{ fontWeight: 400 }}>
+            {/* <Typography variant="h5" color="textSecondary" style={{ fontWeight: 400 }}>
               {type !== "multi" && "Today"}
-            </Typography>
+            </Typography> */}
           </Box>
         )}
       </div>
