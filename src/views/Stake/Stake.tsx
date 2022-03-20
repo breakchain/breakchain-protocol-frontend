@@ -185,11 +185,9 @@ function Stake() {
       // eslint-disable-next-line no-alert
       return dispatch(error(t`Please enter a value!`));
     }
-    console.log("big number check pass:", quantity);
 
     // 1st catch if quantity > balance
     let gweiValue = ethers.utils.parseUnits(quantity.toString(), "gwei");
-    console.log("get gwei pass", ohmBalance);
     // if (action === "stake" && gweiValue.gt(ethers.utils.parseUnits(ohmBalance, "gwei"))) {
     //   return dispatch(error(t`You cannot stake more than your XCHAIN balance.`));
     // }
