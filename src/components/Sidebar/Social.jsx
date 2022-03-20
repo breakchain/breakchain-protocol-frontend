@@ -13,7 +13,7 @@ export default function Social() {
       </Link>
 
       <Link href="https://www.facebook.com/BreakChainX" target="_blank">
-        <SvgIcon color="primary" component={Facebook} />
+        <SvgIcon viewBox="0 0 50 50" color="primary" component={Facebook} />
       </Link>
 
       <Link href="https://breakchain-protocol.medium.com/" target="_blank">
@@ -25,7 +25,7 @@ export default function Social() {
       </Link>
 
       <Link href="https://t.me/+HQItttSpH29iZWIx " target="_blank">
-        <SvgIcon color="primary" component={Telegram} />
+        <SvgIcon viewBox="0 0 50 50" color="primary" component={Telegram} />
       </Link>
     </div>
   );
