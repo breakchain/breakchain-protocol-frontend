@@ -7,7 +7,7 @@ const lightTheme = {
   gold: "#F8CC82",
   gray: "#A3A3A3",
   blueish_gray: "#768299",
-  textHighlightColor: "blue", // "#F4D092",
+  textHighlightColor: "#33C9FE", // "#F4D092",
   backgroundColor: "lightgray",
   // background:
   // "radial-gradient(circle at 25% 0%, rgba(227,255,240,.5), rgba(227,255,240,0) 50%), radial-gradient(circle at 80% 80%, rgba(131,165,203,.5), rgba(131,165,203,0) 50%)",
@@ -134,7 +134,7 @@ export const light = responsiveFontSizes(
               textDecoration: "none",
               "&.active": {
                 color: lightTheme.textHighlightColor,
-                fontWeight: 600,
+                fontWeight: "bold !important",
               },
             },
             "&.active": {

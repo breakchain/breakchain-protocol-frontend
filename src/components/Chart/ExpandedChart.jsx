@@ -48,9 +48,9 @@ function ExpandedChart({
                   {headerSubText}
                 </Typography>
                 {runwayExtraInfo}
-                <Typography variant="h4" color="textSecondary" style={{ fontWeight: 400 }}>
+                {/* <Typography variant="h4" color="textSecondary" style={{ fontWeight: 400 }}>
                   Today
-                </Typography>
+                </Typography> */}
               </Box>
             </div>
 

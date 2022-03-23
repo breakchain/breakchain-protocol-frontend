@@ -170,7 +170,7 @@ function InitialBuyView({ onClose }: { onClose: () => void }) {
             addresses[networkId].XCHAIN_ADDRESS
           }`}
         >
-          <Typography>Get on QuickSwap</Typography>
+          <Typography>Buy on QuickSwap</Typography>
         </ExternalLink>
         {window.ethereum && (
           <>
