@@ -208,7 +208,6 @@ export const addresses: IAddresses = {
   }, // TODO: Avalanche Mainnet addresses
   [NetworkId.POLYGON]: {
     OLYMPUS_ERC20_ADDRESS: "0x4448B237ef3A0544E3F81f8cD60Fb3D8f5e9f8BE",
-    STAKING_ADDRESS: "0x0ae6d47Fb11eF33EB4e5A8d10BF0C4c7aC70702b", // The new staking contract
     STAKING_HELPER_ADDRESS: "0x0ae6d47Fb11eF33EB4e5A8d10BF0C4c7aC70702b", // Helper contract used for Staking only
     DAI_ADDRESS: "0x7e827FC90FfF424477661De7B87B0b8cf99eE6db", // duplicate
     OHM_ADDRESS: "0x189745afBBcB5D4Dd639880397f4bD1bE25673ff",
@@ -252,7 +251,6 @@ export const addresses: IAddresses = {
     XCHAIN_ADDRESS: "",
     STAKING_HELPER_ADDRESS: "0x0ae6d47Fb11eF33EB4e5A8d10BF0C4c7aC70702b",
     OLYMPUS_ERC20_ADDRESS: "0x4448B237ef3A0544E3F81f8cD60Fb3D8f5e9f8BE",
-    STAKING_ADDRESS: "0x0ae6d47Fb11eF33EB4e5A8d10BF0C4c7aC70702b",
   },
 };
 

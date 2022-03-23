@@ -68,7 +68,7 @@ export const stakeApprove = createAsyncThunk(
     const signer = provider.getSigner();
     const stakeContract = new ethers.Contract(addresses[networkID].OLYMPUS_ERC20_ADDRESS, oerc20ABI, signer);
     let approveTx;
-    let stakeAllowance = await stakeContract.allowance(address, addresses[networkID].STAKING_ADDRESS);
+    let stakeAllowance = await stakeContract.allowance(address, addresses[networkID].STAKING_HELPER_ADDRESS);
     // if (alreadyApprovedToken(stakeAllowance)) {
     //   dispatch(info("Approval completed."));
     //   return dispatch(
@@ -83,12 +83,12 @@ export const stakeApprove = createAsyncThunk(
     try {
       if (token === "ohm") {
         approveTx = await stakeContract.approve(
-          addresses[networkID].STAKING_ADDRESS,
+          addresses[networkID].STAKING_HELPER_ADDRESS,
           ethers.utils.parseUnits("1000000000", "gwei").toString(),
         );
       } else if (token === "sohm") {
         approveTx = await stakeContract.approve(
-          addresses[networkID].STAKING_ADDRESS,
+          addresses[networkID].STAKING_HELPER_ADDRESS,
           ethers.utils.parseUnits("1000000000", "gwei").toString(),
         );
       }
@@ -110,7 +110,7 @@ export const stakeApprove = createAsyncThunk(
       }
     }
 
-    stakeAllowance = await stakeContract.allowance(address, addresses[networkID].STAKING_ADDRESS);
+    stakeAllowance = await stakeContract.allowance(address, addresses[networkID].STAKING_HELPER_ADDRESS);
     return dispatch(
       fetchAccountSuccess({
         staking: {
@@ -169,12 +169,12 @@ export const changeApproval = createAsyncThunk(
       } else {
         if (token === "ohm") {
           approveTx = await ohmContract.approve(
-            addresses[networkID].STAKING_ADDRESS,
+            addresses[networkID].STAKING_HELPER_ADDRESS,
             ethers.utils.parseUnits("1000000000", "gwei").toString(),
           );
         } else if (token === "sohm") {
           approveTx = await sohmContract.approve(
-            addresses[networkID].STAKING_ADDRESS,
+            addresses[networkID].STAKING_HELPER_ADDRESS,
             ethers.utils.parseUnits("1000000000", "gwei").toString(),
           );
         }
@@ -225,7 +225,7 @@ export const changeStake = createAsyncThunk(
 
     const signer = provider.getSigner();
 
-    const staking = OlympusStaking__factory.connect(addresses[networkID].STAKING_ADDRESS, signer);
+    const staking = OlympusStaking__factory.connect(addresses[networkID].STAKING_HELPER_ADDRESS, signer);
 
     const stakingHelper = new ethers.Contract(
       addresses[networkID].STAKING_HELPER_ADDRESS as string,
