@@ -166,9 +166,9 @@ function App() {
       // NOTE (appleseed) - tech debt - better network filtering for active bonds
 
       if (networkId === NetworkId.POLYGON || networkId === NetworkId.POLYGON_TESTNET) {
-        bonds.map(bond => {
-          dispatch(calcBondDetails({ bond, value: "", provider: loadProvider, networkID: networkId }));
-        });
+        // bonds.map(bond => {
+        //   dispatch(calcBondDetails({ bond, value: "", provider: loadProvider, networkID: networkId }));
+        // });
         dispatch(getAllBonds({ provider: loadProvider, networkID: networkId, address }));
       }
     },
@@ -183,18 +183,18 @@ function App() {
       dispatch(getUserNotes({ networkID: networkId, address, provider: loadProvider }));
       dispatch(loadAccountDetails({ networkID: networkId, address, provider: loadProvider }));
       dispatch(getMigrationAllowances({ address, provider: loadProvider, networkID: networkId }));
-      bonds.map(bond => {
-        // NOTE: get any Claimable bonds, they may not be bondable
-        if (bond.getClaimability(networkId)) {
-          dispatch(calculateUserBondDetails({ address, bond, provider: loadProvider, networkID: networkId }));
-        }
-      });
-      dispatch(getZapTokenBalances({ address, networkID: networkId, provider: loadProvider }));
-      expiredBonds.map(bond => {
-        if (bond.getClaimability(networkId)) {
-          dispatch(calculateUserBondDetails({ address, bond, provider: loadProvider, networkID: networkId }));
-        }
-      });
+      // bonds.map(bond => {
+      //   // NOTE: get any Claimable bonds, they may not be bondable
+      //   if (bond.getClaimability(networkId)) {
+      //     dispatch(calculateUserBondDetails({ address, bond, provider: loadProvider, networkID: networkId }));
+      //   }
+      // });
+      // dispatch(getZapTokenBalances({ address, networkID: networkId, provider: loadProvider }));
+      // expiredBonds.map(bond => {
+      //   if (bond.getClaimability(networkId)) {
+      //     dispatch(calculateUserBondDetails({ address, bond, provider: loadProvider, networkID: networkId }));
+      //   }
+      // });
     },
     [networkId, address, providerInitialized],
   );
@@ -243,6 +243,7 @@ function App() {
     if (hasCachedProvider()) {
       // then user DOES have a wallet
       connect().then(() => {
+        console.log("Wallet Checked =====>");
         setWalletChecked(true);
         segmentUA({
           type: "connect",
@@ -415,13 +416,13 @@ function App() {
             </Route> */}
 
               <Route path="/bonds-v1">
-                {(bonds as IAllBondData[]).map(bond => {
+                {/* {(bonds as IAllBondData[]).map(bond => {
                   return (
                     <Route exact key={bond.name} path={`/bonds-v1/${bond.name}`}>
                       <Bond bond={bond} />
                     </Route>
                   );
-                })}
+                })} */}
                 <ChooseBond />
               </Route>
 

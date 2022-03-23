@@ -55,21 +55,22 @@ const BondV2 = ({ index }: { index: number }) => {
         <Backdrop open={true} onClick={onClickAway}>
           <Fade in={true}>
             <Paper className="ohm-card ohm-modal" onClick={onClickModal}>
-              <BondHeader
+              {/* <BondHeader
                 bond={bond}
                 slippage={slippage}
                 recipientAddress={recipientAddress}
                 onSlippageChange={onSlippageChange}
                 onRecipientAddressChange={onRecipientAddressChange}
-              />
-
+              /> */}
               <Box display="flex" flexDirection="row" className="bond-price-data-row">
                 <div className="bond-price-data">
                   <Typography variant="h5" color="textSecondary">
                     <Trans>Bond Price</Trans>
                   </Typography>
                   <Typography variant="h3" className="price" color="primary">
-                    <>{isBondLoading ? <Skeleton width="50px" /> : <DisplayBondPrice key={bond.index} bond={bond} />}</>
+                    <>
+                      {isBondLoading ? <Skeleton width="50px" /> : <DisplayBondPrice key={bond?.index} bond={bond} />}
+                    </>
                   </Typography>
                 </div>
                 <div className="bond-price-data">
@@ -77,11 +78,10 @@ const BondV2 = ({ index }: { index: number }) => {
                     <Trans>Market Price</Trans>
                   </Typography>
                   <Typography variant="h3" color="primary" className="price">
-                    {isBondLoading ? <Skeleton /> : formatCurrency(bond.marketPrice, 2)}
+                    {isBondLoading ? <Skeleton /> : formatCurrency(bond?.marketPrice, 2)}
                   </Typography>
                 </div>
               </Box>
-
               {/* <Tabs
                 centered
                 value={view}
@@ -100,11 +100,9 @@ const BondV2 = ({ index }: { index: number }) => {
                 />
                 <Tab aria-label="redeem-tab-button" label={t`Redeem`} {...a11yProps(1)} />
               </Tabs> */}
-
               {/* <TabPanel value={view} index={0}> */}
               <BondPurchase bond={bond} slippage={slippage} recipientAddress={recipientAddress} />
               {/* </TabPanel> */}
-
               {/* <TabPanel value={view} index={1}>
                 <BondRedeem bond={bond} />
               </TabPanel> */}
@@ -117,7 +115,7 @@ const BondV2 = ({ index }: { index: number }) => {
 };
 
 export const DisplayBondPrice = ({ bond }: { bond: IBondV2 }): ReactElement => {
-  if (typeof bond.priceUSD === undefined) {
+  if (typeof bond?.priceUSD === undefined) {
     return <Fragment>--</Fragment>;
   }
 
@@ -128,16 +126,16 @@ export const DisplayBondPrice = ({ bond }: { bond: IBondV2 }): ReactElement => {
         currency: "USD",
         maximumFractionDigits: 2,
         minimumFractionDigits: 2,
-      }).format(bond.priceUSD)}
+      }).format(bond?.priceUSD)}
     </Fragment>
   );
 };
 
 export const DisplayBondDiscount = ({ bond }: { bond: IBondV2 }): ReactElement => {
-  if (typeof bond.discount === undefined) {
+  if (typeof bond?.discount === undefined) {
     return <Fragment>--</Fragment>;
   }
 
-  return <Fragment>{bond.discount && trim(bond.discount * 100, 2)}%</Fragment>;
+  return <Fragment>{bond?.discount && trim(bond?.discount * 100, 2)}%</Fragment>;
 };
 export default BondV2;

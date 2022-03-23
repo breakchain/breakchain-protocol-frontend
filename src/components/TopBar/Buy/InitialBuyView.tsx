@@ -167,7 +167,7 @@ function InitialBuyView({ onClose }: { onClose: () => void }) {
         <ExternalLink
           color={currentTheme === "dark" ? "primary" : undefined}
           href={`https://app.uniswap.org/#/swap?inputCurrency=${frax.getAddressForReserve(networkId)}&outputCurrency=${
-            addresses[networkId].OHM_V2
+            addresses[networkId].XCHAIN_ADDRESS
           }`}
         >
           <Typography>Buy on QuickSwap</Typography>

@@ -113,7 +113,7 @@ function NavContent({ handleDrawerToggle }) {
               <img src={OlympusIcon} style={{ minWdth: "200px", minHeight: "125px", width: "200px" }} />
             </Link>
 
-            <WalletAddressEns />
+            {/* <WalletAddressEns /> */}
           </Box>
 
           <div className="dapp-menu-links">
