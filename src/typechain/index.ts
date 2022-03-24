@@ -56,6 +56,9 @@ export type { OhmDai } from "./OhmDai";
 export type { OhmEth } from "./OhmEth";
 export type { OhmFrax } from "./OhmFrax";
 export type { OhmLusd } from "./OhmLusd";
+export type { OlympusERC20Contract } from "./OlympusERC20Contract";
+export type { StakeContract } from "./StakeContract";
+export type { StakeContract1 } from "./StakeContract1";
 
 export { BondCalcContract__factory } from "./factories/BondCalcContract__factory";
 export { BondContract__factory } from "./factories/BondContract__factory";
@@ -112,3 +115,6 @@ export { OhmDai__factory } from "./factories/OhmDai__factory";
 export { OhmEth__factory } from "./factories/OhmEth__factory";
 export { OhmFrax__factory } from "./factories/OhmFrax__factory";
 export { OhmLusd__factory } from "./factories/OhmLusd__factory";
+export { OlympusERC20Contract__factory } from "./factories/OlympusERC20Contract__factory";
+export { StakeContract__factory } from "./factories/StakeContract__factory";
+export { StakeContract1__factory } from "./factories/StakeContract1__factory";
