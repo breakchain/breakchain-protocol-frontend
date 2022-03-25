@@ -1,9 +1,10 @@
 import { ethers, BigNumber } from "ethers";
 import { addresses } from "../constants";
 import { abi as ierc20ABI } from "../abi/IERC20.json";
-// import { abi as StakingHelperABI } from "../abi/StakingHelper.json";
 import { abi as oerc20ABI } from "../abi/xchain/OlympusERC20Contract.json";
 import { abi as StakingHelperABI } from "../abi/xchain/StakingHelper.json";
+import { abi as StakingABI } from "../abi/xchain/StakeContract.json";
+import { abi as sOlympusABI } from "../abi/sXchain/sOlympus.json";
 import { clearPendingTxn, fetchPendingTxns, getStakingTypeText } from "./PendingTxnsSlice";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchAccountSuccess, getBalances } from "./AccountSlice";
@@ -67,18 +68,10 @@ export const stakeApprove = createAsyncThunk(
     }
     const signer = provider.getSigner();
     const stakeContract = new ethers.Contract(addresses[networkID].OLYMPUS_ERC20_ADDRESS, oerc20ABI, signer);
+    const unstakeContract = new ethers.Contract(addresses[networkID].SOHM_ADDRESS, sOlympusABI, signer);
     let approveTx;
     let stakeAllowance = await stakeContract.allowance(address, addresses[networkID].STAKING_HELPER_ADDRESS);
-    // if (alreadyApprovedToken(stakeAllowance)) {
-    //   dispatch(info("Approval completed."));
-    //   return dispatch(
-    //     fetchAccountSuccess({
-    //       staking: {
-    //         ohmStake: +stakeAllowance,
-    //       },
-    //     }),
-    //   );
-    // }
+    let unstakeAllowance = await unstakeContract.allowance(address, addresses[networkID].STAKING_ADDRESS);
 
     try {
       if (token === "ohm") {
@@ -86,9 +79,9 @@ export const stakeApprove = createAsyncThunk(
           addresses[networkID].STAKING_HELPER_ADDRESS,
           ethers.utils.parseUnits("1000000000", "gwei").toString(),
         );
-      } else if (token === "sohm") {
-        approveTx = await stakeContract.approve(
-          addresses[networkID].STAKING_HELPER_ADDRESS,
+      } else {
+        approveTx = await unstakeContract.approve(
+          addresses[networkID].STAKING_ADDRESS,
           ethers.utils.parseUnits("1000000000", "gwei").toString(),
         );
       }
@@ -111,10 +104,12 @@ export const stakeApprove = createAsyncThunk(
     }
 
     stakeAllowance = await stakeContract.allowance(address, addresses[networkID].STAKING_HELPER_ADDRESS);
+    unstakeAllowance = await unstakeContract.allowance(address, addresses[networkID].STAKING_ADDRESS);
     return dispatch(
       fetchAccountSuccess({
         staking: {
           ohmStake: +stakeAllowance,
+          ohmUnstake: +unstakeAllowance,
         },
       }),
     );
@@ -223,15 +218,22 @@ export const changeStake = createAsyncThunk(
       return;
     }
 
+    console.log("action ============>", action);
     const signer = provider.getSigner();
 
-    const staking = OlympusStaking__factory.connect(addresses[networkID].STAKING_HELPER_ADDRESS, signer);
-
+    const staking = new ethers.Contract(addresses[networkID].STAKING_ADDRESS as string, StakingABI, signer);
     const stakingHelper = new ethers.Contract(
       addresses[networkID].STAKING_HELPER_ADDRESS as string,
       StakingHelperABI,
       signer,
-    ) as StakingHelper;
+    );
+    // const staking = OlympusStaking__factory.connect(addresses[networkID].STAKING_ADDRESS, signer);
+
+    // const stakingHelper = new ethers.Contract(
+    //   addresses[networkID].STAKING_HELPER_ADDRESS as string,
+    //   StakingHelperABI,
+    //   signer,
+    // );
 
     // const stakingV2 = OlympusStakingv2__factory.connect(addresses[networkID].STAKING_V2, signer);
 
@@ -267,7 +269,7 @@ export const changeStake = createAsyncThunk(
         stakeTx = await stakingHelper.stake(ethers.utils.parseUnits(value, "gwei"), { gasLimit: 313447 });
       } else {
         uaData.type = "unstake";
-        stakeTx = await staking.unstake(ethers.utils.parseUnits(value, "gwei"), true);
+        stakeTx = await staking.unstake(ethers.utils.parseUnits(value, "gwei"), { gasLimit: 2346648 });
       }
       // }
       const pendingTxnType = action === "stake" ? "staking" : "unstaking";

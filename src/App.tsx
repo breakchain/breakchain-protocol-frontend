@@ -166,6 +166,7 @@ function App() {
       // NOTE (appleseed) - tech debt - better network filtering for active bonds
 
       if (networkId === NetworkId.POLYGON || networkId === NetworkId.POLYGON_TESTNET) {
+        console.log("network id is polygon mumbai");
         // bonds.map(bond => {
         //   dispatch(calcBondDetails({ bond, value: "", provider: loadProvider, networkID: networkId }));
         // });
@@ -427,14 +428,23 @@ function App() {
               </Route>
 
               <Route path="/bonds">
-                {bondIndexes.map(index => {
+                {/* {bondIndexes.map(index => {
                   return (
                     <Route exact key={index} path={`/bonds/${index}`}>
                       <BondV2 index={index} />
                     </Route>
                   );
-                })}
-                <ChooseBondV2 />
+                })} */}
+                {/* {(bonds as IAllBondData[]).map(bond => {
+                  return (
+                    // <Route exact key={bond.name} path={`/bonds-v1/${bond.name}`}>
+                    <Bond />
+                    // </Route>
+                  );
+                })} */}
+                <Bond />
+                {/* <BondV2 index={1} /> */}
+                {/* <ChooseBondV2 /> */}
               </Route>
 
               <Route path="/network">

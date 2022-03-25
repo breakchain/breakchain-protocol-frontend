@@ -40,9 +40,10 @@ function BondRedeem({ bond }) {
   };
 
   const vestingPeriod = () => {
-    const vestingBlock = parseInt(currentBlock) + parseInt(bondingState.vestingTerm);
-    const seconds = secondsUntilBlock(currentBlock, vestingBlock);
-    return prettifySeconds(seconds, "day");
+    // const vestingBlock = parseInt(currentBlock) + parseInt(bondingState.vestingTerm);
+    // const seconds = secondsUntilBlock(currentBlock, vestingBlock);
+    // return prettifySeconds(seconds, "day");
+    return "7 Day";
   };
 
   // useEffect(() => {

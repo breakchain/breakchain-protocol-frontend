@@ -250,6 +250,7 @@ export const getAllBonds = createAsyncThunk(
   async ({ provider, networkID, address }: IBaseAddressAsyncThunk, { dispatch }) => {
     checkNetwork(networkID);
     const depositoryContract = BondDepository__factory.connect(addresses[networkID].BOND_DEPOSITORY, provider);
+    console.log("==============+++>>>>>", depositoryContract);
     const liveBondIndexes = await depositoryContract.liveMarkets();
     // `markets()` returns quote/price data
     const liveBondPromises = liveBondIndexes.map(async index => await depositoryContract.markets(index));

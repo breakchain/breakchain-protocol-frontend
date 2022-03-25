@@ -21,12 +21,16 @@ import { error } from "../../slices/MessagesSlice";
 import { DisplayBondDiscount } from "./Bond";
 import ConnectButton from "../../components/ConnectButton";
 import { DataRow } from "@olympusdao/component-library";
+import { useAppSelector } from "src/hooks";
 
 function BondPurchase({ bond, slippage, recipientAddress }) {
   const SECONDS_TO_REFRESH = 60;
   const dispatch = useDispatch();
   const { provider, address, networkId } = useWeb3Context();
 
+  const bondAllowance = useAppSelector(state => {
+    return (state.account.bonding && state.account.bonding.usdcBond) || 0;
+  });
   const [quantity, setQuantity] = useState("");
   const [secondsToRefresh, setSecondsToRefresh] = useState(SECONDS_TO_REFRESH);
 
@@ -47,26 +51,28 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
   };
 
   async function onBond() {
+    console.log("onbond ===========>>>");
     if (quantity === "") {
       dispatch(error(t`Please enter a value!`));
     } else if (isNaN(quantity)) {
       dispatch(error(t`Please enter a valid value!`));
     } else if (bond.interestDue > 0 || bond.pendingPayout > 0) {
-      const shouldProceed = window.confirm(
-        t`You have an existing bond. Bonding will reset your vesting period and forfeit rewards. We recommend claiming rewards first or using a fresh wallet. Do you still want to proceed?`,
-      );
-      if (shouldProceed) {
-        await dispatch(
-          bondAsset({
-            value: quantity,
-            slippage,
-            bond,
-            networkID: networkId,
-            provider,
-            address: recipientAddress || address,
-          }),
-        );
-      }
+      // const shouldProceed = window.confirm(
+      //   t`You have an existing bond. Bonding will reset your vesting period and forfeit rewards. We recommend claiming rewards first or using a fresh wallet. Do you still want to proceed?`,
+      // );
+      // if (shouldProceed) {
+      //   console.log("=========>bonddddddddddd");
+      //   await dispatch(
+      //     bondAsset({
+      //       value: quantity,
+      //       slippage,
+      //       bond,
+      //       networkID: networkId,
+      //       provider,
+      //       address: recipientAddress || address,
+      //     }),
+      //   );
+      // }
     } else {
       await dispatch(
         bondAsset({
@@ -87,8 +93,9 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
   };
 
   const hasAllowance = useCallback(() => {
-    return bond.allowance > 0;
-  }, [bond.allowance]);
+    return bondAllowance > 0;
+    // return bond.allowance > 0;
+  }, [bondAllowance]);
 
   const setMax = () => {
     let maxQ;
@@ -104,23 +111,23 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
   const bondDetailsDebounce = useDebounce(quantity, 1000);
 
   useEffect(() => {
-    dispatch(calcBondDetails({ bond, value: quantity, provider, networkID: networkId }));
+    // dispatch(calcBondDetails({ bond, value: quantity, provider, networkID: networkId }));
   }, [bondDetailsDebounce]);
 
   useEffect(() => {
     let interval = null;
-    if (secondsToRefresh > 0) {
-      interval = setInterval(() => {
-        setSecondsToRefresh(secondsToRefresh => secondsToRefresh - 1);
-      }, 1000);
-    } else {
-      if (bond.getBondability(networkId)) {
-        clearInterval(interval);
-        dispatch(calcBondDetails({ bond, value: quantity, provider, networkID: networkId }));
-        setSecondsToRefresh(SECONDS_TO_REFRESH);
-      }
-    }
-    return () => clearInterval(interval);
+    // if (secondsToRefresh > 0) {
+    //   interval = setInterval(() => {
+    //     setSecondsToRefresh(secondsToRefresh => secondsToRefresh - 1);
+    //   }, 1000);
+    // } else {
+    //   if (bond?.getBondability(networkId)) {
+    //     clearInterval(interval);
+    //     dispatch(calcBondDetails({ bond, value: quantity, provider, networkID: networkId }));
+    //     setSecondsToRefresh(SECONDS_TO_REFRESH);
+    //   }
+    // }
+    // return () => clearInterval(interval);
   }, [secondsToRefresh, quantity]);
 
   const onSeekApproval = async () => {
@@ -138,80 +145,74 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
           <ConnectButton />
         ) : (
           <>
-            {isAllowanceDataLoading ? (
+            {/* {isAllowanceDataLoading ? (
               <Skeleton width="200px" />
+            ) : ( */}
+            {/* <> */}
+            {!hasAllowance() ? (
+              <div className="help-text">
+                <em>
+                  <Typography variant="body1" align="center" color="textSecondary">
+                    <Trans>First time bonding</Trans> <b>{bond.displayName}</b>? <br />{" "}
+                    <Trans>Please approve Breakchain Protocol to use your</Trans> <b>{bond.displayName}</b>{" "}
+                    <Trans>for bonding</Trans>.
+                  </Typography>
+                </em>
+              </div>
             ) : (
-              <>
-                {!hasAllowance() ? (
-                  <div className="help-text">
-                    <em>
-                      <Typography variant="body1" align="center" color="textSecondary">
-                        <Trans>First time bonding</Trans> <b>{bond.displayName}</b>? <br />{" "}
-                        <Trans>Please approve Breakchain Protocol to use your</Trans> <b>{bond.displayName}</b>{" "}
-                        <Trans>for bonding</Trans>.
-                      </Typography>
-                    </em>
-                  </div>
-                ) : (
-                  <FormControl className="ohm-input" variant="outlined" color="primary" fullWidth>
-                    <InputLabel htmlFor="outlined-adornment-amount">
-                      <Trans>Amount</Trans>
-                    </InputLabel>
-                    <OutlinedInput
-                      id="outlined-adornment-amount"
-                      type="number"
-                      value={quantity}
-                      onChange={e => setQuantity(e.target.value)}
-                      // startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                      labelWidth={55}
-                      endAdornment={
-                        <InputAdornment position="end">
-                          <Button variant="text" onClick={setMax}>
-                            <Trans>Max</Trans>
-                          </Button>
-                        </InputAdornment>
-                      }
-                    />
-                  </FormControl>
-                )}
-                {!bond.isBondable[networkId] ? (
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    id="bond-btn"
-                    className="transaction-button"
-                    disabled={true}
-                  >
-                    {/* NOTE (appleseed): temporary for ONHOLD MIGRATION */}
-                    {/* <Trans>Sold Out</Trans> */}
-                    {bond.LOLmessage}
-                  </Button>
-                ) : hasAllowance() ? (
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    id="bond-btn"
-                    className="transaction-button"
-                    disabled={isPendingTxn(pendingTransactions, "bond_" + bond.name)}
-                    onClick={onBond}
-                  >
-                    {txnButtonText(pendingTransactions, "bond_" + bond.name, "Bond (v1)")}
-                  </Button>
-                ) : (
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    id="bond-approve-btn"
-                    className="transaction-button"
-                    disabled={isPendingTxn(pendingTransactions, "approve_" + bond.name)}
-                    onClick={onSeekApproval}
-                  >
-                    {txnButtonText(pendingTransactions, "approve_" + bond.name, "Approve")}
-                  </Button>
-                )}
-              </>
-            )}{" "}
+              <FormControl className="ohm-input" variant="outlined" color="primary" fullWidth>
+                <InputLabel htmlFor="outlined-adornment-amount">
+                  <Trans>Amount</Trans>
+                </InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-amount"
+                  type="number"
+                  value={quantity}
+                  onChange={e => setQuantity(e.target.value)}
+                  // startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                  labelWidth={55}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <Button variant="text" onClick={setMax}>
+                        <Trans>Max</Trans>
+                      </Button>
+                    </InputAdornment>
+                  }
+                />
+              </FormControl>
+            )}
+            {false ? (
+              <Button variant="contained" color="primary" id="bond-btn" className="transaction-button" disabled={true}>
+                {/* NOTE (appleseed): temporary for ONHOLD MIGRATION */}
+                {/* <Trans>Sold Out</Trans> */}
+                {bond.LOLmessage}
+              </Button>
+            ) : hasAllowance() ? (
+              <Button
+                variant="contained"
+                color="primary"
+                id="bond-btn"
+                className="transaction-button"
+                disabled={isPendingTxn(pendingTransactions, "bond_" + bond.name)}
+                onClick={onBond}
+              >
+                {txnButtonText(pendingTransactions, "bond_" + bond.name, "Bond")}
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                color="primary"
+                id="bond-approve-btn"
+                className="transaction-button"
+                disabled={isPendingTxn(pendingTransactions, "approve_" + bond.name)}
+                onClick={onSeekApproval}
+              >
+                {txnButtonText(pendingTransactions, "approve_" + bond.name, "Approve")}
+              </Button>
+            )}
           </>
+          //   {/* )}{" "} */}
+          // // </>
         )}
       </Box>
 

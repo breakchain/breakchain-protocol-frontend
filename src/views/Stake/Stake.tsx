@@ -170,7 +170,7 @@ function Stake() {
   };
 
   const onSeekApproval = async (token: string) => {
-    await dispatch(stakeApprove({ address, token, provider, networkID: 80001, version2: false }));
+    await dispatch(stakeApprove({ address, token, provider, networkID: networkId, version2: false }));
     // if (token === "gohm") {
     //   await dispatch(changeGohmApproval({ address, token: token.toLowerCase(), provider, networkID: networkId }));
     // } else {
@@ -209,6 +209,7 @@ function Stake() {
     // const formQuant = checked && currentIndex && view === 1 ? quantity / Number(currentIndex) : quantity;
     const formQuant = async () => {
       if (confirmation && currentIndex && view === 1) {
+        console.log("here ???????");
         return await getGohmBalFromSohm({ provider, networkID: networkId, sOHMbalance: quantity });
       } else {
         return quantity;
@@ -231,7 +232,7 @@ function Stake() {
   const hasAllowance = useCallback(
     token => {
       if (token === "ohm") return stakeAllowance > 0;
-      // if (token === "sohm") return unstakeAllowance > 0;
+      if (token === "sohm") return unstakeAllowance > 0;
       // if (token === "gohm") return directUnstakeAllowance > 0;
       return 0;
     },
@@ -472,7 +473,7 @@ function Stake() {
                                 {txnButtonText(
                                   pendingTransactions,
                                   "unstaking",
-                                  `${t`Unstake from`} ${confirmation ? " gOHM" : " sOHM"}`,
+                                  `${t`Unstake from`} ${confirmation ? " sXCHAIN" : " sXCHAIN"}`,
                                 )}
                               </Button>
                             ) : (

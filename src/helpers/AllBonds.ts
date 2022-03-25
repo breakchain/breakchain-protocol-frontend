@@ -169,6 +169,55 @@ export const frax = new StableBond({
   },
 });
 
+export const usdc = new StableBond({
+  name: "usdc",
+  displayName: "USDC",
+  bondToken: "USDC",
+  payoutToken: "OHM",
+  v2Bond: true,
+  bondIconSvg: FraxImg,
+  bondContractABI: FraxBondContract,
+  isBondable: {
+    [NetworkId.MAINNET]: false,
+    [NetworkId.TESTNET_RINKEBY]: false,
+    [NetworkId.ARBITRUM]: false,
+    [NetworkId.ARBITRUM_TESTNET]: false,
+    [NetworkId.AVALANCHE]: false,
+    [NetworkId.AVALANCHE_TESTNET]: false,
+    [NetworkId.POLYGON]: true,
+    [NetworkId.POLYGON_TESTNET]: true,
+  },
+  isLOLable: {
+    [NetworkId.MAINNET]: false,
+    [NetworkId.TESTNET_RINKEBY]: false,
+    [NetworkId.ARBITRUM]: false,
+    [NetworkId.ARBITRUM_TESTNET]: false,
+    [NetworkId.AVALANCHE]: false,
+    [NetworkId.AVALANCHE_TESTNET]: false,
+  },
+  LOLmessage: "",
+  isClaimable: {
+    [NetworkId.MAINNET]: true,
+    [NetworkId.TESTNET_RINKEBY]: true,
+    [NetworkId.ARBITRUM]: false,
+    [NetworkId.ARBITRUM_TESTNET]: false,
+    [NetworkId.AVALANCHE]: false,
+    [NetworkId.AVALANCHE_TESTNET]: false,
+    [NetworkId.POLYGON]: true,
+    [NetworkId.POLYGON_TESTNET]: true,
+  },
+  networkAddrs: {
+    [NetworkId.POLYGON]: {
+      bondAddress: "0x95e9BA3E289888ACd402c3c7b88B2356592b0C59",
+      reserveAddress: "0x9a7E7639322643d02F8CB478baB0EB1019F82389",
+    },
+    [NetworkId.POLYGON_TESTNET]: {
+      bondAddress: "0x95e9BA3E289888ACd402c3c7b88B2356592b0C59",
+      reserveAddress: "0x9a7E7639322643d02F8CB478baB0EB1019F82389",
+    },
+  },
+});
+
 export const lusd = new StableBond({
   name: "lusd",
   displayName: "LUSD",
@@ -802,6 +851,7 @@ export const allBonds = [
   ohm_lusd,
   ohm_weth,
   ohm_wethOld,
+  usdc,
 ];
 // TODO (appleseed-expiredBonds): there may be a smarter way to refactor this
 export const allExpiredBonds = [cvx_expired, fraxOld];
