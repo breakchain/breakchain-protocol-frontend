@@ -34,7 +34,6 @@ export const changeApproval = createAsyncThunk(
     const reserveContract = new ethers.Contract(addresses[networkID].BOND_ADDRESS, BondABI, signer);
     // const reserveContract = bond.getContractForReserve(networkID, signer);
     // const bondAddr = bond.getAddressForBond(networkID);
-    const bondAddr = "0x9a7E7639322643d02F8CB478baB0EB1019F82389";
 
     let approveTx;
     let bondAllowance = 0;
@@ -49,12 +48,11 @@ export const changeApproval = createAsyncThunk(
     // }
 
     try {
-      console.log("=========+>");
+      console.log("==========+>", ethers.utils.parseEther("10"));
       approveTx = await reserveContract.approve(
-        bondAddr || "",
-        ethers.utils.parseUnits("1000000000", "gwei").toString(),
+        addresses[networkID].BOND_DEPOSITORY_ADDRESS,
+        ethers.utils.parseEther("10"),
       );
-      console.log("==========+>", approveTx);
       dispatch(
         fetchPendingTxns({
           txnHash: approveTx.hash,
