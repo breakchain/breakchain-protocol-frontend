@@ -119,9 +119,14 @@ function NavContent({ handleDrawerToggle }) {
           <div className="dapp-menu-links">
             <div className="dapp-nav" id="navbarNav">
               <Link
-                component={NavLink}
+                // component={NavLink}
                 id="dash-nav"
-                to="/home"
+                // to="home"
+                target="_self"
+                href="http://localhost:3000/home"
+                isActive={(match, location) => {
+                  return checkPage(match, location, "bonds");
+                }}
                 className={`button-dapp-menu ${isActive ? "active" : ""}`}
                 onClick={handleDrawerToggle}
               >
