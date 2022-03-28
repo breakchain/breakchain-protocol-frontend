@@ -347,15 +347,15 @@ function App() {
 
               <Route path="/stake">
                 {/* if newAssets or 0 assets */}
-                {newAssetsDetected || (!newAssetsDetected && !oldAssetsDetected) || !oldAssetsEnoughToMigrate ? (
-                  <Stake />
-                ) : (
+                {/* {newAssetsDetected || (!newAssetsDetected && !oldAssetsDetected) || !oldAssetsEnoughToMigrate ? ( */}
+                <Stake />
+                {/* ) : (
                   <V1Stake
                     hasActiveV1Bonds={hasActiveV1Bonds}
                     oldAssetsDetected={oldAssetsDetected}
                     setMigrationModalOpen={setMigrationModalOpen}
                   />
-                )}
+                )} */}
               </Route>
 
               <Route path="/v1-stake">

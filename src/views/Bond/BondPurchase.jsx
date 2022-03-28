@@ -38,6 +38,10 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
     return state.app.currentBlock;
   });
 
+  const usdcBalance = useAppSelector(state => {
+    return state.account.balances && state.account.balances.usdc;
+  });
+
   const isBondLoading = useSelector(state => state.bonding.loading ?? true);
 
   const pendingTransactions = useSelector(state => {
@@ -97,13 +101,13 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
 
   const setMax = () => {
     let maxQ;
-    if (bond.maxBondPrice * bond.bondPrice < Number(bond.balance)) {
-      // there is precision loss here on Number(bond.balance)
-      maxQ = bond.maxBondPrice * bond.bondPrice.toString();
-    } else {
-      maxQ = bond.balance;
-    }
-    setQuantity(maxQ);
+    // if (bond.maxBondPrice * bond.bondPrice < Number(bond.balance)) {
+    //   // there is precision loss here on Number(bond.balance)
+    //   maxQ = bond.maxBondPrice * bond.bondPrice.toString();
+    // } else {
+    //   maxQ = bond.balance;
+    // }
+    setQuantity(usdcBalance || "0.00");
   };
 
   const bondDetailsDebounce = useDebounce(quantity, 1000);
