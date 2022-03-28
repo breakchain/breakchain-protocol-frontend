@@ -451,7 +451,6 @@ export const getMigrationAllowances = createAsyncThunk(
 export const loadAccountDetails = createAsyncThunk(
   "account/loadAccountDetails",
   async ({ networkID, provider, address }: IBaseAddressAsyncThunk, { dispatch }) => {
-    console.log("load account ============>", networkID, provider, address);
     let stakeAllowance = BigNumber.from("0");
     let stakeAllowanceV2 = BigNumber.from("0");
     let unstakeAllowanceV2 = BigNumber.from("0");
@@ -613,6 +612,9 @@ export interface IAccountSlice extends IUserAccountDetails, IUserBalances {
     ohmStake: number;
     ohmUnstake: number;
   };
+  bonding: {
+    usdcBond: number;
+  };
   migration: {
     ohm: number;
     sohm: number;
@@ -676,6 +678,7 @@ const initialState: IAccountSlice = {
     },
   },
   staking: { ohmStakeV1: 0, ohmUnstakeV1: 0, ohmStake: 0, ohmUnstake: 0 },
+  bonding: { usdcBond: 0 },
   wrapping: { sohmWrap: 0, wsohmUnwrap: 0, gOhmUnwrap: 0, wsOhmMigrate: 0, xChain: 0 },
   pooling: { sohmPool: 0 },
   migration: { ohm: 0, sohm: 0, wsohm: 0, gohm: 0 },

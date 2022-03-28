@@ -3,7 +3,7 @@ import { useHistory } from "react-router";
 import { usePathForNetwork } from "src/hooks/usePathForNetwork";
 import { t, Trans } from "@lingui/macro";
 import { formatCurrency, trim } from "../../helpers";
-import { Backdrop, Box, Fade, Grid, Paper, Tab, Tabs, Typography } from "@material-ui/core";
+import { Backdrop, Box, Fade, Grid, Paper, Tab, Tabs, Typography, Zoom } from "@material-ui/core";
 import TabPanel from "../../components/TabPanel";
 import BondHeader from "./BondHeader";
 import BondRedeem from "./BondRedeem";
@@ -50,39 +50,37 @@ const BondV2 = ({ index }: { index: number }) => {
   }, [provider, address]);
 
   return (
-    <Fade in={true} mountOnEnter unmountOnExit>
-      <Grid container id="bond-view">
-        <Backdrop open={true} onClick={onClickAway}>
-          <Fade in={true}>
-            <Paper className="ohm-card ohm-modal" onClick={onClickModal}>
-              {/* <BondHeader
+    // <Fade in={true} mountOnEnter unmountOnExit>
+    <Zoom in={true}>
+      {/* <Backdrop open={true} onClick={onClickAway}>
+        <Fade in={true}> */}
+      <Paper className="ohm-card ohm-modal" onClick={onClickModal}>
+        {/* <BondHeader
                 bond={bond}
                 slippage={slippage}
                 recipientAddress={recipientAddress}
                 onSlippageChange={onSlippageChange}
                 onRecipientAddressChange={onRecipientAddressChange}
               /> */}
-              <Box display="flex" flexDirection="row" className="bond-price-data-row">
-                <div className="bond-price-data">
-                  <Typography variant="h5" color="textSecondary">
-                    <Trans>Bond Price</Trans>
-                  </Typography>
-                  <Typography variant="h3" className="price" color="primary">
-                    <>
-                      {isBondLoading ? <Skeleton width="50px" /> : <DisplayBondPrice key={bond?.index} bond={bond} />}
-                    </>
-                  </Typography>
-                </div>
-                <div className="bond-price-data">
-                  <Typography variant="h5" color="textSecondary">
-                    <Trans>Market Price</Trans>
-                  </Typography>
-                  <Typography variant="h3" color="primary" className="price">
-                    {isBondLoading ? <Skeleton /> : formatCurrency(bond?.marketPrice, 2)}
-                  </Typography>
-                </div>
-              </Box>
-              {/* <Tabs
+        <Box display="flex" flexDirection="row" className="bond-price-data-row">
+          <div className="bond-price-data">
+            <Typography variant="h5" color="textSecondary">
+              <Trans>Bond Price</Trans>
+            </Typography>
+            <Typography variant="h3" className="price" color="primary">
+              <>{isBondLoading ? <Skeleton width="50px" /> : <DisplayBondPrice key={bond?.index} bond={bond} />}</>
+            </Typography>
+          </div>
+          <div className="bond-price-data">
+            <Typography variant="h5" color="textSecondary">
+              <Trans>Market Price</Trans>
+            </Typography>
+            <Typography variant="h3" color="primary" className="price">
+              {isBondLoading ? <Skeleton /> : formatCurrency(bond?.marketPrice, 2)}
+            </Typography>
+          </div>
+        </Box>
+        {/* <Tabs
                 centered
                 value={view}
                 textColor="primary"
@@ -100,17 +98,17 @@ const BondV2 = ({ index }: { index: number }) => {
                 />
                 <Tab aria-label="redeem-tab-button" label={t`Redeem`} {...a11yProps(1)} />
               </Tabs> */}
-              {/* <TabPanel value={view} index={0}> */}
-              <BondPurchase bond={bond} slippage={slippage} recipientAddress={recipientAddress} />
-              {/* </TabPanel> */}
-              {/* <TabPanel value={view} index={1}>
+        {/* <TabPanel value={view} index={0}> */}
+        <BondPurchase bond={bond} slippage={slippage} recipientAddress={recipientAddress} />
+        {/* </TabPanel> */}
+        {/* <TabPanel value={view} index={1}>
                 <BondRedeem bond={bond} />
               </TabPanel> */}
-            </Paper>
-          </Fade>
-        </Backdrop>
-      </Grid>
-    </Fade>
+      </Paper>
+      {/* </Fade>
+      </Backdrop> */}
+    </Zoom>
+    // {/* </Fade> */}
   );
 };
 
