@@ -137,30 +137,30 @@ export const changeApproval = createAsyncThunk(
 export const purchaseBond = createAsyncThunk(
   "bondsV2/purchase",
   async ({ provider, address, bond, networkID, amount, maxPrice }: IBondV2PurchaseAsyncThunk, { dispatch }) => {
-    checkNetwork(networkID);
-    const signer = provider.getSigner();
-    const depositoryContract = BondDepository__factory.connect(addresses[networkID].BOND_DEPOSITORY, signer);
+    // checkNetwork(networkID);
+    // const signer = provider.getSigner();
+    // const depositoryContract = BondDepository__factory.connect(addresses[networkID].BOND_DEPOSITORY, signer);
 
-    let depositTx: ethers.ContractTransaction | undefined;
-    try {
-      depositTx = await depositoryContract.deposit(bond.index, amount, maxPrice, address, address);
-      const text = `Purchase ${bond.displayName} Bond`;
-      const pendingTxnType = `bond_${bond.displayName}`;
-      if (depositTx) {
-        dispatch(fetchPendingTxns({ txnHash: depositTx.hash, text, type: pendingTxnType }));
-        await depositTx.wait();
-        dispatch(clearPendingTxn(depositTx.hash));
-      }
-    } catch (e: unknown) {
-      dispatch(error((e as IJsonRPCError).message));
-      return;
-    } finally {
-      if (depositTx) {
-        dispatch(info("Successfully purchased bond!"));
-        dispatch(getUserNotes({ provider, networkID, address }));
-        dispatch(getAllBonds({ address, provider, networkID }));
-      }
-    }
+    // let depositTx: ethers.ContractTransaction | undefined;
+    // try {
+    //   depositTx = await depositoryContract.deposit(bond.index, amount, maxPrice, address, address);
+    //   const text = `Purchase ${bond.displayName} Bond`;
+    //   const pendingTxnType = `bond_${bond.displayName}`;
+    //   if (depositTx) {
+    //     dispatch(fetchPendingTxns({ txnHash: depositTx.hash, text, type: pendingTxnType }));
+    //     await depositTx.wait();
+    //     dispatch(clearPendingTxn(depositTx.hash));
+    //   }
+    // } catch (e: unknown) {
+    //   dispatch(error((e as IJsonRPCError).message));
+    //   return;
+    // } finally {
+    //   if (depositTx) {
+    //     dispatch(info("Successfully purchased bond!"));
+    //     dispatch(getUserNotes({ provider, networkID, address }));
+    //     dispatch(getAllBonds({ address, provider, networkID }));
+    //   }
+    // }
   },
 );
 
