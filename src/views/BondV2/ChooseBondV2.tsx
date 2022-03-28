@@ -30,7 +30,7 @@ import { allBondsMap } from "src/helpers/AllBonds";
 import { useAppSelector, useWeb3Context } from "src/hooks";
 import { IUserBondDetails } from "src/slices/AccountSlice";
 import { Metric, MetricCollection } from "@olympusdao/component-library";
-import { getAllBonds, getUserNotes, IBondV2, IUserNote } from "src/slices/BondSliceV2";
+import { IBondV2, IUserNote } from "src/slices/BondSliceV2";
 import { ReactComponent as ArrowUp } from "../../assets/icons/arrow-up.svg";
 import { useEffect, useState } from "react";
 import { AppDispatch } from "src/store";
@@ -73,8 +73,8 @@ function ChooseBondV2() {
 
   useEffect(() => {
     const interval = setTimeout(() => {
-      dispatch(getAllBonds({ address, networkID: networkId, provider }));
-      dispatch(getUserNotes({ address, networkID: networkId, provider }));
+      // dispatch(getAllBonds({ address, networkID: networkId, provider }));
+      // dispatch(getUserNotes({ address, networkID: networkId, provider }));
     }, 60000);
     return () => clearTimeout(interval);
   });

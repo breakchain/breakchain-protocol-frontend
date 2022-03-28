@@ -20,7 +20,7 @@ import { error } from "../../slices/MessagesSlice";
 import { DisplayBondDiscount } from "./BondV2";
 import ConnectButton from "../../components/ConnectButton";
 import { useAppSelector } from "src/hooks";
-import { changeApproval, getSingleBond, IBondV2, IBondV2Balance, purchaseBond } from "src/slices/BondSliceV2";
+import { IBondV2, IBondV2Balance, purchaseBond } from "src/slices/BondSliceV2";
 import { BigNumber, ethers } from "ethers";
 import { AppDispatch } from "src/store";
 
@@ -100,14 +100,14 @@ function BondPurchase({
       }, 1000);
     } else if (interval) {
       clearInterval(interval);
-      dispatch(getSingleBond({ bondIndex: bond.index, address, networkID: networkId, provider }));
+      // dispatch(getSingleBond({ bondIndex: bond.index, address, networkID: networkId, provider }));
       setSecondsToRefresh(SECONDS_TO_REFRESH);
     }
     return () => clearInterval(interval!);
   }, [secondsToRefresh, quantity]);
 
   const onSeekApproval = async () => {
-    dispatch(changeApproval({ address, provider, networkID: networkId, bond }));
+    // dispatch(changeApproval({ address, provider, networkID: networkId, bond }));
   };
 
   // const displayUnits = bond.displayUnits;
