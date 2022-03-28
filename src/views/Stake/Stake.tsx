@@ -72,6 +72,15 @@ function Stake() {
   const ohmBalance = useAppSelector(state => {
     return state.account.balances && state.account.balances.ohm;
   });
+
+  const xChainBalance = useAppSelector(state => {
+    return state.account.balances && state.account.balances.xChain;
+  });
+
+  const sXChainBalance = useAppSelector(state => {
+    return state.account.balances && state.account.balances.sXChain;
+  });
+
   const sohmBalance = useAppSelector(state => {
     return state.account.balances && state.account.balances.sohm;
   });
@@ -161,12 +170,16 @@ function Stake() {
 
   const setMax = () => {
     if (view === 0) {
-      setQuantity(ohmBalance);
-    } else if (!confirmation) {
-      setQuantity(sohmBalance);
-    } else if (confirmation) {
-      setQuantity(gOhmAsSohm.toString());
+      setQuantity(xChainBalance || "0.00");
+    } else {
+      setQuantity(sXChainBalance || "0.00");
     }
+    // else if (!confirmation) {
+    //   console.log("unstake");
+    //   setQuantity(sohmBalance || "0.00");
+    // } else if (confirmation) {
+    //   setQuantity(gOhmAsSohm.toString());
+    // }
   };
 
   const onSeekApproval = async (token: string) => {

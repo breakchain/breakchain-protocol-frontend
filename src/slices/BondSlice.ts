@@ -61,12 +61,13 @@ export const changeApproval = createAsyncThunk(
       dispatch(error((e as IJsonRPCError).message));
     } finally {
       if (approveTx) {
+        bondAllowance = 1000000000;
         dispatch(clearPendingTxn(approveTx.hash));
-        dispatch(calculateUserBondDetails({ address, bond, networkID, provider }));
+        // dispatch(calculateUserBondDetails({ address, bond, networkID, provider }));
       }
     }
     // bondAllowance = await reserveContract.allowance(address, bondAddr || "");
-    bondAllowance = 1000000000;
+    dispatch(getBalances({ address, networkID, provider }));
     dispatch(
       fetchAccountSuccess({
         bonding: {

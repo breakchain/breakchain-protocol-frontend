@@ -105,6 +105,7 @@ export const stakeApprove = createAsyncThunk(
 
     stakeAllowance = await stakeContract.allowance(address, addresses[networkID].STAKING_HELPER_ADDRESS);
     unstakeAllowance = await unstakeContract.allowance(address, addresses[networkID].STAKING_ADDRESS);
+    dispatch(getBalances({ address, networkID, provider }));
     return dispatch(
       fetchAccountSuccess({
         staking: {
