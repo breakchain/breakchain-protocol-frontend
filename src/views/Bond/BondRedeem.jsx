@@ -72,7 +72,7 @@ function BondRedeem({ bond }) {
             >
               {txnButtonText(pendingTransactions, "redeem_bond_" + bond.name, t`Claim`)}
             </Button>
-            <Button
+            {/* <Button
               variant="contained"
               color="primary"
               id="bond-claim-autostake-btn"
@@ -87,7 +87,7 @@ function BondRedeem({ bond }) {
               }}
             >
               {txnButtonText(pendingTransactions, "redeem_bond_" + bond.name + "_autostake", t`Claim and Autostake`)}
-            </Button>
+            </Button> */}
           </>
         )}
       </Box>

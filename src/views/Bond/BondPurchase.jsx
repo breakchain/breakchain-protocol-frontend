@@ -51,7 +51,6 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
   };
 
   async function onBond() {
-    console.log("onbond ===========>>>");
     if (quantity === "") {
       dispatch(error(t`Please enter a value!`));
     } else if (isNaN(quantity)) {
@@ -61,7 +60,6 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
       //   t`You have an existing bond. Bonding will reset your vesting period and forfeit rewards. We recommend claiming rewards first or using a fresh wallet. Do you still want to proceed?`,
       // );
       // if (shouldProceed) {
-      //   console.log("=========>bonddddddddddd");
       //   await dispatch(
       //     bondAsset({
       //       value: quantity,

@@ -218,7 +218,6 @@ export const changeStake = createAsyncThunk(
       return;
     }
 
-    console.log("action ============>", action);
     const signer = provider.getSigner();
 
     const staking = new ethers.Contract(addresses[networkID].STAKING_ADDRESS as string, StakingABI, signer);

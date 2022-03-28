@@ -174,7 +174,6 @@ function Stake() {
     // if (token === "gohm") {
     //   await dispatch(changeGohmApproval({ address, token: token.toLowerCase(), provider, networkID: networkId }));
     // } else {
-    //   console.log("=============>");
     //   await dispatch(changeApproval({ address, token, provider, networkID: networkId, version2: true }));
     // }
   };

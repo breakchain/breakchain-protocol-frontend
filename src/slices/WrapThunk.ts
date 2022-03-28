@@ -29,9 +29,7 @@ export const approveStake = createAsyncThunk(
     //   return;
     // }
     // const signer = provider.getSigner();
-    // console.log("singer ============+>", signer);
     // const stakeContract = new ethers.Contract("0x58D81C972445556E4d9013f6aBF7bfE7EBE8a080", olympusABI, signer);
-    // console.log("stacke Contract ===========>", stakeContract);
     // let approveTx;
     // let stakeAllowance = await stakeContract.allowance(address, "0xCD3D16D089F1f04428BDb510008c7855eE989eac");
     // try {
@@ -39,7 +37,6 @@ export const approveStake = createAsyncThunk(
     //     "0xCD3D16D089F1f04428BDb510008c7855eE989eac",
     //     ethers.utils.parseUnits("1000000000", "gwei"),
     //   );
-    //   console.log("===============>", approveTx);
     //   const text = "Approve " + "Wrapping";
     //   // const pendingTxnType = token === "sohm" ? "approve_wrapping" : "approve_unwrapping";
     //   const pendingTxnType = "approve_wrapping";
@@ -50,7 +47,6 @@ export const approveStake = createAsyncThunk(
     //   }
     // } catch (err) {
     //   dispatch(error((err as IJsonRPCError).message));
-    //   console.log("errro ===========>", err);
     //   return;
     // } finally {
     //   if (approveTx) {

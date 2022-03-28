@@ -451,7 +451,6 @@ export const getMigrationAllowances = createAsyncThunk(
 export const loadAccountDetails = createAsyncThunk(
   "account/loadAccountDetails",
   async ({ networkID, provider, address }: IBaseAddressAsyncThunk, { dispatch }) => {
-    console.log("load account ============>", networkID, provider, address);
     let stakeAllowance = BigNumber.from("0");
     let stakeAllowanceV2 = BigNumber.from("0");
     let unstakeAllowanceV2 = BigNumber.from("0");

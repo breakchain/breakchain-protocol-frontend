@@ -244,7 +244,6 @@ function App() {
     if (hasCachedProvider()) {
       // then user DOES have a wallet
       connect().then(() => {
-        console.log("Wallet Checked =====>");
         setWalletChecked(true);
         segmentUA({
           type: "connect",
