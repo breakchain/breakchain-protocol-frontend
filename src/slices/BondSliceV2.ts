@@ -140,7 +140,6 @@ export const purchaseBond = createAsyncThunk(
     // checkNetwork(networkID);
     // const signer = provider.getSigner();
     // const depositoryContract = BondDepository__factory.connect(addresses[networkID].BOND_DEPOSITORY, signer);
-
     // let depositTx: ethers.ContractTransaction | undefined;
     // try {
     //   depositTx = await depositoryContract.deposit(bond.index, amount, maxPrice, address, address);
