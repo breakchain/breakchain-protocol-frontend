@@ -131,7 +131,7 @@ function NavContent({ handleDrawerToggle }) {
                 onClick={handleDrawerToggle}
               >
                 <Typography variant="h6">
-                  <Trans>Home</Trans>
+                  <Trans>HOME</Trans>
                 </Typography>
               </Link>
               <Link
