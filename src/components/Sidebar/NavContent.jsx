@@ -33,7 +33,7 @@ import {
   AccordionSummary,
   AccordionDetails,
 } from "@material-ui/core";
-import { getAllBonds, getUserNotes } from "src/slices/BondSliceV2";
+// import { getAllBonds, getUserNotes } from "src/slices/BondSliceV2";
 
 import { Skeleton } from "@material-ui/lab";
 import "./sidebar.scss";

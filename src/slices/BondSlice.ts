@@ -21,6 +21,7 @@ import { segmentUA } from "../helpers/userAnalyticHelpers";
 import ReactGA from "react-ga";
 import { addresses } from "src/constants";
 
+
 export const changeApproval = createAsyncThunk(
   "bonding/changeApproval",
   async ({ address, bond, provider, networkID }: IApproveBondAsyncThunk, { dispatch }) => {
