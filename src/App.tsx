@@ -53,7 +53,7 @@ import { Project } from "src/components/GiveProject/project.type";
 import ProjectInfo from "./views/Give/ProjectInfo";
 import projectData from "src/views/Give/projects.json";
 import Announcement from "./components/Announcement/Announcement";
-import { getAllBonds, getUserNotes } from "./slices/BondSliceV2";
+// import { getAllBonds, getUserNotes } from "./slices/BondSliceV2";
 import Airdrop from "src/views/Airdrop";
 import { NetworkId } from "./constants";
 import Calculator from "./views/Calculator";
@@ -170,7 +170,7 @@ function App() {
         // bonds.map(bond => {
         //   dispatch(calcBondDetails({ bond, value: "", provider: loadProvider, networkID: networkId }));
         // });
-        dispatch(getAllBonds({ provider: loadProvider, networkID: networkId, address }));
+        // dispatch(getAllBonds({ provider: loadProvider, networkID: networkId, address }));
       }
     },
     [networkId, address],
@@ -181,7 +181,7 @@ function App() {
       if (!providerInitialized) {
         return;
       }
-      dispatch(getUserNotes({ networkID: networkId, address, provider: loadProvider }));
+      // dispatch(getUserNotes({ networkID: networkId, address, provider: loadProvider }));
       dispatch(loadAccountDetails({ networkID: networkId, address, provider: loadProvider }));
       dispatch(getMigrationAllowances({ address, provider: loadProvider, networkID: networkId }));
       // bonds.map(bond => {
