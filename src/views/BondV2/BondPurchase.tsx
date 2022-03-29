@@ -20,7 +20,7 @@ import { error } from "../../slices/MessagesSlice";
 import { DisplayBondDiscount } from "./BondV2";
 import ConnectButton from "../../components/ConnectButton";
 import { useAppSelector } from "src/hooks";
-import { changeApproval, getSingleBond, IBondV2, IBondV2Balance, purchaseBond } from "src/slices/BondSliceV2";
+import { IBondV2, IBondV2Balance, purchaseBond } from "src/slices/BondSliceV2";
 import { BigNumber, ethers } from "ethers";
 import { AppDispatch } from "src/store";
 
@@ -45,10 +45,10 @@ function BondPurchase({
 
   const isBondLoading = useAppSelector(state => state.bondingV2.loading ?? true);
 
-  const balance = useAppSelector(state => state.bondingV2.balances[bond.quoteToken]);
+  const balance = useAppSelector(state => state.bondingV2.balances[bond?.quoteToken || ""]);
 
   const balanceNumber: number = useMemo(
-    () => (balance ? +balance.balance / Math.pow(10, bond.quoteDecimals) : 0),
+    () => (balance ? +balance.balance / Math.pow(10, bond?.quoteDecimals) : 0),
     [balance],
   );
 
@@ -100,14 +100,14 @@ function BondPurchase({
       }, 1000);
     } else if (interval) {
       clearInterval(interval);
-      dispatch(getSingleBond({ bondIndex: bond.index, address, networkID: networkId, provider }));
+      // dispatch(getSingleBond({ bondIndex: bond.index, address, networkID: networkId, provider }));
       setSecondsToRefresh(SECONDS_TO_REFRESH);
     }
     return () => clearInterval(interval!);
   }, [secondsToRefresh, quantity]);
 
   const onSeekApproval = async () => {
-    dispatch(changeApproval({ address, provider, networkID: networkId, bond }));
+    // dispatch(changeApproval({ address, provider, networkID: networkId, bond }));
   };
 
   // const displayUnits = bond.displayUnits;
@@ -129,8 +129,8 @@ function BondPurchase({
                   <div className="help-text">
                     <em>
                       <Typography variant="body1" align="center" color="textSecondary">
-                        <Trans>First time bonding</Trans> <b>{bond.displayName}</b>? <br />{" "}
-                        <Trans>Please approve Breakchain Protocol to use your</Trans> <b>{bond.displayName}</b>{" "}
+                        <Trans>First time bonding</Trans> <b>{bond?.displayName}</b>? <br />{" "}
+                        <Trans>Please approve Breakchain Protocol to use your</Trans> <b>{bond?.displayName}</b>{" "}
                         <Trans>for bonding</Trans>.
                       </Typography>
                     </em>
@@ -197,7 +197,7 @@ function BondPurchase({
               <Trans>Your Balance</Trans>
             </Typography>{" "}
             <Typography id="bond-balance">
-              {isBondLoading ? <Skeleton width="100px" /> : <>{`${trim(balanceNumber, 4)} ${bond.displayName}`}</>}
+              {isBondLoading ? <Skeleton width="100px" /> : <>{`${trim(balanceNumber, 4)} ${bond?.displayName}`}</>}
             </Typography>
           </div>
 
@@ -209,8 +209,8 @@ function BondPurchase({
               {isBondLoading ? (
                 <Skeleton width="100px" />
               ) : (
-                `${trim(Number(quantity) / bond.priceToken, 4) || "0"} ` +
-                `sOHM (≈${trim(+quantity / bond.priceToken / +currentIndex, 4) || "0"} gOHM)`
+                `${trim(Number(quantity) / bond?.priceToken, 4) || "0"} ` +
+                `sOHM (≈${trim(+quantity / bond?.priceToken / +currentIndex, 4) || "0"} gOHM)`
               )}
             </Typography>
           </div>
@@ -220,7 +220,7 @@ function BondPurchase({
               <Trans>Max You Can Buy</Trans>
             </Typography>
             <Typography id="bond-value-id" className="price-data">
-              {isBondLoading ? <Skeleton width="100px" /> : `${trim(+bond.maxPayout / 10 ** 9, 1) || "0"} ` + `sOHM`}
+              {isBondLoading ? <Skeleton width="100px" /> : `${trim(+bond?.maxPayout / 10 ** 9, 1) || "0"} ` + `sOHM`}
             </Typography>
           </div>
 
@@ -229,7 +229,7 @@ function BondPurchase({
               <Trans>ROI</Trans>
             </Typography>
             <Typography>
-              {isBondLoading ? <Skeleton width="100px" /> : <DisplayBondDiscount key={bond.displayName} bond={bond} />}
+              {isBondLoading ? <Skeleton width="100px" /> : <DisplayBondDiscount key={bond?.displayName} bond={bond} />}
             </Typography>
           </div>
 
@@ -237,7 +237,7 @@ function BondPurchase({
             <Typography>
               <Trans>Duration</Trans>
             </Typography>
-            <Typography>{isBondLoading ? <Skeleton width="100px" /> : bond.duration}</Typography>
+            <Typography>{isBondLoading ? <Skeleton width="100px" /> : bond?.duration}</Typography>
           </div>
 
           {recipientAddress !== address && (

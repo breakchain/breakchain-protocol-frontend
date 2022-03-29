@@ -33,7 +33,7 @@ import {
   AccordionSummary,
   AccordionDetails,
 } from "@material-ui/core";
-import { getAllBonds, getUserNotes } from "src/slices/BondSliceV2";
+// import { getAllBonds, getUserNotes } from "src/slices/BondSliceV2";
 
 import { Skeleton } from "@material-ui/lab";
 import "./sidebar.scss";
@@ -55,8 +55,8 @@ function NavContent({ handleDrawerToggle }) {
 
   useEffect(() => {
     const interval = setTimeout(() => {
-      dispatch(getAllBonds({ address, networkID: networkId, provider }));
-      dispatch(getUserNotes({ address, networkID: networkId, provider }));
+      // dispatch(getAllBonds({ address, networkID: networkId, provider }));
+      // dispatch(getUserNotes({ address, networkID: networkId, provider }));
     }, 60000);
     return () => clearTimeout(interval);
   });
@@ -115,7 +115,8 @@ function NavContent({ handleDrawerToggle }) {
             <Link target="_self" href="http://localhost:3000/home">
               <img src={OlympusIcon} style={{ minWdth: "200px", minHeight: "125px", width: "200px" }} />
             </Link>
-            <WalletAddressEns />
+
+            {/* <WalletAddressEns /> */}
           </Box>
           <br></br>
           <br></br>

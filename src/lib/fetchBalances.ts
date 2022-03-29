@@ -72,13 +72,13 @@ const addressBalancesByNetwork = (Networks: NetworkId[], balances: Token[], cont
 };
 
 export const fetchCrossChainBalances = async (address: string) => {
-  const balances = await Promise.all(
-    Networks.map(NetworkId => balancesOf(address, NetworkId)),
-    // tokens with same addrs between chains (?)
-  ).then(arr => arr.reduce((acc, networkBalances) => [...acc, ...networkBalances], []));
+  // const balances = await Promise.all(
+  //   Networks.map(NetworkId => balancesOf(address, NetworkId)),
+  //   // tokens with same addrs between chains (?)
+  // ).then(arr => arr.reduce((acc, networkBalances) => [...acc, ...networkBalances], []));
 
-  return {
-    gohm: addressBalancesByNetwork(Networks, balances, "GOHM_ADDRESS"),
-    wsohm: addressBalancesByNetwork(Networks, balances, "WSOHM_ADDRESS"),
-  };
+  // return {
+  //   gohm: addressBalancesByNetwork(Networks, balances, "GOHM_ADDRESS"),
+  //   wsohm: addressBalancesByNetwork(Networks, balances, "WSOHM_ADDRESS"),
+  // };
 };

@@ -1,10 +1,12 @@
 import { ethers, BigNumber, BigNumberish } from "ethers";
 import { contractForRedeemHelper } from "../helpers";
-import { calculateUserBondDetails, getBalances } from "./AccountSlice";
+import { calculateUserBondDetails, fetchAccountSuccess, getBalances } from "./AccountSlice";
 import { findOrLoadMarketPrice } from "./AppSlice";
 import { error, info } from "./MessagesSlice";
 import { clearPendingTxn, fetchPendingTxns } from "./PendingTxnsSlice";
 import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit";
+import { abi as BondDepositoryABI } from "../abi/xchain/BondDepository.json";
+import { abi as BondABI } from "../abi/xchain/Bond.json";
 import { getBondCalculator } from "src/helpers/BondCalculator";
 import { RootState } from "src/store";
 import {
@@ -17,6 +19,7 @@ import {
 } from "./interfaces";
 import { segmentUA } from "../helpers/userAnalyticHelpers";
 import ReactGA from "react-ga";
+import { addresses } from "src/constants";
 
 export const changeApproval = createAsyncThunk(
   "bonding/changeApproval",
@@ -25,25 +28,26 @@ export const changeApproval = createAsyncThunk(
       dispatch(error("Please connect your wallet!"));
       return;
     }
-
     const signer = provider.getSigner();
-    const reserveContract = bond.getContractForReserve(networkID, signer);
-    const bondAddr = bond.getAddressForBond(networkID);
+    const reserveContract = new ethers.Contract(addresses[networkID].BOND_ADDRESS, BondABI, signer);
+    // const reserveContract = bond.getContractForReserve(networkID, signer);
+    // const bondAddr = bond.getAddressForBond(networkID);
 
     let approveTx;
-    let bondAllowance = await reserveContract.allowance(address, bondAddr || "");
-
+    let bondAllowance = 0;
+    // let bondAllowance = await reserveContract.allowance(address, bondAddr || "");
+    // let bondAllowance = await reserveContract.allowance(address, addresses[networkID].);
     // return early if approval already exists
-    if (bondAllowance.gt(BigNumber.from("0"))) {
-      dispatch(info("Approval completed."));
-      dispatch(calculateUserBondDetails({ address, bond, networkID, provider }));
-      return;
-    }
+    // if (bondAllowance.gt(BigNumber.from("0"))) {
+    //   dispatch(info("Approval completed."));
+    //   dispatch(calculateUserBondDetails({ address, bond, networkID, provider }));
+    //   return;
+    // }
 
     try {
       approveTx = await reserveContract.approve(
-        bondAddr || "",
-        ethers.utils.parseUnits("1000000000", "ether").toString(),
+        addresses[networkID].BOND_DEPOSITORY_ADDRESS,
+        ethers.utils.parseEther("10"),
       );
       dispatch(
         fetchPendingTxns({
@@ -57,10 +61,20 @@ export const changeApproval = createAsyncThunk(
       dispatch(error((e as IJsonRPCError).message));
     } finally {
       if (approveTx) {
+        bondAllowance = 1000000000;
         dispatch(clearPendingTxn(approveTx.hash));
-        dispatch(calculateUserBondDetails({ address, bond, networkID, provider }));
+        // dispatch(calculateUserBondDetails({ address, bond, networkID, provider }));
       }
     }
+    // bondAllowance = await reserveContract.allowance(address, bondAddr || "");
+    dispatch(getBalances({ address, networkID, provider }));
+    dispatch(
+      fetchAccountSuccess({
+        bonding: {
+          usdcBond: +bondAllowance,
+        },
+      }),
+    );
   },
 );
 
@@ -82,7 +96,6 @@ export const calcBondDetails = createAsyncThunk(
       value = "0";
     }
     const amountInWei = ethers.utils.parseEther(value);
-
     let bondPrice = BigNumber.from(0),
       bondDiscount = 0,
       valuation = 0,
@@ -214,16 +227,19 @@ export const bondAsset = createAsyncThunk(
   "bonding/bondAsset",
   async ({ value, address, bond, networkID, provider, slippage }: IBondAssetAsyncThunk, { dispatch }) => {
     const depositorAddress = address;
-    const acceptedSlippage = slippage / 100 || 0.005; // 0.5% as default
+    // const acceptedSlippage = slippage / 100 || 0.005; // 0.5% as default
     // parseUnits takes String => BigNumber
-    const valueInWei = ethers.utils.parseUnits(value.toString(), "ether");
+    const valueInWei = ethers.utils.parseEther(value.toString());
     let balance;
     // Calculate maxPremium based on premium and slippage.
     // const calculatePremium = await bonding.calculatePremium();
     const signer = provider.getSigner();
-    const bondContract = bond.getContractForBond(networkID, signer);
-    const calculatePremium = await bondContract.bondPrice();
-    const maxPremium = Math.round(Number(calculatePremium.toString()) * (1 + acceptedSlippage));
+    // const bondContract = bond.getContractForBond(networkID, signer);
+    const bondContract = new ethers.Contract(addresses[networkID].BOND_DEPOSITORY_ADDRESS, BondDepositoryABI, signer);
+    const terms = await bondContract.terms();
+    const minimumPrice = terms.minimumPrice;
+    // const calculatePremium = await bondContract.bondPrice();
+    // const maxPremium = Math.round(Number(calculatePremium.toString()) * (1 + acceptedSlippage));
 
     // Deposit the bond
     let bondTx;
@@ -236,7 +252,7 @@ export const bondAsset = createAsyncThunk(
       txHash: "",
     };
     try {
-      bondTx = await bondContract.deposit(valueInWei, maxPremium, depositorAddress);
+      bondTx = await bondContract.deposit(valueInWei, minimumPrice, depositorAddress, { gasLimit: 500000 });
       dispatch(
         fetchPendingTxns({ txnHash: bondTx.hash, text: "Bonding " + bond.displayName, type: "bond_" + bond.name }),
       );
@@ -245,7 +261,7 @@ export const bondAsset = createAsyncThunk(
       // TODO: it may make more sense to only have it in the finally.
       // UX preference (show pending after txn complete or after balance updated)
 
-      dispatch(calculateUserBondDetails({ address, bond, networkID, provider }));
+      // dispatch(calculateUserBondDetails({ address, bond, networkID, provider }));
     } catch (e: unknown) {
       const rpcError = e as IJsonRPCError;
       if (rpcError.code === -32603 && rpcError.message.indexOf("ds-math-sub-underflow") >= 0) {
@@ -255,18 +271,17 @@ export const bondAsset = createAsyncThunk(
       } else dispatch(error(rpcError.message));
     } finally {
       if (bondTx) {
-        segmentUA(uaData);
-        ReactGA.event({
-          category: "Bonds",
-          action: uaData.type ?? "unknown",
-          value: parseFloat(uaData.value),
-          label: uaData.bondName,
-          dimension1: uaData.txHash ?? "unknown",
-          dimension2: uaData.address,
-        });
+        // segmentUA(uaData);
         dispatch(clearPendingTxn(bondTx.hash));
       }
     }
+    dispatch(
+      fetchAccountSuccess({
+        bonding: {
+          usdcBond: null,
+        },
+      }),
+    );
   },
 );
 
@@ -279,20 +294,21 @@ export const redeemBond = createAsyncThunk(
     }
 
     const signer = provider.getSigner();
-    const bondContract = bond.getContractForBond(networkID, signer);
+    const bondContract = new ethers.Contract(addresses[networkID].BOND_DEPOSITORY_ADDRESS, BondDepositoryABI, signer);
+    // const bondContract = bond.getContractForBond(networkID, signer);
 
     let redeemTx;
     let uaData = {
       address: address,
       type: "Redeem",
-      bondName: bond.displayName,
+      bondName: bond?.displayName,
       autoStake: autostake,
       approved: true,
       txHash: "",
     };
     try {
       redeemTx = await bondContract.redeem(address, autostake === true);
-      const pendingTxnType = "redeem_bond_" + bond.displayName;
+      const pendingTxnType = "redeem_bond_" + bond?.displayName;
       uaData.txHash = redeemTx.hash;
       dispatch(
         fetchPendingTxns({ txnHash: redeemTx.hash, text: "Redeeming " + bond.displayName, type: pendingTxnType }),
@@ -308,14 +324,14 @@ export const redeemBond = createAsyncThunk(
     } finally {
       if (redeemTx) {
         segmentUA(uaData);
-        ReactGA.event({
-          category: "Bonds",
-          action: uaData.type ?? "unknown",
-          label: uaData.bondName,
-          dimension1: uaData.txHash ?? "unknown",
-          dimension2: uaData.address,
-          dimension3: uaData.autoStake.toString(),
-        });
+        // ReactGA.event({
+        //   category: "Bonds",
+        //   action: uaData.type ?? "unknown",
+        //   label: uaData.bondName,
+        //   dimension1: uaData.txHash ?? "unknown",
+        //   dimension2: uaData.address,
+        //   dimension3: uaData.autoStake.toString(),
+        // });
         dispatch(clearPendingTxn(redeemTx.hash));
       }
     }

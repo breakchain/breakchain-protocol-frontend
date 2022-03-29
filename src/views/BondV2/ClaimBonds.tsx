@@ -30,7 +30,7 @@ import "./choosebond.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { ContactSupportOutlined, ExpandMore } from "@material-ui/icons";
 import { useAppSelector } from "src/hooks";
-import { claimAllNotes, IUserNote } from "src/slices/BondSliceV2";
+import { IUserNote } from "src/slices/BondSliceV2";
 import { CurrentIndex } from "../TreasuryDashboard/components/Metric/Metric";
 import { trim } from "src/helpers";
 import { IUserBondDetails } from "src/slices/AccountSlice";
@@ -82,7 +82,7 @@ function ClaimBonds({ activeNotes }: { activeNotes: IUserNote[] }) {
   const totalClaimable = view === 1 ? total : total * +currentIndex;
 
   const onRedeemAll = () => {
-    dispatch(claimAllNotes({ address, provider, networkID: networkId, gOHM: view === 1 }));
+    // dispatch(claimAllNotes({ address, provider, networkID: networkId, gOHM: view === 1 }));
   };
 
   return (

@@ -53,7 +53,7 @@ import { Project } from "src/components/GiveProject/project.type";
 import ProjectInfo from "./views/Give/ProjectInfo";
 import projectData from "src/views/Give/projects.json";
 import Announcement from "./components/Announcement/Announcement";
-import { getAllBonds, getUserNotes } from "./slices/BondSliceV2";
+// import { getAllBonds, getUserNotes } from "./slices/BondSliceV2";
 import Airdrop from "src/views/Airdrop";
 import { NetworkId } from "./constants";
 import Calculator from "./views/Calculator";
@@ -166,10 +166,11 @@ function App() {
       // NOTE (appleseed) - tech debt - better network filtering for active bonds
 
       if (networkId === NetworkId.POLYGON || networkId === NetworkId.POLYGON_TESTNET) {
-        bonds.map(bond => {
-          dispatch(calcBondDetails({ bond, value: "", provider: loadProvider, networkID: networkId }));
-        });
-        dispatch(getAllBonds({ provider: loadProvider, networkID: networkId, address }));
+        console.log("network id is polygon mumbai");
+        // bonds.map(bond => {
+        //   dispatch(calcBondDetails({ bond, value: "", provider: loadProvider, networkID: networkId }));
+        // });
+        // dispatch(getAllBonds({ provider: loadProvider, networkID: networkId, address }));
       }
     },
     [networkId, address],
@@ -180,21 +181,21 @@ function App() {
       if (!providerInitialized) {
         return;
       }
-      dispatch(getUserNotes({ networkID: networkId, address, provider: loadProvider }));
+      // dispatch(getUserNotes({ networkID: networkId, address, provider: loadProvider }));
       dispatch(loadAccountDetails({ networkID: networkId, address, provider: loadProvider }));
       dispatch(getMigrationAllowances({ address, provider: loadProvider, networkID: networkId }));
-      bonds.map(bond => {
-        // NOTE: get any Claimable bonds, they may not be bondable
-        if (bond.getClaimability(networkId)) {
-          dispatch(calculateUserBondDetails({ address, bond, provider: loadProvider, networkID: networkId }));
-        }
-      });
-      dispatch(getZapTokenBalances({ address, networkID: networkId, provider: loadProvider }));
-      expiredBonds.map(bond => {
-        if (bond.getClaimability(networkId)) {
-          dispatch(calculateUserBondDetails({ address, bond, provider: loadProvider, networkID: networkId }));
-        }
-      });
+      // bonds.map(bond => {
+      //   // NOTE: get any Claimable bonds, they may not be bondable
+      //   if (bond.getClaimability(networkId)) {
+      //     dispatch(calculateUserBondDetails({ address, bond, provider: loadProvider, networkID: networkId }));
+      //   }
+      // });
+      // dispatch(getZapTokenBalances({ address, networkID: networkId, provider: loadProvider }));
+      // expiredBonds.map(bond => {
+      //   if (bond.getClaimability(networkId)) {
+      //     dispatch(calculateUserBondDetails({ address, bond, provider: loadProvider, networkID: networkId }));
+      //   }
+      // });
     },
     [networkId, address, providerInitialized],
   );
@@ -346,15 +347,15 @@ function App() {
 
               <Route path="/stake">
                 {/* if newAssets or 0 assets */}
-                {newAssetsDetected || (!newAssetsDetected && !oldAssetsDetected) || !oldAssetsEnoughToMigrate ? (
-                  <Stake />
-                ) : (
+                {/* {newAssetsDetected || (!newAssetsDetected && !oldAssetsDetected) || !oldAssetsEnoughToMigrate ? ( */}
+                <Stake />
+                {/* ) : (
                   <V1Stake
                     hasActiveV1Bonds={hasActiveV1Bonds}
                     oldAssetsDetected={oldAssetsDetected}
                     setMigrationModalOpen={setMigrationModalOpen}
                   />
-                )}
+                )} */}
               </Route>
 
               <Route path="/v1-stake">
@@ -415,25 +416,34 @@ function App() {
             </Route> */}
 
               <Route path="/bonds-v1">
-                {(bonds as IAllBondData[]).map(bond => {
+                {/* {(bonds as IAllBondData[]).map(bond => {
                   return (
                     <Route exact key={bond.name} path={`/bonds-v1/${bond.name}`}>
                       <Bond bond={bond} />
                     </Route>
                   );
-                })}
+                })} */}
                 <ChooseBond />
               </Route>
 
               <Route path="/bonds">
-                {bondIndexes.map(index => {
+                {/* {bondIndexes.map(index => {
                   return (
                     <Route exact key={index} path={`/bonds/${index}`}>
                       <BondV2 index={index} />
                     </Route>
                   );
-                })}
-                <ChooseBondV2 />
+                })} */}
+                {/* {(bonds as IAllBondData[]).map(bond => {
+                  return (
+                    // <Route exact key={bond.name} path={`/bonds-v1/${bond.name}`}>
+                    <Bond />
+                    // </Route>
+                  );
+                })} */}
+                <Bond />
+                {/* <BondV2 index={1} /> */}
+                {/* <ChooseBondV2 /> */}
               </Route>
 
               <Route path="/network">

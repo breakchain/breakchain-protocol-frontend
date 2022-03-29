@@ -1,7 +1,10 @@
 import { ethers, BigNumber } from "ethers";
 import { addresses } from "../constants";
 import { abi as ierc20ABI } from "../abi/IERC20.json";
-import { abi as StakingHelperABI } from "../abi/StakingHelper.json";
+import { abi as oerc20ABI } from "../abi/xchain/OlympusERC20Contract.json";
+import { abi as StakingHelperABI } from "../abi/xchain/StakingHelper.json";
+import { abi as StakingABI } from "../abi/xchain/StakeContract.json";
+import { abi as sOlympusABI } from "../abi/sXchain/sOlympus.json";
 import { clearPendingTxn, fetchPendingTxns, getStakingTypeText } from "./PendingTxnsSlice";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchAccountSuccess, getBalances } from "./AccountSlice";
@@ -26,32 +29,93 @@ interface IUAData {
 }
 
 function alreadyApprovedToken(
-  token: string,
+  // token: string,
   stakeAllowance: BigNumber,
-  unstakeAllowance: BigNumber,
-  stakeAllowanceV2: BigNumber,
-  unstakeAllowanceV2: BigNumber,
-  version2: boolean,
+  // unstakeAllowance: BigNumber,
+  // stakeAllowanceV2: BigNumber,
+  // unstakeAllowanceV2: BigNumber,
+  // version2: boolean,
 ) {
   // set defaults
   let bigZero = BigNumber.from("0");
   let applicableAllowance = bigZero;
   // determine which allowance to check
-  if (token === "ohm" && version2) {
-    applicableAllowance = stakeAllowanceV2;
-  } else if (token === "sohm" && version2) {
-    applicableAllowance = unstakeAllowanceV2;
-  } else if (token === "ohm") {
-    applicableAllowance = stakeAllowance;
-  } else if (token === "sohm") {
-    applicableAllowance = unstakeAllowance;
-  }
+  // if (token === "ohm" && version2) {
+  //   applicableAllowance = stakeAllowanceV2;
+  // } else if (token === "sohm" && version2) {
+  //   applicableAllowance = unstakeAllowanceV2;
+  // } else if (token === "ohm") {
+  applicableAllowance = stakeAllowance;
+  // } else if (token === "sohm") {
+  //   applicableAllowance = unstakeAllowance;
+  // }
 
   // check if allowance exists
   if (applicableAllowance.gt(bigZero)) return true;
 
   return false;
 }
+
+export const stakeApprove = createAsyncThunk(
+  "stake/changeApproval",
+  async (
+    { token = "ohm", provider, address, networkID, version2 }: IChangeApprovalWithVersionAsyncThunk,
+    { dispatch },
+  ) => {
+    if (!provider) {
+      dispatch(error("Please connect your wallet!"));
+      return;
+    }
+    const signer = provider.getSigner();
+    const stakeContract = new ethers.Contract(addresses[networkID].OLYMPUS_ERC20_ADDRESS, oerc20ABI, signer);
+    const unstakeContract = new ethers.Contract(addresses[networkID].SOHM_ADDRESS, sOlympusABI, signer);
+    let approveTx;
+    let stakeAllowance = await stakeContract.allowance(address, addresses[networkID].STAKING_HELPER_ADDRESS);
+    let unstakeAllowance = await unstakeContract.allowance(address, addresses[networkID].STAKING_ADDRESS);
+
+    try {
+      if (token === "ohm") {
+        approveTx = await stakeContract.approve(
+          addresses[networkID].STAKING_HELPER_ADDRESS,
+          ethers.utils.parseUnits("1000000000", "gwei").toString(),
+        );
+      } else {
+        approveTx = await unstakeContract.approve(
+          addresses[networkID].STAKING_ADDRESS,
+          ethers.utils.parseUnits("1000000000", "gwei").toString(),
+        );
+      }
+
+      const text = "Approve " + (token === "ohm" ? "Staking" : "Unstaking");
+      const pendingTxnType = token === "ohm" ? "approve_staking" : "approve_unstaking";
+      if (approveTx) {
+        dispatch(fetchPendingTxns({ txnHash: approveTx.hash, text, type: pendingTxnType }));
+
+        await approveTx.wait();
+      }
+    } catch (e: unknown) {
+      dispatch(error((e as IJsonRPCError).message));
+      return;
+    } finally {
+      if (approveTx) {
+        dispatch(clearPendingTxn(approveTx.hash));
+        dispatch(info("Successfully Approved!"));
+      }
+    }
+
+    stakeAllowance = await stakeContract.allowance(address, addresses[networkID].STAKING_HELPER_ADDRESS);
+    unstakeAllowance = await unstakeContract.allowance(address, addresses[networkID].STAKING_ADDRESS);
+    dispatch(getBalances({ address, networkID, provider }));
+    return dispatch(
+      fetchAccountSuccess({
+        staking: {
+          ohmStake: +stakeAllowance,
+          ohmUnstake: +unstakeAllowance,
+        },
+      }),
+    );
+  },
+);
 
 export const changeApproval = createAsyncThunk(
   "stake/changeApproval",
@@ -71,19 +135,19 @@ export const changeApproval = createAsyncThunk(
     let stakeAllowanceV2 = await ohmV2Contract.allowance(address, addresses[networkID].STAKING_V2);
     let unstakeAllowanceV2 = await sohmV2Contract.allowance(address, addresses[networkID].STAKING_V2);
     // return early if approval has already happened
-    if (alreadyApprovedToken(token, stakeAllowance, unstakeAllowance, stakeAllowanceV2, unstakeAllowanceV2, version2)) {
-      dispatch(info("Approval completed."));
-      return dispatch(
-        fetchAccountSuccess({
-          staking: {
-            ohmStakeV1: +stakeAllowance,
-            ohmUnstakeV1: +unstakeAllowance,
-            ohmStake: +stakeAllowanceV2,
-            ohmUnstake: +unstakeAllowanceV2,
-          },
-        }),
-      );
-    }
+    // if (alreadyApprovedToken(token, stakeAllowance, unstakeAllowance, stakeAllowanceV2, unstakeAllowanceV2, version2)) {
+    //   dispatch(info("Approval completed."));
+    //   return dispatch(
+    //     fetchAccountSuccess({
+    //       staking: {
+    //         ohmStakeV1: +stakeAllowance,
+    //         ohmUnstakeV1: +unstakeAllowance,
+    //         ohmStake: +stakeAllowanceV2,
+    //         ohmUnstake: +unstakeAllowanceV2,
+    //       },
+    //     }),
+    //   );
+    // }
 
     try {
       if (version2) {
@@ -101,12 +165,12 @@ export const changeApproval = createAsyncThunk(
       } else {
         if (token === "ohm") {
           approveTx = await ohmContract.approve(
-            addresses[networkID].STAKING_ADDRESS,
+            addresses[networkID].STAKING_HELPER_ADDRESS,
             ethers.utils.parseUnits("1000000000", "gwei").toString(),
           );
         } else if (token === "sohm") {
           approveTx = await sohmContract.approve(
-            addresses[networkID].STAKING_ADDRESS,
+            addresses[networkID].STAKING_HELPER_ADDRESS,
             ethers.utils.parseUnits("1000000000", "gwei").toString(),
           );
         }
@@ -157,15 +221,21 @@ export const changeStake = createAsyncThunk(
 
     const signer = provider.getSigner();
 
-    const staking = OlympusStaking__factory.connect(addresses[networkID].STAKING_ADDRESS, signer);
-
+    const staking = new ethers.Contract(addresses[networkID].STAKING_ADDRESS as string, StakingABI, signer);
     const stakingHelper = new ethers.Contract(
       addresses[networkID].STAKING_HELPER_ADDRESS as string,
       StakingHelperABI,
       signer,
-    ) as StakingHelper;
+    );
+    // const staking = OlympusStaking__factory.connect(addresses[networkID].STAKING_ADDRESS, signer);
 
-    const stakingV2 = OlympusStakingv2__factory.connect(addresses[networkID].STAKING_V2, signer);
+    // const stakingHelper = new ethers.Contract(
+    //   addresses[networkID].STAKING_HELPER_ADDRESS as string,
+    //   StakingHelperABI,
+    //   signer,
+    // );
+
+    // const stakingV2 = OlympusStakingv2__factory.connect(addresses[networkID].STAKING_V2, signer);
 
     let stakeTx;
     let uaData: IUAData = {
@@ -176,32 +246,32 @@ export const changeStake = createAsyncThunk(
       type: null,
     };
     try {
-      if (version2) {
-        let rebasing = true; // when true stake into sOHM
-        if (action === "stake") {
-          uaData.type = "stake";
-          // 3rd arg is rebase
-          // 4th argument is claim default to true
-          stakeTx = rebase
-            ? await stakingV2.stake(address, ethers.utils.parseUnits(value, "gwei"), true, true)
-            : await stakingV2.stake(address, ethers.utils.parseUnits(value, "gwei"), false, true);
-        } else {
-          uaData.type = "unstake";
-          // 3rd arg is trigger default to true for mainnet and false for rinkeby
-          // 4th arg is rebasing
-          stakeTx = rebase
-            ? await stakingV2.unstake(address, ethers.utils.parseUnits(value, "gwei"), true, true)
-            : await stakingV2.unstake(address, ethers.utils.parseUnits(value, "ether"), true, false);
-        }
+      // if (version2) {
+      // let rebasing = true; // when true stake into sOHM
+      // if (action === "stake") {
+      //   uaData.type = "stake";
+      //   // 3rd arg is rebase
+      //   // 4th argument is claim default to true
+      //   stakeTx = rebase
+      //     ? await stakingV2.stake(address, ethers.utils.parseUnits(value, "gwei"), true, true)
+      //     : await stakingV2.stake(address, ethers.utils.parseUnits(value, "gwei"), false, true);
+      // } else {
+      //   uaData.type = "unstake";
+      //   // 3rd arg is trigger default to true for mainnet and false for rinkeby
+      //   // 4th arg is rebasing
+      //   stakeTx = rebase
+      //     ? await stakingV2.unstake(address, ethers.utils.parseUnits(value, "gwei"), true, true)
+      //     : await stakingV2.unstake(address, ethers.utils.parseUnits(value, "ether"), true, false);
+      // }
+      // } else {
+      if (action === "stake") {
+        uaData.type = "stake";
+        stakeTx = await stakingHelper.stake(ethers.utils.parseUnits(value, "gwei"), { gasLimit: 313447 });
       } else {
-        if (action === "stake") {
-          uaData.type = "stake";
-          stakeTx = await stakingHelper.stake(ethers.utils.parseUnits(value, "gwei"));
-        } else {
-          uaData.type = "unstake";
-          stakeTx = await staking.unstake(ethers.utils.parseUnits(value, "gwei"), true);
-        }
+        uaData.type = "unstake";
+        stakeTx = await staking.unstake(ethers.utils.parseUnits(value, "gwei"), { gasLimit: 2346648 });
       }
+      // }
       const pendingTxnType = action === "stake" ? "staking" : "unstaking";
       uaData.txHash = stakeTx.hash;
       dispatch(fetchPendingTxns({ txnHash: stakeTx.hash, text: getStakingTypeText(action), type: pendingTxnType }));
@@ -219,18 +289,17 @@ export const changeStake = createAsyncThunk(
       return;
     } finally {
       if (stakeTx) {
-        segmentUA(uaData);
-        ReactGA.event({
-          category: "Staking",
-          action: uaData.type ?? "unknown",
-          value: parseFloat(uaData.value),
-          label: uaData.txHash ?? "unknown",
-          dimension1: uaData.txHash ?? "unknown",
-          dimension2: uaData.address,
-        });
+        // segmentUA(uaData);
         dispatch(clearPendingTxn(stakeTx.hash));
       }
     }
     dispatch(getBalances({ address, networkID, provider }));
+    dispatch(
+      fetchAccountSuccess({
+        staking: {
+          ohmStake: null,
+        },
+      }),
+    );
   },
 );

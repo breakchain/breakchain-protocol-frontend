@@ -145,10 +145,11 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
     setAddress(connectedAddress);
     let networkHash = await initNetworkFunc({ provider: connectedProvider });
     console.log("networkHash", networkHash);
-    // setNetworkId(networkHash.networkId);
+    setNetworkId(networkHash.networkId);
     // setNetworkName(networkHash.networkName);
     // setProviderUri(networkHash.uri);
     // setProviderInitialized(networkHash.initialized);
+    setProviderInitialized(true);
     // Keep this at the bottom of the method, to ensure any repaints have the data we need
     setConnected(true);
 

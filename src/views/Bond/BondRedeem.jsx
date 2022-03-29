@@ -40,9 +40,10 @@ function BondRedeem({ bond }) {
   };
 
   const vestingPeriod = () => {
-    const vestingBlock = parseInt(currentBlock) + parseInt(bondingState.vestingTerm);
-    const seconds = secondsUntilBlock(currentBlock, vestingBlock);
-    return prettifySeconds(seconds, "day");
+    // const vestingBlock = parseInt(currentBlock) + parseInt(bondingState.vestingTerm);
+    // const seconds = secondsUntilBlock(currentBlock, vestingBlock);
+    // return prettifySeconds(seconds, "day");
+    return "7 Day";
   };
 
   // useEffect(() => {
@@ -71,7 +72,7 @@ function BondRedeem({ bond }) {
             >
               {txnButtonText(pendingTransactions, "redeem_bond_" + bond.name, t`Claim`)}
             </Button>
-            <Button
+            {/* <Button
               variant="contained"
               color="primary"
               id="bond-claim-autostake-btn"
@@ -86,7 +87,7 @@ function BondRedeem({ bond }) {
               }}
             >
               {txnButtonText(pendingTransactions, "redeem_bond_" + bond.name + "_autostake", t`Claim and Autostake`)}
-            </Button>
+            </Button> */}
           </>
         )}
       </Box>

@@ -3,7 +3,7 @@ import { useHistory } from "react-router";
 import { usePathForNetwork } from "src/hooks/usePathForNetwork";
 import { t, Trans } from "@lingui/macro";
 import { formatCurrency, trim } from "../../helpers";
-import { Backdrop, Box, Fade, Grid, Paper, Tab, Tabs, Typography } from "@material-ui/core";
+import { Backdrop, Box, Fade, Grid, Paper, Tab, Tabs, Typography, Zoom } from "@material-ui/core";
 import TabPanel from "../../components/TabPanel";
 import BondHeader from "./BondHeader";
 import BondRedeem from "./BondRedeem";
@@ -12,7 +12,7 @@ import "./bond.scss";
 import { useWeb3Context } from "src/hooks/web3Context";
 import { Skeleton } from "@material-ui/lab";
 import { useAppSelector } from "src/hooks";
-import { getAllBonds, getUserNotes, IBondV2 } from "src/slices/BondSliceV2";
+import { IBondV2 } from "src/slices/BondSliceV2";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "src/store";
 
@@ -50,39 +50,37 @@ const BondV2 = ({ index }: { index: number }) => {
   }, [provider, address]);
 
   return (
-    <Fade in={true} mountOnEnter unmountOnExit>
-      <Grid container id="bond-view">
-        <Backdrop open={true} onClick={onClickAway}>
-          <Fade in={true}>
-            <Paper className="ohm-card ohm-modal" onClick={onClickModal}>
-              <BondHeader
+    // <Fade in={true} mountOnEnter unmountOnExit>
+    <Zoom in={true}>
+      {/* <Backdrop open={true} onClick={onClickAway}>
+        <Fade in={true}> */}
+      <Paper className="ohm-card ohm-modal" onClick={onClickModal}>
+        {/* <BondHeader
                 bond={bond}
                 slippage={slippage}
                 recipientAddress={recipientAddress}
                 onSlippageChange={onSlippageChange}
                 onRecipientAddressChange={onRecipientAddressChange}
-              />
-
-              <Box display="flex" flexDirection="row" className="bond-price-data-row">
-                <div className="bond-price-data">
-                  <Typography variant="h5" color="textSecondary">
-                    <Trans>Bond Price</Trans>
-                  </Typography>
-                  <Typography variant="h3" className="price" color="primary">
-                    <>{isBondLoading ? <Skeleton width="50px" /> : <DisplayBondPrice key={bond.index} bond={bond} />}</>
-                  </Typography>
-                </div>
-                <div className="bond-price-data">
-                  <Typography variant="h5" color="textSecondary">
-                    <Trans>Market Price</Trans>
-                  </Typography>
-                  <Typography variant="h3" color="primary" className="price">
-                    {isBondLoading ? <Skeleton /> : formatCurrency(bond.marketPrice, 2)}
-                  </Typography>
-                </div>
-              </Box>
-
-              {/* <Tabs
+              /> */}
+        <Box display="flex" flexDirection="row" className="bond-price-data-row">
+          <div className="bond-price-data">
+            <Typography variant="h5" color="textSecondary">
+              <Trans>Bond Price</Trans>
+            </Typography>
+            <Typography variant="h3" className="price" color="primary">
+              <>{isBondLoading ? <Skeleton width="50px" /> : <DisplayBondPrice key={bond?.index} bond={bond} />}</>
+            </Typography>
+          </div>
+          <div className="bond-price-data">
+            <Typography variant="h5" color="textSecondary">
+              <Trans>Market Price</Trans>
+            </Typography>
+            <Typography variant="h3" color="primary" className="price">
+              {isBondLoading ? <Skeleton /> : formatCurrency(bond?.marketPrice, 2)}
+            </Typography>
+          </div>
+        </Box>
+        {/* <Tabs
                 centered
                 value={view}
                 textColor="primary"
@@ -100,24 +98,22 @@ const BondV2 = ({ index }: { index: number }) => {
                 />
                 <Tab aria-label="redeem-tab-button" label={t`Redeem`} {...a11yProps(1)} />
               </Tabs> */}
-
-              {/* <TabPanel value={view} index={0}> */}
-              <BondPurchase bond={bond} slippage={slippage} recipientAddress={recipientAddress} />
-              {/* </TabPanel> */}
-
-              {/* <TabPanel value={view} index={1}>
+        {/* <TabPanel value={view} index={0}> */}
+        <BondPurchase bond={bond} slippage={slippage} recipientAddress={recipientAddress} />
+        {/* </TabPanel> */}
+        {/* <TabPanel value={view} index={1}>
                 <BondRedeem bond={bond} />
               </TabPanel> */}
-            </Paper>
-          </Fade>
-        </Backdrop>
-      </Grid>
-    </Fade>
+      </Paper>
+      {/* </Fade>
+      </Backdrop> */}
+    </Zoom>
+    // {/* </Fade> */}
   );
 };
 
 export const DisplayBondPrice = ({ bond }: { bond: IBondV2 }): ReactElement => {
-  if (typeof bond.priceUSD === undefined) {
+  if (typeof bond?.priceUSD === undefined) {
     return <Fragment>--</Fragment>;
   }
 
@@ -128,16 +124,16 @@ export const DisplayBondPrice = ({ bond }: { bond: IBondV2 }): ReactElement => {
         currency: "USD",
         maximumFractionDigits: 2,
         minimumFractionDigits: 2,
-      }).format(bond.priceUSD)}
+      }).format(bond?.priceUSD)}
     </Fragment>
   );
 };
 
 export const DisplayBondDiscount = ({ bond }: { bond: IBondV2 }): ReactElement => {
-  if (typeof bond.discount === undefined) {
+  if (typeof bond?.discount === undefined) {
     return <Fragment>--</Fragment>;
   }
 
-  return <Fragment>{bond.discount && trim(bond.discount * 100, 2)}%</Fragment>;
+  return <Fragment>{bond?.discount && trim(bond?.discount * 100, 2)}%</Fragment>;
 };
 export default BondV2;
