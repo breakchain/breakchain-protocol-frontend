@@ -89,6 +89,9 @@ function NavContent({ handleDrawerToggle }) {
     if ((currentPath.indexOf("bonds") >= 0 || currentPath.indexOf("choose_bond") >= 0) && page === "bonds") {
       return true;
     }
+    if (currentPath.indexOf("whitepaper") >= 0 && page === "whitepaper") {
+      return true;
+    }
     if (currentPath.indexOf("33-together") >= 0 && page === "33-together") {
       return true;
     }
@@ -109,24 +112,31 @@ function NavContent({ handleDrawerToggle }) {
       <Box className="dapp-sidebar-inner" display="flex" justifyContent="space-between" flexDirection="column">
         <div className="dapp-menu-top">
           <Box className="branding-header">
-            <Link href="https://olympusdao.finance" target="_blank">
+            <Link target="_self" href="http://localhost:3000/home">
               <img src={OlympusIcon} style={{ minWdth: "200px", minHeight: "125px", width: "200px" }} />
             </Link>
 
             {/* <WalletAddressEns /> */}
           </Box>
-
+          <br></br>
+          <br></br>
+          <br></br>
           <div className="dapp-menu-links">
             <div className="dapp-nav" id="navbarNav">
               <Link
-                component={NavLink}
+                // component={NavLink}
                 id="dash-nav"
-                to="/home"
+                // to="home"
+                target="_self"
+                href="http://localhost:3000/home"
+                isActive={(match, location) => {
+                  return checkPage(match, location, "bonds");
+                }}
                 className={`button-dapp-menu ${isActive ? "active" : ""}`}
                 onClick={handleDrawerToggle}
               >
                 <Typography variant="h6">
-                  <Trans>Home</Trans>
+                  <Trans>HOME</Trans>
                 </Typography>
               </Link>
               <Link
@@ -141,7 +151,7 @@ function NavContent({ handleDrawerToggle }) {
               >
                 <Typography variant="h6">
                   {/* <SvgIcon color="primary" component={DashboardIcon} /> */}
-                  <Trans>Dashboard</Trans>
+                  <Trans>DASHBOARD</Trans>
                 </Typography>
               </Link>
 
@@ -163,20 +173,19 @@ function NavContent({ handleDrawerToggle }) {
               >
                 <Typography variant="h6">
                   {/* <SvgIcon color="primary" component={StakeIcon} /> */}
-                  <Trans>Staking</Trans>
+                  <Trans>STAKING</Trans>
                 </Typography>
               </Link>
-              <Link
+              {/* <Link
                 id="stake"
                 component={NavLink}
                 to="/calculator"
                 className={`button-dapp-menu ${isActive ? "active" : ""}`}
               >
                 <Typography variant="h6">
-                  {/* <SvgIcon color="primary" component={InfoIcon} /> */}
                   <Trans>ROI Projections</Trans>
                 </Typography>
-              </Link>
+              </Link> */}
               <Link
                 id="stake"
                 component={NavLink}
@@ -185,7 +194,7 @@ function NavContent({ handleDrawerToggle }) {
               >
                 <Typography variant="h6">
                   {/* <SvgIcon color="primary" component={ZapIcon} /> */}
-                  <Trans>Rewards</Trans>
+                  <Trans>REWARDS</Trans>
                 </Typography>
               </Link>
               <Link
@@ -200,13 +209,28 @@ function NavContent({ handleDrawerToggle }) {
               >
                 <Typography variant="h6">
                   {/* <SvgIcon color="primary" component={BondIcon} /> */}
-                  <Trans>Bonds</Trans>
+                  <Trans>BONDS</Trans>
+                </Typography>
+              </Link>
+              <Link
+                component={NavLink}
+                id="whitepaper-nav"
+                to="/whitepaper"
+                isActive={(match, location) => {
+                  return checkPage(match, location, "whitepaper");
+                }}
+                className={`button-dapp-menu ${isActive ? "active" : ""}`}
+                onClick={handleDrawerToggle}
+              >
+                <Typography variant="h6">
+                  {/* <SvgIcon color="primary" component={BondIcon} /> */}
+                  <Trans>WHITE PAPER</Trans>
                 </Typography>
               </Link>
             </div>
           </div>
         </div>
-        <br></br>
+        {/* <br></br>
         <br></br>
         <br></br>
         <Box className="dapp-menu-bottom" display="flex" justifyContent="space-between" flexDirection="column">
@@ -230,7 +254,7 @@ function NavContent({ handleDrawerToggle }) {
           <div className="dapp-menu-social">
             <Social />
           </div>
-        </Box>
+        </Box> */}
       </Box>
     </Paper>
   );
