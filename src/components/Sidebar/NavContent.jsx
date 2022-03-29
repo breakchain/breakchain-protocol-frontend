@@ -230,12 +230,12 @@ function NavContent({ handleDrawerToggle }) {
             </div>
           </div>
         </div>
-        {/* <br></br>
+        <br></br>
         <br></br>
         <br></br>
         <Box className="dapp-menu-bottom" display="flex" justifyContent="space-between" flexDirection="column">
           <div className="dapp-menu-external-links">
-            {Object.keys(externalUrls).map((link, i) => {
+            {/* {Object.keys(externalUrls).map((link, i) => {
               return (
                 <Link
                   key={i}
@@ -249,12 +249,12 @@ function NavContent({ handleDrawerToggle }) {
                   <SvgIcon component={ArrowUpIcon} className="external-site-link-icon" />
                 </Link>
               );
-            })}
+            })} */}
           </div>
           <div className="dapp-menu-social">
             <Social />
           </div>
-        </Box> */}
+        </Box>
       </Box>
     </Paper>
   );
