@@ -88,7 +88,7 @@ const useStyles = makeStyles(theme => ({
     height: "100%",
     overflow: "auto",
     marginLeft: drawerWidth,
-    background: "linear-gradient(lightgray, #ABCFDE, #b5cfdb, #33C9FE)",
+    background: "linear-gradient(lightgray, #92cee4)",
   },
   contentShift: {
     transition: theme.transitions.create("margin", {
