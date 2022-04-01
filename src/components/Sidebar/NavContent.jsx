@@ -251,31 +251,9 @@ function NavContent({ handleDrawerToggle }) {
             </div>
           </div>
         </div>
-        <br></br>
-        <br></br>
-        <br></br>
-        <Box className="dapp-menu-bottom" display="flex" justifyContent="space-between" flexDirection="column">
-          <div className="dapp-menu-external-links">
-            {/* {Object.keys(externalUrls).map((link, i) => {
-              return (
-                <Link
-                  key={i}
-                  href={`${externalUrls[link].url}`}
-                  target="_blank"
-                  className="external-site-link"
-                  onClick={handleDrawerToggle}
-                >
-                  <Typography variant="h6">{externalUrls[link].icon}</Typography>
-                  <Typography variant="h6">{externalUrls[link].title}</Typography>
-                  <SvgIcon component={ArrowUpIcon} className="external-site-link-icon" />
-                </Link>
-              );
-            })} */}
-          </div>
-          <div className="dapp-menu-social">
-            <Social />
-          </div>
-        </Box>
+        <div className="dapp-menu-social">
+          <Social />
+        </div>
       </Box>
     </Paper>
   );
