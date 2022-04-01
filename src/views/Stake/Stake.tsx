@@ -516,7 +516,7 @@ function Stake() {
                     <DataRow
                       title={`Your Balance`}
                       id="user-balance"
-                      balance={`${trim(Number(ohmBalance), 4)} XCHAIN`}
+                      balance={`${trim(Number(xChainBalance), 4)} XCHAIN`}
                       isLoading={isAppLoading}
                     />
                     <Accordion className="stake-accordion" square defaultExpanded>
@@ -524,7 +524,7 @@ function Stake() {
                         <DataRow
                           title={`Your Staked Balance`}
                           id="user-staked-balance"
-                          balance={`${trimmedBalance} XCHAIN`}
+                          balance={`${sXChainBalance} sXCHAIN`}
                           isLoading={isAppLoading}
                         />
                       </AccordionSummary>
