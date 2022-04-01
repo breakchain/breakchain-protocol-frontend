@@ -1,18 +1,18 @@
 @font-face {
     font-family: "poppins";
-    src: url("assets/fonts/Poppins-Regular.woff") format('woff');
+    src: url("../assets/fonts/Poppins-Regular.woff") format('woff');
     font-weight:400
 }
 
 @font-face {
     font-family: "myfont";
-    src: url("assets/fonts/Poppins-Bold.woff") format('woff');
+    src: url("../assets/fonts/Poppins-Bold.woff") format('woff');
     font-weight: bold;
 }
 
 @font-face {
     font-family: "myfont";
-    src: url("assets/fonts/Poppins-Italic.woff") format('woff');
+    src: url("../assets/fonts/Poppins-Italic.woff") format('woff');
     font-style: italic;
 }
 
@@ -22,19 +22,38 @@ body {
   font-weight: bold;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: black;
-  color:white;
+  background-color: white;
+  color:black;
+  margin-top :130px;
 }
 header {
     background-color: black;
+    position: absolute;
+    top: 0px; 
+    left:0px;
+    width:100%;
+    padding:10px 10px;
 }
 .main {
-    background-color: white;
-    color:black;
-    background-image: "assets/images/breakchain/logo_black_sm.png";
-    padding:10px 10px;
+    background-image: url('../assets/images/breakchain/logo_black_sm.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
     text-align: center;
 }
 footer {
     padding:10px 10px;
+    margin:0 0;
+    height: 150px;
+    position: absolute;
+    bottom: 0px;
+    left:0px;
+    width: 100%;
+    background-color: black;
+    color:white;
+}
+.partner {
+    display: block;
+    float:left;
+    padding: 5px;
 }
