@@ -1,0 +1,40 @@
+@font-face {
+    font-family: "poppins";
+    src: url("assets/fonts/Poppins-Regular.woff") format('woff');
+    font-weight:400
+}
+
+@font-face {
+    font-family: "myfont";
+    src: url("assets/fonts/Poppins-Bold.woff") format('woff');
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: "myfont";
+    src: url("assets/fonts/Poppins-Italic.woff") format('woff');
+    font-style: italic;
+}
+
+
+body {
+  font-family: poppins;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: black;
+  color:white;
+}
+header {
+    background-color: black;
+}
+.main {
+    background-color: white;
+    color:black;
+    background-image: "assets/images/breakchain/logo_black_sm.png";
+    padding:10px 10px;
+    text-align: center;
+}
+footer {
+    padding:10px 10px;
+}
