@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Typography, Box, Slide } from "@material-ui/core";
 import { t, Trans } from "@lingui/macro";
@@ -12,11 +12,19 @@ import ConnectButton from "../../components/ConnectButton";
 import { DataRow } from "@olympusdao/component-library";
 
 function BondRedeem({ bond }) {
-  // const { bond: bondName } = bond;
   const dispatch = useDispatch();
   const { provider, address, networkId } = useWeb3Context();
+  const [isBondLoading, setLoading] = useState(true);
 
-  const isBondLoading = useSelector(state => state.bonding.loading ?? true);
+  const appData = useSelector(state => {
+    return state.app;
+  });
+
+  useEffect(() => {
+    if (appData && (appData.vestTerm || appData.maxBuy || appData.bondROI)) {
+      setLoading(false);
+    }
+  }, [setLoading, appData]);
 
   const currentBlock = useSelector(state => {
     return state.app.currentBlock;
@@ -39,18 +47,9 @@ function BondRedeem({ bond }) {
     return prettyVestingPeriod(currentBlock, bond.bondMaturationBlock);
   };
 
-  const vestingPeriod = () => {
-    // const vestingBlock = parseInt(currentBlock) + parseInt(bondingState.vestingTerm);
-    // const seconds = secondsUntilBlock(currentBlock, vestingBlock);
-    // return prettifySeconds(seconds, "day");
-    return "7 Day";
+  const vestingPeriod = data => {
+    return `${data} Days`;
   };
-
-  // useEffect(() => {
-  //   console.log(bond);
-  //   console.log(bondingState);
-  //   console.log(bondDetails);
-  // }, []);
 
   return (
     <Box display="flex" flexDirection="column">
@@ -72,41 +71,29 @@ function BondRedeem({ bond }) {
             >
               {txnButtonText(pendingTransactions, "redeem_bond_" + bond.name, t`Claim`)}
             </Button>
-            {/* <Button
-              variant="contained"
-              color="primary"
-              id="bond-claim-autostake-btn"
-              className="transaction-button"
-              fullWidth
-              disabled={
-                isPendingTxn(pendingTransactions, "redeem_bond_" + bond.name + "_autostake") ||
-                bond.pendingPayout == 0.0
-              }
-              onClick={() => {
-                onRedeem({ autostake: true });
-              }}
-            >
-              {txnButtonText(pendingTransactions, "redeem_bond_" + bond.name + "_autostake", t`Claim and Autostake`)}
-            </Button> */}
           </>
         )}
       </Box>
       <Slide direction="right" in={true} mountOnEnter unmountOnExit {...{ timeout: 533 }}>
         <Box className="bond-data">
-          <DataRow title={t`Pending Rewards`} balance={`${trim(bond.interestDue, 4)} OHM`} isLoading={isBondLoading} />
+          <DataRow title={t`Pending Rewards`} balance={`${trim(bond.interestDue, 4)} USDC`} isLoading={isBondLoading} />
           <DataRow
             title={t`Claimable Rewards`}
-            balance={`${trim(bond.pendingPayout, 4)} OHM`}
+            balance={`${trim(bond.pendingPayout, 4)} USDC`}
             isLoading={isBondLoading}
           />
           <DataRow title={t`Time until fully vested`} balance={vestingTime()} isLoading={isBondLoading} />
           <DataRow
             title={t`ROI`}
-            balance={<DisplayBondDiscount key={bond.name} bond={bond} />}
+            balance={<DisplayBondDiscount key={bond.bondROI} bond={bond} />}
             isLoading={isBondLoading}
           />
-          <DataRow title={t`Debt Ratio`} balance={`${trim(bond.debtRatio / 10000000, 2)}%`} isLoading={isBondLoading} />
-          <DataRow title={t`Vesting Term`} balance={vestingPeriod()} isLoading={isBondLoading} />
+          <DataRow
+            title={t`Debt Ratio`}
+            balance={`${trim(appData.debtRatio / 10000000, 2)}%`}
+            isLoading={isBondLoading}
+          />
+          <DataRow title={t`Vesting Term`} balance={vestingPeriod(appData.vestTerm)} isLoading={isBondLoading} />
         </Box>
       </Slide>
     </Box>

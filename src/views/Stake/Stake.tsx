@@ -60,15 +60,35 @@ function Stake() {
 
   const isAppLoading = useAppSelector(state => state.app.loading);
 
-  const sOhmPrice = useSelector((state: any) => {
-    return state.app.marketPrice;
+  const stakeXChainPrice = useSelector((state: any) => {
+    return state.app.stakeXChainPrice;
   });
-  const currentIndex = useAppSelector(state => {
-    return state.app.currentIndex ?? "1";
+  const nextRewardYield = useSelector((state: any) => {
+    return state.app.nextRewardYield || 0;
+  });
+  const stakingAPY = useAppSelector(state => {
+    return state.app.stakeApy || 0;
+  });
+  const stakingTVL = useAppSelector(state => {
+    return state.app.stakeTotalLock || 0;
+  });
+  const nextRewardValue = useAppSelector(state => {
+    return state.app.nextRewardAmount || 0;
   });
   const fiveDayRate = useAppSelector(state => {
     return state.app.fiveDayRate;
   });
+  const earningDay = useAppSelector((state: any) => {
+    return state.app.earningDay || 0;
+  });
+  const position = useAppSelector((state: any) => {
+    return state.app.position || 0;
+  });
+
+  const currentIndex = useAppSelector(state => {
+    return state.app.currentIndex ?? "1";
+  });
+
   const ohmBalance = useAppSelector(state => {
     return state.account.balances && state.account.balances.ohm;
   });
@@ -156,12 +176,6 @@ function Stake() {
 
   const stakingRebase = useAppSelector(state => {
     return state.app.stakingRebase || 0;
-  });
-  const stakingAPY = useAppSelector(state => {
-    return state.app.stakingAPY || 0;
-  });
-  const stakingTVL = useAppSelector(state => {
-    return state.app.stakingTVL || 0;
   });
 
   const pendingTransactions = useAppSelector(state => {
@@ -290,8 +304,8 @@ function Stake() {
   );
   const trimmedStakingAPY = trim(stakingAPY * 100, 1);
 
-  const stakingRebasePercentage = trim(stakingRebase * 100, 4);
-  const nextRewardValue = trim((Number(stakingRebasePercentage) / 100) * trimmedBalance, 4);
+  // const stakingRebasePercentage = trim(stakingRebase * 100, 4);
+  // const nextRewardValue = trim((Number(stakingRebasePercentage) / 100) * trimmedBalance, 4);
 
   const formattedTrimmedStakingAPY = new Intl.NumberFormat("en-US").format(Number(trimmedStakingAPY));
   const formattedStakingTVL = new Intl.NumberFormat("en-US", {
@@ -343,8 +357,8 @@ function Stake() {
                 <Metric
                   className="stake-index"
                   label={`XCHAIN ${t`Price`}`}
-                  metric={formatCurrency(sOhmPrice, 2)}
-                  isLoading={sOhmPrice ? false : true}
+                  metric={formatCurrency(stakeXChainPrice, 2)}
+                  isLoading={stakeXChainPrice ? false : true}
                 />
               </MetricCollection>
             </Grid>
@@ -621,11 +635,7 @@ function Stake() {
                       balance={`${nextRewardValue} XCHAIN`}
                       isLoading={isAppLoading}
                     />
-                    <DataRow
-                      title={t`Next Reward Yield`}
-                      balance={`${stakingRebasePercentage}%`}
-                      isLoading={isAppLoading}
-                    />
+                    <DataRow title={t`Next Reward Yield`} balance={`${nextRewardYield}%`} isLoading={isAppLoading} />
                     <DataRow
                       title={t`ROI (5-Day Rate)`}
                       balance={`${trim(Number(fiveDayRate) * 100, 4)}%`}
@@ -633,14 +643,10 @@ function Stake() {
                     />
                     <DataRow
                       title="Your Earnings Per Day"
-                      balance={`$${Number(nextRewardValue) * 3 * Number(sOhmPrice)}`}
+                      balance={earningDay && `$${earningDay}`}
                       isLoading={isAppLoading}
                     />
-                    <DataRow
-                      title="Position"
-                      balance={`${(Number(trimmedBalance) * Number(sOhmPrice)).toFixed(2)}`}
-                      isLoading={isAppLoading}
-                    />
+                    <DataRow title="Position" balance={position && `${position.toFixed(2)}`} isLoading={isAppLoading} />
                     {/* <DataRow
                       title="Position"
                       balance={`${(Number(stakingTVL) / Number(currentIndex)).toFixed(2)}`}

@@ -32,10 +32,16 @@ export const loadAppDetails = createAsyncThunk(
       .then(res => {
         return res;
       });
-    // if (networkID !== NetworkId.POLYGON) {
-    //   provider = NodeHelper.getMainnetStaticProvider();
-    //   networkID = NetworkId.POLYGON;
-    // }
+    const stakeMetrics = await fetch("https://breakchain.money/api/stakingMetrics")
+      .then(resp => resp.json())
+      .then(res => {
+        return res;
+      });
+    const bondMetrics = await fetch("https://breakchain.money/api/bondingMetrics")
+      .then(resp => resp.json())
+      .then(res => {
+        return res;
+      });
     let marketPrice;
     try {
       const originalPromiseResult = await dispatch(
@@ -56,12 +62,21 @@ export const loadAppDetails = createAsyncThunk(
     const treasureAsset = parseFloat(metricsData.body["treasury-assets"]);
     const treasureBack = parseFloat(metricsData.body["treasury-backing"]);
     const xChainStaked = parseFloat(metricsData.body["xchain-staked"]);
-    // console.log("marketCap ==========>", marketPrice);
-    // const circSupply = parseFloat(graphData.data.protocolMetrics[0].ohmCirculatingSupply);
-    // const totalSupply = parseFloat(graphData.data.protocolMetrics[0].totalSupply);
-    // const treasuryMarketValue = parseFloat(graphData.data.protocolMetrics[0].treasuryMarketValue);
-    // const currentBlock = parseFloat(graphData.data._meta.block.number);
-    // marketPrice = 0;
+    const nextRewardAmount = parseFloat(stakeMetrics.body["next-reward-amount"]);
+    const nextRewardYield = parseFloat(stakeMetrics.body["next-reward-yield"]);
+    const fiveDayRate = parseFloat(stakeMetrics.body["ROI-5-Day"]);
+    const earningDay = parseFloat(stakeMetrics.body["your-earnings-per-day"]);
+    const position = parseFloat(stakeMetrics.body["position"]);
+    const stakeApy = parseFloat(stakeMetrics.body["APY"]);
+    const stakeTotalLock = parseFloat(stakeMetrics.body["total-locked-value"]);
+    const stakeXChainPrice = parseFloat(stakeMetrics.body["xchain-price"]);
+    const willGet = parseFloat(bondMetrics.body["you-will-get"]);
+    const maxBuy = parseFloat(bondMetrics.body["max-you-can-buy"]);
+    const bondROI = parseFloat(bondMetrics.body["ROI"]);
+    const debtRatio = parseFloat(bondMetrics.body["debt-ratio"]);
+    const vestTerm = parseFloat(bondMetrics.body["vesting-term"]);
+
+    // const
     if (!provider) {
       console.error("failed to connect to provider, please connect your wallet");
       return {
@@ -74,6 +89,19 @@ export const loadAppDetails = createAsyncThunk(
         treasureAsset,
         treasureBack,
         xChainStaked,
+        nextRewardAmount,
+        nextRewardYield,
+        fiveDayRate,
+        earningDay,
+        position,
+        stakeApy,
+        stakeTotalLock,
+        stakeXChainPrice,
+        willGet,
+        maxBuy,
+        bondROI,
+        debtRatio,
+        vestTerm,
       } as IAppData;
     }
     const currentBlock = await provider.getBlockNumber();
@@ -91,8 +119,6 @@ export const loadAppDetails = createAsyncThunk(
       const stakingReward = epoch.distribute;
 
       const circ = await sohmMainContract.circulatingSupply();
-
-      // console.log("circ", Number(stakingReward.toString()));
 
       const stakingRebase =
         Number(circ.toString()) > 0 ? Number(stakingReward.toString()) / Number(circ.toString()) : 0;
@@ -118,6 +144,18 @@ export const loadAppDetails = createAsyncThunk(
         treasureBack,
         xChainStaked,
         circulSupply,
+        nextRewardAmount,
+        nextRewardYield,
+        earningDay,
+        position,
+        stakeApy,
+        stakeTotalLock,
+        stakeXChainPrice,
+        willGet,
+        maxBuy,
+        bondROI,
+        debtRatio,
+        vestTerm,
       } as IAppData;
     } catch (e: any) {
       console.log("errormessage", e.message);
@@ -125,19 +163,6 @@ export const loadAppDetails = createAsyncThunk(
   },
 );
 
-/**
- * checks if app.slice has marketPrice already
- * if yes then simply load that state
- * if no then fetches via `loadMarketPrice`
- *
- * `usage`:
- * ```
- * const originalPromiseResult = await dispatch(
- *    findOrLoadMarketPrice({ networkID: networkID, provider: provider }),
- *  ).unwrap();
- * originalPromiseResult?.whateverValue;
- * ```
- */
 export const findOrLoadMarketPrice = createAsyncThunk(
   "app/findOrLoadMarketPrice",
   async ({ networkID, provider }: IBaseAsyncThunk, { dispatch, getState }) => {
@@ -205,6 +230,19 @@ export interface IAppData {
   readonly treasureAsset?: number;
   readonly treasureBack?: number;
   readonly xChainStaked?: number;
+  readonly nextRewardAmount?: number;
+  readonly nextRewardYield?: number;
+  readonly roi5Day?: number;
+  readonly earningDay?: number;
+  readonly position?: number;
+  readonly stakeApy?: number;
+  readonly stakeTotalLock?: number;
+  readonly stakeXChainPrice?: number;
+  readonly willGet?: number;
+  readonly maxBuy?: number;
+  readonly bondROI?: number;
+  readonly debtRatio?: number;
+  readonly vestTerm?: number;
 }
 
 const initialState: IAppData = {

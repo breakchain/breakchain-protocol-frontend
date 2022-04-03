@@ -72,6 +72,7 @@ export const changeApproval = createAsyncThunk(
       fetchAccountSuccess({
         bonding: {
           usdcBond: +bondAllowance,
+          loading: false,
         },
       }),
     );

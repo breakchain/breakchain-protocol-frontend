@@ -35,7 +35,7 @@ const Bond = () => {
   const [view, setView] = useState<number>(0);
   const [quantity, setQuantity] = useState<number | undefined>();
 
-  const isBondLoading = useAppSelector<boolean>(state => state.bonding.loading ?? true);
+  const isBondLoading = useAppSelector<boolean>(state => (state.bonding.loading ? state.bonding.loading : false));
 
   const onRecipientAddressChange = (e: InputEvent): void => {
     return setRecipientAddress(e.target.value);
@@ -61,18 +61,8 @@ const Bond = () => {
   };
 
   return (
-    // <Fade in={true} mountOnEnter unmountOnExit>
     <Grid container id="bond-view">
-      {/* <Backdrop open={true} onClick={onClickAway}> */}
-      {/* <Fade in={true}> */}
       <Paper className="ohm-card ohm-modal" onClick={onClickModal}>
-        {/* <BondHeader
-          bond={bond}
-          slippage={slippage}
-          recipientAddress={recipientAddress}
-          onSlippageChange={onSlippageChange}
-          onRecipientAddressChange={onRecipientAddressChange}
-        /> */}
         <Box display="flex" flexDirection="row" className="bond-price-data-row">
           <div className="bond-price-data">
             <Typography variant="h5" color="textSecondary">
@@ -119,20 +109,15 @@ const Bond = () => {
           <BondRedeem bond={bond} />
         </TabPanel>
       </Paper>
-      {/* </Fade> */}
-      {/* </Backdrop> */}
     </Grid>
-    // </Fade>
   );
 };
 
 export const DisplayBondPrice = ({ bond }: { bond: IAllBondData }): ReactElement => {
   const { networkId } = useWeb3Context();
-
-  // if (typeof bond?.bondPrice === undefined || !bond?.getBondability(networkId)) {
-  //   return <Fragment>--</Fragment>;
-  // }
-
+  const usdcBalance = useAppSelector(state => {
+    return state.account.balances && state.account.balances.usdc;
+  });
   return (
     <Fragment>
       {new Intl.NumberFormat("en-US", {
@@ -140,17 +125,13 @@ export const DisplayBondPrice = ({ bond }: { bond: IAllBondData }): ReactElement
         currency: "USD",
         maximumFractionDigits: 2,
         minimumFractionDigits: 2,
-      }).format(bond.bondPrice)}
+      }).format(Number(usdcBalance))}
     </Fragment>
   );
 };
 
 export const DisplayBondDiscount = ({ bond }: { bond: IAllBondData }): ReactNode => {
   const { networkId } = useWeb3Context();
-
-  // if (typeof bond?.bondDiscount === undefined || !bond?.getBondability(networkId)) {
-  //   return <Fragment>--</Fragment>;
-  // }
 
   return <Fragment>{bond?.bondDiscount && trim(bond?.bondDiscount * 100, 2)}%</Fragment>;
 };
