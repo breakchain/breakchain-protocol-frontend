@@ -17,6 +17,7 @@ interface IProtocolMetrics {
   readonly totalSupply: string;
   readonly ohmPrice: string;
   readonly marketCap: string;
+  readonly priceFloor: string;
   readonly totalValueLocked: string;
   readonly treasuryMarketValue: string;
   readonly nextEpochRebase: string;
@@ -26,41 +27,15 @@ interface IProtocolMetrics {
 export const loadAppDetails = createAsyncThunk(
   "app/loadAppDetails",
   async ({ networkID, provider }: IBaseAsyncThunk, { dispatch }) => {
-    const protocolMetricsQuery = `
-      query {
-        _meta {
-          block {
-            number
-          }
-        }
-        protocolMetrics(first: 1, orderBy: timestamp, orderDirection: desc) {
-          timestamp
-          ohmCirculatingSupply
-          sOhmCirculatingSupply
-          totalSupply
-          ohmPrice
-          marketCap
-          totalValueLocked
-          treasuryMarketValue
-          nextEpochRebase
-          nextDistributedOhm
-        }
-      }
-    `;
-
-    if (networkID !== NetworkId.POLYGON) {
-      provider = NodeHelper.getMainnetStaticProvider();
-      networkID = NetworkId.POLYGON;
-    }
-    const graphData = await apollo<{ protocolMetrics: IProtocolMetrics[] }>(protocolMetricsQuery);
-    if (!graphData || graphData == null) {
-      console.error("Returned a null response when querying TheGraph");
-      return;
-    }
-
-    const stakingTVL = parseFloat(graphData.data.protocolMetrics[0].totalValueLocked);
-    // NOTE (appleseed): marketPrice from Graph was delayed, so get CoinGecko price
-    // const marketPrice = parseFloat(graphData.data.protocolMetrics[0].ohmPrice);
+    const metricsData = await fetch("https://breakchain.money/api/dashboardMetrics")
+      .then(resp => resp.json())
+      .then(res => {
+        return res;
+      });
+    // if (networkID !== NetworkId.POLYGON) {
+    //   provider = NodeHelper.getMainnetStaticProvider();
+    //   networkID = NetworkId.POLYGON;
+    // }
     let marketPrice;
     try {
       const originalPromiseResult = await dispatch(
@@ -73,21 +48,32 @@ export const loadAppDetails = createAsyncThunk(
       return;
     }
 
-    const marketCap = parseFloat(graphData.data.protocolMetrics[0].marketCap);
-    const circSupply = parseFloat(graphData.data.protocolMetrics[0].ohmCirculatingSupply);
-    const totalSupply = parseFloat(graphData.data.protocolMetrics[0].totalSupply);
-    const treasuryMarketValue = parseFloat(graphData.data.protocolMetrics[0].treasuryMarketValue);
+    const marketCap = parseFloat(metricsData.body["market-cap"]);
+    const priceFloor = parseFloat(metricsData.body["price-floor"]);
+    const circulSupply = parseFloat(metricsData.body["circulating-supply"]);
+    const runAwayAvail = parseFloat(metricsData.body["runway-available"]);
+    const totalLocked = parseFloat(metricsData.body["total-value-locked"]);
+    const treasureAsset = parseFloat(metricsData.body["treasury-assets"]);
+    const treasureBack = parseFloat(metricsData.body["treasury-backing"]);
+    const xChainStaked = parseFloat(metricsData.body["xchain-staked"]);
+    // console.log("marketCap ==========>", marketPrice);
+    // const circSupply = parseFloat(graphData.data.protocolMetrics[0].ohmCirculatingSupply);
+    // const totalSupply = parseFloat(graphData.data.protocolMetrics[0].totalSupply);
+    // const treasuryMarketValue = parseFloat(graphData.data.protocolMetrics[0].treasuryMarketValue);
     // const currentBlock = parseFloat(graphData.data._meta.block.number);
-
+    // marketPrice = 0;
     if (!provider) {
       console.error("failed to connect to provider, please connect your wallet");
       return {
-        stakingTVL,
+        // stakingTVL,
         marketPrice,
         marketCap,
-        circSupply,
-        totalSupply,
-        treasuryMarketValue,
+        priceFloor,
+        circulSupply,
+        totalLocked,
+        treasureAsset,
+        treasureBack,
+        xChainStaked,
       } as IAppData;
     }
     const currentBlock = await provider.getBlockNumber();
@@ -123,13 +109,15 @@ export const loadAppDetails = createAsyncThunk(
         currentBlock,
         fiveDayRate,
         stakingAPY,
-        stakingTVL,
+        runAwayAvail,
         stakingRebase,
         marketCap,
-        marketPrice,
-        circSupply,
-        totalSupply,
-        treasuryMarketValue,
+        priceFloor,
+        totalLocked,
+        treasureAsset,
+        treasureBack,
+        xChainStaked,
+        circulSupply,
       } as IAppData;
     } catch (e: any) {
       console.log("errormessage", e.message);
@@ -210,6 +198,13 @@ export interface IAppData {
   readonly treasuryBalance?: number;
   readonly treasuryMarketValue?: number;
   readonly secondsToEpoch?: number;
+  readonly priceFloor?: number;
+  readonly circulSupply?: number;
+  readonly runAwayAvail?: number;
+  readonly totalLocked?: number;
+  readonly treasureAsset?: number;
+  readonly treasureBack?: number;
+  readonly xChainStaked?: number;
 }
 
 const initialState: IAppData = {

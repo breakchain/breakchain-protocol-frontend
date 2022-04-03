@@ -41,13 +41,13 @@ export const MarketCap = () => {
 };
 
 export const PriceFloor = () => {
-  const backingPerOhm = useSelector(state => state.app.treasuryMarketValue / state.app.circSupply);
+  const priceFloor = useSelector(state => state.app.priceFloor);
   return (
     <div>
       <Metric
         label={t`Price Floor`}
-        metric={!isNaN(backingPerOhm) && formatCurrency(backingPerOhm, 2)}
-        isLoading={backingPerOhm ? false : true}
+        metric={!isNaN(priceFloor) && formatCurrency(priceFloor, 2)}
+        isLoading={priceFloor ? false : true}
         {...sharedProps}
       />
       <br />
@@ -56,15 +56,15 @@ export const PriceFloor = () => {
 };
 
 export const CircSupply = () => {
-  const circSupply = useSelector(state => state.app.circSupply);
+  const circSupply = useSelector(state => state.app.circulSupply);
   const totalSupply = useSelector(state => state.app.totalSupply);
-  const isDataLoaded = circSupply && totalSupply;
+  const isDataLoaded = circSupply !== null;
   return (
     <div>
       <Metric
         label={t`Circulating Supply / Total Supply`}
-        metric={isDataLoaded && parseInt(circSupply) + " / " + parseInt(totalSupply)}
-        isLoading={isDataLoaded ? false : true}
+        metric={circSupply && parseInt(circSupply) + " / " + parseInt(totalSupply)}
+        isLoading={circSupply ? false : true}
         {...sharedProps}
       />
       <br />

@@ -3,17 +3,19 @@ import { useTheme } from "@material-ui/core/styles";
 import { trim, formatCurrency } from "../../../../helpers";
 import { useTreasuryMetrics } from "../../hooks/useTreasuryMetrics";
 import { bulletpoints, tooltipItems, tooltipInfoMessages, itemType } from "../../treasuryData";
+import { useSelector } from "react-redux";
 
 export const Graph = ({ children }) => <>{children}</>;
 
 export const TotalValueLockedGraph = () => {
   const theme = useTheme();
+  const totalLocked = useSelector(state => state.app.totalLocked);
   const { data } = useTreasuryMetrics({ refetchOnMount: false });
 
   return (
     <ChartSmall
       type="area"
-      data={data}
+      data={totalLocked}
       itemType={itemType.dollar}
       itemNames={tooltipItems.tvl}
       dataKey={["totalValueLocked"]}
@@ -22,19 +24,20 @@ export const TotalValueLockedGraph = () => {
       bulletpointColors={bulletpoints.tvl}
       infoTooltipMessage={tooltipInfoMessages.tvl}
       expandedGraphStrokeColor={theme.palette.graphStrokeColor}
-      headerSubText={`${data && formatCurrency(data[0].totalValueLocked)}`}
+      headerSubText={`${totalLocked && formatCurrency(totalLocked)}`}
     />
   );
 };
 
 export const TreasuryAssetsGraph = () => {
   const theme = useTheme();
+  const treasureAsset = useSelector(state => state.app.treasureAsset);
   const { data } = useTreasuryMetrics({ refetchOnMount: false });
 
   return (
     <ChartSmall
       type="stack"
-      data={data}
+      data={treasureAsset}
       dataKey={[
         "treasuryDaiMarketValue",
         "treasuryFraxMarketValue",
@@ -50,7 +53,7 @@ export const TreasuryAssetsGraph = () => {
         ["#ff758f", "#c9184a"],
       ]}
       headerText="Treasury Assets"
-      headerSubText={`${data && formatCurrency(data[0].treasuryMarketValue)}`}
+      headerSubText={`${treasureAsset && formatCurrency(treasureAsset)}`}
       bulletpointColors={bulletpoints.coin}
       itemNames={tooltipItems.coin}
       itemType={itemType.dollar}
@@ -63,11 +66,11 @@ export const TreasuryAssetsGraph = () => {
 export const TreasuryBackingGraph = () => {
   const theme = useTheme();
   const { data } = useTreasuryMetrics({ refetchOnMount: false });
-
+  const treasureBack = useSelector(state => state.app.treasureBack);
   return (
     <ChartSmall
       type="stack"
-      data={data}
+      data={treasureBack}
       format="currency"
       dataKey={["treasuryDaiRiskFreeValue", "treasuryFraxRiskFreeValue", "treasuryLusdRiskFreeValue"]}
       stopColor={[
@@ -78,7 +81,7 @@ export const TreasuryBackingGraph = () => {
         ["#000", "#fff"],
       ]}
       headerText="Treasury Backing"
-      headerSubText={`${data && formatCurrency(data[0].treasuryRiskFreeValue)}`}
+      headerSubText={`${treasureBack && formatCurrency(treasureBack)}`}
       bulletpointColors={bulletpoints.rfv}
       itemNames={tooltipItems.rfv}
       itemType={itemType.dollar}
@@ -113,6 +116,7 @@ export const TreasuryBackingGraph = () => {
 
 export const XCHAINStakedGraph = () => {
   const theme = useTheme();
+  const marketPrice = useSelector(state => state.app.marketPrice);
   const { data } = useTreasuryMetrics({ refetchOnMount: false });
 
   const staked =
@@ -136,13 +140,15 @@ export const XCHAINStakedGraph = () => {
       bulletpointColors={bulletpoints.staked}
       infoTooltipMessage={tooltipInfoMessages.staked}
       expandedGraphStrokeColor={theme.palette.graphStrokeColor}
-      headerSubText={`${staked && trim(staked[0].staked, 2)}% `}
+      // headerSubText={`${staked && trim(staked[0].staked, 2)}% `}
+      headerSubText={marketPrice}
     />
   );
 };
 
 export const RunwayAvailableGraph = () => {
   const theme = useTheme();
+  const runAwayAvail = useSelector(state => state.app.runAwayAvail);
   const { data } = useTreasuryMetrics({ refetchOnMount: false });
 
   const runway = data && data.filter(metric => metric.runway10k > 5);
@@ -154,12 +160,12 @@ export const RunwayAvailableGraph = () => {
   return (
     <ChartSmall
       type="multi"
-      data={runway}
+      data={runAwayAvail}
       dataKey={["runwayCurrent", "runway7dot5k", "runway5k", "runway2dot5k"]}
       color={theme.palette.text.primary}
       stroke={colors}
       headerText="Runway Available"
-      headerSubText={`${data && trim(data[0].runwayCurrent, 1)} Days`}
+      headerSubText={`${runAwayAvail && trim(runAwayAvail, 1)} Days`}
       dataFormat="days"
       bulletpointColors={runwayBulletpoints}
       itemNames={tooltipItems.runway}
