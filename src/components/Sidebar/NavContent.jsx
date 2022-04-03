@@ -92,6 +92,12 @@ function NavContent({ handleDrawerToggle }) {
     if (currentPath.indexOf("whitepaper") >= 0 && page === "whitepaper") {
       return true;
     }
+    if (currentPath.indexOf("roadmap") >= 0 && page === "roadmap") {
+      return true;
+    }
+    if (currentPath.indexOf("home") >= 0 && page === "home") {
+      return true;
+    }
     if (currentPath.indexOf("33-together") >= 0 && page === "33-together") {
       return true;
     }
@@ -112,8 +118,8 @@ function NavContent({ handleDrawerToggle }) {
       <Box className="dapp-sidebar-inner" display="flex" justifyContent="space-between" flexDirection="column">
         <div className="dapp-menu-top">
           <Box className="branding-header">
-            <Link target="_self" href="http://localhost:3000/home">
-              <img src={OlympusIcon} style={{ minWdth: "200px", minHeight: "125px", width: "200px" }} />
+            <Link target="_self" href={"http://" + window.location.host + "/home"}>
+              <img src={OlympusIcon} style={{ minWidth: "200px", minHeight: "125px", width: "200px" }} />
             </Link>
 
             {/* <WalletAddressEns /> */}
@@ -128,9 +134,9 @@ function NavContent({ handleDrawerToggle }) {
                 id="dash-nav"
                 // to="home"
                 target="_self"
-                href="http://localhost:3000/home"
+                href={"http://" + window.location.host + "/home"}
                 isActive={(match, location) => {
-                  return checkPage(match, location, "bonds");
+                  return checkPage(match, location, "home");
                 }}
                 className={`button-dapp-menu ${isActive ? "active" : ""}`}
                 onClick={handleDrawerToggle}
@@ -213,9 +219,24 @@ function NavContent({ handleDrawerToggle }) {
                 </Typography>
               </Link>
               <Link
-                component={NavLink}
+                // component={NavLink}
+                id="roadmap-nav"
+                href={window.location.hostname + "/roadmap"}
+                isActive={(match, location) => {
+                  return checkPage(match, location, "roadmap");
+                }}
+                className={`button-dapp-menu ${isActive ? "active" : ""}`}
+                onClick={handleDrawerToggle}
+              >
+                <Typography variant="h6">
+                  {/* <SvgIcon color="primary" component={BondIcon} /> */}
+                  <Trans>ROADMAP</Trans>
+                </Typography>
+              </Link>
+              <Link
+                // component={NavLink}
                 id="whitepaper-nav"
-                to="/whitepaper"
+                href={window.location.hostname + "/whitepaper"}
                 isActive={(match, location) => {
                   return checkPage(match, location, "whitepaper");
                 }}
@@ -230,31 +251,9 @@ function NavContent({ handleDrawerToggle }) {
             </div>
           </div>
         </div>
-        <br></br>
-        <br></br>
-        <br></br>
-        <Box className="dapp-menu-bottom" display="flex" justifyContent="space-between" flexDirection="column">
-          <div className="dapp-menu-external-links">
-            {/* {Object.keys(externalUrls).map((link, i) => {
-              return (
-                <Link
-                  key={i}
-                  href={`${externalUrls[link].url}`}
-                  target="_blank"
-                  className="external-site-link"
-                  onClick={handleDrawerToggle}
-                >
-                  <Typography variant="h6">{externalUrls[link].icon}</Typography>
-                  <Typography variant="h6">{externalUrls[link].title}</Typography>
-                  <SvgIcon component={ArrowUpIcon} className="external-site-link-icon" />
-                </Link>
-              );
-            })} */}
-          </div>
-          <div className="dapp-menu-social">
-            <Social />
-          </div>
-        </Box>
+        <div className="dapp-menu-social">
+          <Social />
+        </div>
       </Box>
     </Paper>
   );
