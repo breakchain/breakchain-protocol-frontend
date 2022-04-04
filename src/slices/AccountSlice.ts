@@ -108,6 +108,7 @@ export const getBalances = createAsyncThunk(
     let xChainBalance = BigNumber.from("0");
     let sXChainBalance = BigNumber.from("0");
     let usdcBalance = BigNumber.from("0");
+    let bondMarketPrice = BigNumber.from("0");
 
     // const gOhmContract = GOHM__factory.connect(addresses[networkID].GOHM_ADDRESS, provider);
     // const ohmContract = new ethers.Contract(
@@ -133,6 +134,7 @@ export const getBalances = createAsyncThunk(
 
     try {
       usdcBalance = await reservedContract.balanceOf(address);
+      // bondMarketPrice = await reservedContract.marketPrice(address);
     } catch (e) {
       handleContractError(e);
     }

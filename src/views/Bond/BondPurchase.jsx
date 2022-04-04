@@ -28,7 +28,6 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
   const dispatch = useDispatch();
   const [isBondLoading, setLoading] = useState(true);
   const { provider, address, networkId } = useWeb3Context();
-
   const bondAllowance = useAppSelector(state => {
     return (state.account.bonding && state.account.bonding.usdcBond) || 0;
   });
@@ -184,7 +183,7 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
           <DataRow title={t`Your Balance`} balance={`${trim(usdcBalance, 4)} ${"USDC"}`} isLoading={isBondLoading} />
           <DataRow
             title={t`You Will Get`}
-            balance={`${trim(appData.willGet || "0", 4) || "0"} ` + `${"USDC"}`}
+            balance={`${trim(usdcBalance / appData.bondPrice || "0", 4) || "0"} ` + `${"USDC"}`}
             isLoading={isBondLoading}
           />
           <DataRow
@@ -202,7 +201,7 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
             balance={`${trim(appData.debtRatio / 10000000, 2)}%`}
             isLoading={isBondLoading}
           />
-          <DataRow title={t`Vesting Term`} balance={appData.vestTerm + "Days"} isLoading={isBondLoading} />
+          <DataRow title={t`Vesting Term`} balance={appData.vestTerm + " Days"} isLoading={isBondLoading} />
           {recipientAddress !== address && (
             <DataRow title={t`Recipient`} balance={shorten(recipientAddress)} isLoading={isBondLoading} />
           )}
