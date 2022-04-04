@@ -26,23 +26,31 @@ import { useAppSelector } from "src/hooks";
 function BondPurchase({ bond, slippage, recipientAddress }) {
   const SECONDS_TO_REFRESH = 60;
   const dispatch = useDispatch();
+  const [isBondLoading, setLoading] = useState(true);
   const { provider, address, networkId } = useWeb3Context();
 
   const bondAllowance = useAppSelector(state => {
     return (state.account.bonding && state.account.bonding.usdcBond) || 0;
   });
   const [quantity, setQuantity] = useState("");
-  const [secondsToRefresh, setSecondsToRefresh] = useState(SECONDS_TO_REFRESH);
 
   const currentBlock = useSelector(state => {
     return state.app.currentBlock;
   });
 
+  const appData = useSelector(state => {
+    return state.app;
+  });
+
+  useEffect(() => {
+    if (appData && (appData.vestTerm || appData.maxBuy || appData.bondROI)) {
+      setLoading(false);
+    }
+  }, [setLoading, appData]);
+
   const usdcBalance = useAppSelector(state => {
     return state.account.balances && state.account.balances.usdc;
   });
-
-  const isBondLoading = useSelector(state => state.bonding.loading ?? true);
 
   const pendingTransactions = useSelector(state => {
     return state.pendingTransactions;
@@ -60,21 +68,6 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
     } else if (isNaN(quantity)) {
       dispatch(error(t`Please enter a valid value!`));
     } else if (bond.interestDue > 0 || bond.pendingPayout > 0) {
-      // const shouldProceed = window.confirm(
-      //   t`You have an existing bond. Bonding will reset your vesting period and forfeit rewards. We recommend claiming rewards first or using a fresh wallet. Do you still want to proceed?`,
-      // );
-      // if (shouldProceed) {
-      //   await dispatch(
-      //     bondAsset({
-      //       value: quantity,
-      //       slippage,
-      //       bond,
-      //       networkID: networkId,
-      //       provider,
-      //       address: recipientAddress || address,
-      //     }),
-      //   );
-      // }
     } else {
       await dispatch(
         bondAsset({
@@ -101,36 +94,12 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
 
   const setMax = () => {
     let maxQ;
-    // if (bond.maxBondPrice * bond.bondPrice < Number(bond.balance)) {
-    //   // there is precision loss here on Number(bond.balance)
-    //   maxQ = bond.maxBondPrice * bond.bondPrice.toString();
-    // } else {
-    //   maxQ = bond.balance;
-    // }
     setQuantity(usdcBalance || "0.00");
   };
 
   const bondDetailsDebounce = useDebounce(quantity, 1000);
 
-  useEffect(() => {
-    // dispatch(calcBondDetails({ bond, value: quantity, provider, networkID: networkId }));
-  }, [bondDetailsDebounce]);
-
-  useEffect(() => {
-    let interval = null;
-    // if (secondsToRefresh > 0) {
-    //   interval = setInterval(() => {
-    //     setSecondsToRefresh(secondsToRefresh => secondsToRefresh - 1);
-    //   }, 1000);
-    // } else {
-    //   if (bond?.getBondability(networkId)) {
-    //     clearInterval(interval);
-    //     dispatch(calcBondDetails({ bond, value: quantity, provider, networkID: networkId }));
-    //     setSecondsToRefresh(SECONDS_TO_REFRESH);
-    //   }
-    // }
-    // return () => clearInterval(interval);
-  }, [secondsToRefresh, quantity]);
+  useEffect(() => {}, [bondDetailsDebounce]);
 
   const onSeekApproval = async () => {
     dispatch(changeApproval({ address, bond, provider, networkID: networkId }));
@@ -147,15 +116,11 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
           <ConnectButton />
         ) : (
           <>
-            {/* {isAllowanceDataLoading ? (
-              <Skeleton width="200px" />
-            ) : ( */}
-            {/* <> */}
             {!hasAllowance() ? (
               <div className="help-text">
                 <em>
                   <Typography variant="body1" align="center" color="textSecondary">
-                    <Trans>First time bonding</Trans> <b>{bond.displayName}</b>? <br />{" "}
+                    <Trans>First time bonding</Trans> <b>{"USDC"}</b>? <br />{" "}
                     <Trans>Please approve Breakchain Protocol to use your</Trans> <b>{bond.displayName}</b>{" "}
                     <Trans>for bonding</Trans>.
                   </Typography>
@@ -185,8 +150,6 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
             )}
             {false ? (
               <Button variant="contained" color="primary" id="bond-btn" className="transaction-button" disabled={true}>
-                {/* NOTE (appleseed): temporary for ONHOLD MIGRATION */}
-                {/* <Trans>Sold Out</Trans> */}
                 {bond.LOLmessage}
               </Button>
             ) : hasAllowance() ? (
@@ -195,10 +158,10 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
                 color="primary"
                 id="bond-btn"
                 className="transaction-button"
-                disabled={isPendingTxn(pendingTransactions, "bond_" + bond.name)}
+                disabled={isPendingTxn(pendingTransactions, "bond_" + "USDC")}
                 onClick={onBond}
               >
-                {txnButtonText(pendingTransactions, "bond_" + bond.name, "Bond")}
+                {txnButtonText(pendingTransactions, "bond_" + "USDC", "Bond")}
               </Button>
             ) : (
               <Button
@@ -206,42 +169,40 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
                 color="primary"
                 id="bond-approve-btn"
                 className="transaction-button"
-                disabled={isPendingTxn(pendingTransactions, "approve_" + bond.name)}
+                disabled={isPendingTxn(pendingTransactions, "approve_" + "USDC")}
                 onClick={onSeekApproval}
               >
-                {txnButtonText(pendingTransactions, "approve_" + bond.name, "Approve")}
+                {txnButtonText(pendingTransactions, "approve_" + "USDC", "Approve")}
               </Button>
             )}
           </>
-          //   {/* )}{" "} */}
-          // // </>
         )}
       </Box>
 
       <Slide direction="left" in={true} mountOnEnter unmountOnExit {...{ timeout: 533 }}>
         <Box className="bond-data">
-          <DataRow
-            title={t`Your Balance`}
-            balance={`${trim(bond.balance, 4)} ${displayUnits}`}
-            isLoading={isBondLoading}
-          />
+          <DataRow title={t`Your Balance`} balance={`${trim(usdcBalance, 4)} ${"USDC"}`} isLoading={isBondLoading} />
           <DataRow
             title={t`You Will Get`}
-            balance={`${trim(bond.bondQuote, 4) || "0"} ` + `${bond.payoutToken}`}
+            balance={`${trim(appData.willGet || "0", 4) || "0"} ` + `${"USDC"}`}
             isLoading={isBondLoading}
           />
           <DataRow
             title={t`Max You Can Buy`}
-            balance={`${trim(bond.maxBondPrice, 4) || "0"} ` + `${bond.payoutToken}`}
+            balance={`${trim(appData.maxBuy, 4) || "0"} ` + `${"USDC"}`}
             isLoading={isBondLoading}
           />
           <DataRow
             title={t`ROI`}
-            balance={<DisplayBondDiscount key={bond.name} bond={bond} />}
+            balance={<DisplayBondDiscount key={appData.bondROI} bond={bond} />}
             isLoading={isBondLoading}
           />
-          <DataRow title={t`Debt Ratio`} balance={`${trim(bond.debtRatio / 10000000, 2)}%`} isLoading={isBondLoading} />
-          <DataRow title={t`Vesting Term`} balance={vestingPeriod()} isLoading={isBondLoading} />
+          <DataRow
+            title={t`Debt Ratio`}
+            balance={`${trim(appData.debtRatio / 10000000, 2)}%`}
+            isLoading={isBondLoading}
+          />
+          <DataRow title={t`Vesting Term`} balance={appData.vestTerm + "Days"} isLoading={isBondLoading} />
           {recipientAddress !== address && (
             <DataRow title={t`Recipient`} balance={shorten(recipientAddress)} isLoading={isBondLoading} />
           )}

@@ -116,12 +116,10 @@ export const getBalances = createAsyncThunk(
     //   provider.getSigner(),
     // );
     const signer = provider.getSigner();
-    console.log("============111+>", signer);
     const stakeContract = new ethers.Contract(addresses[networkID].OLYMPUS_ERC20_ADDRESS, oerc20ABI, signer);
     const unstakeContract = new ethers.Contract(addresses[networkID].SOHM_ADDRESS, sOlympusABI, signer);
     const reservedContract = new ethers.Contract(addresses[networkID].BOND_ADDRESS, BondABI, signer);
     try {
-      console.log("===========+>", stakeContract, await stakeContract.balanceOf(address));
       xChainBalance = await stakeContract.balanceOf(address);
     } catch (e) {
       handleContractError(e);
@@ -188,7 +186,6 @@ export const getBalances = createAsyncThunk(
     //     oerc20ABI,
     //     provider,
     //   ) as IERC20;
-    //   console.log("===========+>", ohmContract, await ohmContract.balanceOf(address) );
     //   ohmBalance = await ohmContract.balanceOf(address);
     // } catch (e) {
     //   handleContractError(e);
