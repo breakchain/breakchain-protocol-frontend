@@ -115,8 +115,8 @@ const Bond = () => {
 
 export const DisplayBondPrice = ({ bond }: { bond: IAllBondData }): ReactElement => {
   const { networkId } = useWeb3Context();
-  const usdcBalance = useAppSelector(state => {
-    return state.account.balances && state.account.balances.usdc;
+  const bondPrice = useAppSelector(state => {
+    return state.app && state.app.bondPrice;
   });
   return (
     <Fragment>
@@ -125,14 +125,16 @@ export const DisplayBondPrice = ({ bond }: { bond: IAllBondData }): ReactElement
         currency: "USD",
         maximumFractionDigits: 2,
         minimumFractionDigits: 2,
-      }).format(Number(usdcBalance))}
+      }).format(Number(bondPrice))}
     </Fragment>
   );
 };
 
 export const DisplayBondDiscount = ({ bond }: { bond: IAllBondData }): ReactNode => {
-  const { networkId } = useWeb3Context();
+  const bondROI = useAppSelector(state => {
+    return state.app && state.app.bondROI;
+  });
 
-  return <Fragment>{bond?.bondDiscount && trim(bond?.bondDiscount * 100, 2)}%</Fragment>;
+  return <Fragment>{bondROI && trim(bondROI, 2)}%</Fragment>;
 };
 export default Bond;

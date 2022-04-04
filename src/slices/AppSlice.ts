@@ -32,16 +32,16 @@ export const loadAppDetails = createAsyncThunk(
       .then(res => {
         return res;
       });
-    const stakeMetrics = await fetch("https://api.breakchain.money/api/stakingMetrics")
-      .then(resp => resp.json())
-      .then(res => {
-        return res;
-      });
-    const bondMetrics = await fetch("https://api.breakchain.money/api/bondingMetrics")
-      .then(resp => resp.json())
-      .then(res => {
-        return res;
-      });
+    // const stakeMetrics = await fetch("https://api.breakchain.money/api/stakingMetrics")
+    //   .then(resp => resp.json())
+    //   .then(res => {
+    //     return res;
+    //   });
+    // const bondMetrics = await fetch("https://api.breakchain.money/api/bondingMetrics")
+    //   .then(resp => resp.json())
+    //   .then(res => {
+    //     return res;
+    //   });
     let marketPrice;
     try {
       const originalPromiseResult = await dispatch(
@@ -62,19 +62,20 @@ export const loadAppDetails = createAsyncThunk(
     const treasureAsset = parseFloat(metricsData.body["treasury-assets"]);
     const treasureBack = parseFloat(metricsData.body["treasury-backing"]);
     const xChainStaked = parseFloat(metricsData.body["xchain-staked"]);
-    const nextRewardAmount = parseFloat(stakeMetrics.body["next-reward-amount"]);
-    const nextRewardYield = parseFloat(stakeMetrics.body["next-reward-yield"]);
-    const fiveDayRate = parseFloat(stakeMetrics.body["ROI-5-Day"]);
-    const earningDay = parseFloat(stakeMetrics.body["your-earnings-per-day"]);
-    const position = parseFloat(stakeMetrics.body["position"]);
-    const stakeApy = parseFloat(stakeMetrics.body["APY"]);
-    const stakeTotalLock = parseFloat(stakeMetrics.body["total-locked-value"]);
-    const stakeXChainPrice = parseFloat(stakeMetrics.body["xchain-price"]);
-    const willGet = parseFloat(bondMetrics.body["you-will-get"]);
-    const maxBuy = parseFloat(bondMetrics.body["max-you-can-buy"]);
-    const bondROI = parseFloat(bondMetrics.body["ROI"]);
-    const debtRatio = parseFloat(bondMetrics.body["debt-ratio"]);
-    const vestTerm = parseFloat(bondMetrics.body["vesting-term"]);
+    const nextRewardAmount = parseFloat(metricsData.body["next-reward-amount"]);
+    const nextRewardYield = parseFloat(metricsData.body["next-reward-yield"]);
+    const fiveDayRate = parseFloat(metricsData.body["ROI-5-Day"]);
+    const earningDay = parseFloat(metricsData.body["your-earnings-per-day"]);
+    const position = parseFloat(metricsData.body["position"]);
+    const stakeApy = parseFloat(metricsData.body["APY"]);
+    const stakeTotalLock = parseFloat(metricsData.body["total-locked-value"]);
+    const stakeXChainPrice = parseFloat(metricsData.body["xchain-price"]);
+    const willGet = parseFloat(metricsData.body["you-will-get"]);
+    const maxBuy = parseFloat(metricsData.body["max-you-can-buy"]);
+    const bondROI = parseFloat(metricsData.body["ROI"]);
+    const debtRatio = parseFloat(metricsData.body["debt-ratio"]);
+    const vestTerm = parseFloat(metricsData.body["vesting-term"]);
+    const bondPrice = parseFloat(metricsData.body["bond-price"]);
 
     // const
     if (!provider) {
@@ -102,6 +103,7 @@ export const loadAppDetails = createAsyncThunk(
         bondROI,
         debtRatio,
         vestTerm,
+        bondPrice,
       } as IAppData;
     }
     const currentBlock = await provider.getBlockNumber();
@@ -156,6 +158,7 @@ export const loadAppDetails = createAsyncThunk(
         bondROI,
         debtRatio,
         vestTerm,
+        bondPrice,
       } as IAppData;
     } catch (e: any) {
       console.log("errormessage", e.message);
@@ -243,6 +246,7 @@ export interface IAppData {
   readonly bondROI?: number;
   readonly debtRatio?: number;
   readonly vestTerm?: number;
+  readonly bondPrice?: number;
 }
 
 const initialState: IAppData = {

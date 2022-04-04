@@ -329,15 +329,15 @@ function Stake() {
                 </div>
               </Grid>
               {/* <Grid item style={{ marginLeft: "auto" }}>
-                <div className="card-header">
-                  <Typography variant="h5">Position</Typography>
-                  <Typography variant="h6">${(Number(trimmedBalance) * Number(sOhmPrice)).toFixed(2)}</Typography>
-                </div>
-                <div className="card-header">
-                  <Typography variant="h5">Your Earnings Per Day</Typography>
-                  <Typography variant="h6">{`$${Number(nextRewardValue) * 3 * Number(sOhmPrice)}`}</Typography>
-                </div>
-              </Grid> */}
+                  <div className="card-header">
+                    <Typography variant="h5">Position</Typography>
+                    <Typography variant="h6">${(Number(trimmedBalance) * Number(sOhmPrice)).toFixed(2)}</Typography>
+                  </div>
+                  <div className="card-header">
+                    <Typography variant="h5">Your Earnings Per Day</Typography>
+                    <Typography variant="h6">{`$${Number(nextRewardValue) * 3 * Number(sOhmPrice)}`}</Typography>
+                  </div>
+                </Grid> */}
             </Grid>
 
             <Grid item>
@@ -521,11 +521,11 @@ function Stake() {
                     </Grid>
                   </Box>
                   {/* <ConfirmDialog
-                    quantity={quantity}
-                    currentIndex={currentIndex}
-                    view={view}
-                    onConfirm={setConfirmation}
-                  /> */}
+                      quantity={quantity}
+                      currentIndex={currentIndex}
+                      view={view}
+                      onConfirm={setConfirmation}
+                    /> */}
                   <div className="stake-user-data">
                     <DataRow
                       title={`Your Balance`}
@@ -538,101 +538,101 @@ function Stake() {
                         <DataRow
                           title={`Your Staked Balance`}
                           id="user-staked-balance"
-                          balance={`${sXChainBalance} sXCHAIN`}
+                          balance={`${trim(Number(sXChainBalance), 4)} sXCHAIN`}
                           isLoading={isAppLoading}
                         />
                       </AccordionSummary>
                       {/* <AccordionDetails>
-                        <DataRow
-                          title={t`sOHM Balance`}
-                          balance={`${trim(Number(sohmBalance), 4)} sOHM`}
-                          indented
-                          isLoading={isAppLoading}
-                        />
-                        <DataRow
-                          title={`${t`gOHM Balance`}`}
-                          balance={`${trim(Number(gOhmBalance), 4)} gOHM`}
-                          indented
-                          isLoading={isAppLoading}
-                        />
-                        {Number(gOhmOnArbitrum) > 0.00009 && (
                           <DataRow
-                            title={`${t`gOHM (Arbitrum)`}`}
-                            balance={`${trim(Number(gOhmOnArbitrum), 4)} gOHM`}
-                            indented
-                            {...{ isAppLoading }}
-                          />
-                        )}
-                        {Number(gOhmOnAvax) > 0.00009 && (
-                          <DataRow
-                            title={`${t`gOHM (Avalanche)`}`}
-                            balance={`${trim(Number(gOhmOnAvax), 4)} gOHM`}
-                            indented
-                            {...{ isAppLoading }}
-                          />
-                        )}
-                        {Number(gOhmOnPolygon) > 0.00009 && (
-                          <DataRow
-                            title={`${t`gOHM (Polygon)`}`}
-                            balance={`${trim(Number(gOhmOnPolygon), 4)} gOHM`}
-                            indented
-                            {...{ isAppLoading }}
-                          />
-                        )}
-                        {Number(gOhmOnFantom) > 0.00009 && (
-                          <DataRow
-                            title={`${t`gOHM (Fantom)`}`}
-                            balance={`${trim(Number(gOhmOnFantom), 4)} gOHM`}
-                            indented
-                            {...{ isAppLoading }}
-                          />
-                        )}
-                        {Number(fgohmBalance) > 0.00009 && (
-                          <DataRow
-                            title={`${t`gOHM Balance in Fuse`}`}
-                            balance={`${trim(Number(fgohmBalance), 4)} gOHM`}
+                            title={t`sOHM Balance`}
+                            balance={`${trim(Number(sohmBalance), 4)} sOHM`}
                             indented
                             isLoading={isAppLoading}
                           />
-                        )}
-                        {Number(sohmV1Balance) > 0.00009 && (
                           <DataRow
-                            title={`${t`sOHM Balance`} (v1)`}
-                            balance={`${trim(Number(sohmV1Balance), 4)} sOHM (v1)`}
+                            title={`${t`gOHM Balance`}`}
+                            balance={`${trim(Number(gOhmBalance), 4)} gOHM`}
                             indented
                             isLoading={isAppLoading}
                           />
-                        )}
-                        {Number(wsohmBalance) > 0.00009 && (
-                          <DataRow
-                            title={`${t`wsOHM Balance`} (v1)`}
-                            balance={`${trim(Number(wsohmBalance), 4)} wsOHM (v1)`}
-                            isLoading={isAppLoading}
-                            indented
-                          />
-                        )}
-                        {Number(fiatDaowsohmBalance) > 0.00009 && (
-                          <DataRow
-                            title={t`wsOHM Balance in FiatDAO (v1)`}
-                            balance={`${trim(Number(fiatDaowsohmBalance), 4)} wsOHM (v1)`}
-                            isLoading={isAppLoading}
-                            indented
-                          />
-                        )}
-                        {Number(fsohmBalance) > 0.00009 && (
-                          <DataRow
-                            title={t`sOHM Balance in Fuse (v1)`}
-                            balance={`${trim(Number(fsohmBalance), 4)} sOHM (v1)`}
-                            indented
-                            isLoading={isAppLoading}
-                          />
-                        )}
-                      </AccordionDetails> */}
+                          {Number(gOhmOnArbitrum) > 0.00009 && (
+                            <DataRow
+                              title={`${t`gOHM (Arbitrum)`}`}
+                              balance={`${trim(Number(gOhmOnArbitrum), 4)} gOHM`}
+                              indented
+                              {...{ isAppLoading }}
+                            />
+                          )}
+                          {Number(gOhmOnAvax) > 0.00009 && (
+                            <DataRow
+                              title={`${t`gOHM (Avalanche)`}`}
+                              balance={`${trim(Number(gOhmOnAvax), 4)} gOHM`}
+                              indented
+                              {...{ isAppLoading }}
+                            />
+                          )}
+                          {Number(gOhmOnPolygon) > 0.00009 && (
+                            <DataRow
+                              title={`${t`gOHM (Polygon)`}`}
+                              balance={`${trim(Number(gOhmOnPolygon), 4)} gOHM`}
+                              indented
+                              {...{ isAppLoading }}
+                            />
+                          )}
+                          {Number(gOhmOnFantom) > 0.00009 && (
+                            <DataRow
+                              title={`${t`gOHM (Fantom)`}`}
+                              balance={`${trim(Number(gOhmOnFantom), 4)} gOHM`}
+                              indented
+                              {...{ isAppLoading }}
+                            />
+                          )}
+                          {Number(fgohmBalance) > 0.00009 && (
+                            <DataRow
+                              title={`${t`gOHM Balance in Fuse`}`}
+                              balance={`${trim(Number(fgohmBalance), 4)} gOHM`}
+                              indented
+                              isLoading={isAppLoading}
+                            />
+                          )}
+                          {Number(sohmV1Balance) > 0.00009 && (
+                            <DataRow
+                              title={`${t`sOHM Balance`} (v1)`}
+                              balance={`${trim(Number(sohmV1Balance), 4)} sOHM (v1)`}
+                              indented
+                              isLoading={isAppLoading}
+                            />
+                          )}
+                          {Number(wsohmBalance) > 0.00009 && (
+                            <DataRow
+                              title={`${t`wsOHM Balance`} (v1)`}
+                              balance={`${trim(Number(wsohmBalance), 4)} wsOHM (v1)`}
+                              isLoading={isAppLoading}
+                              indented
+                            />
+                          )}
+                          {Number(fiatDaowsohmBalance) > 0.00009 && (
+                            <DataRow
+                              title={t`wsOHM Balance in FiatDAO (v1)`}
+                              balance={`${trim(Number(fiatDaowsohmBalance), 4)} wsOHM (v1)`}
+                              isLoading={isAppLoading}
+                              indented
+                            />
+                          )}
+                          {Number(fsohmBalance) > 0.00009 && (
+                            <DataRow
+                              title={t`sOHM Balance in Fuse (v1)`}
+                              balance={`${trim(Number(fsohmBalance), 4)} sOHM (v1)`}
+                              indented
+                              isLoading={isAppLoading}
+                            />
+                          )}
+                        </AccordionDetails> */}
                     </Accordion>
                     <Divider color="secondary" />
                     <DataRow
                       title={t`Next Reward Amount`}
-                      balance={`${nextRewardValue} XCHAIN`}
+                      balance={`${trim((nextRewardYield / 100) * Number(xChainBalance), 4)} XCHAIN`}
                       isLoading={isAppLoading}
                     />
                     <DataRow title={t`Next Reward Yield`} balance={`${nextRewardYield}%`} isLoading={isAppLoading} />
@@ -643,15 +643,18 @@ function Stake() {
                     />
                     <DataRow
                       title="Your Earnings Per Day"
-                      balance={earningDay && `$${earningDay}`}
+                      balance={
+                        xChainBalance &&
+                        `$${(((stakingAPY / 100) * Number(xChainBalance) + Number(xChainBalance)) / 365).toFixed(4)}`
+                      }
                       isLoading={isAppLoading}
                     />
-                    <DataRow title="Position" balance={position && `${position.toFixed(2)}`} isLoading={isAppLoading} />
+                    {/* <DataRow title="Position" balance={position && `${position.toFixed(2)}`} isLoading={isAppLoading} /> */}
                     {/* <DataRow
-                      title="Position"
-                      balance={`${(Number(stakingTVL) / Number(currentIndex)).toFixed(2)}`}
-                      isLoading={isAppLoading}
-                    /> */}
+                        title="Position"
+                        balance={`${(Number(stakingTVL) / Number(currentIndex)).toFixed(2)}`}
+                        isLoading={isAppLoading}
+                      /> */}
                   </div>
                 </>
               )}
