@@ -52,8 +52,8 @@ export const changeApproval = createAsyncThunk(
       dispatch(
         fetchPendingTxns({
           txnHash: approveTx.hash,
-          text: "Approving " + bond.displayName,
-          type: "approve_" + bond.name,
+          text: "Approving " + "USDC",
+          type: "approve_" + "USDC",
         }),
       );
       await approveTx.wait();
@@ -63,7 +63,7 @@ export const changeApproval = createAsyncThunk(
       if (approveTx) {
         bondAllowance = 1000000000;
         dispatch(clearPendingTxn(approveTx.hash));
-        // dispatch(calculateUserBondDetails({ address, bond, networkID, provider }));
+        dispatch(calculateUserBondDetails({ address, bond, networkID, provider }));
       }
     }
     // bondAllowance = await reserveContract.allowance(address, bondAddr || "");

@@ -28,7 +28,6 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
   const dispatch = useDispatch();
   const [isBondLoading, setLoading] = useState(true);
   const { provider, address, networkId } = useWeb3Context();
-
   const bondAllowance = useAppSelector(state => {
     return (state.account.bonding && state.account.bonding.usdcBond) || 0;
   });
