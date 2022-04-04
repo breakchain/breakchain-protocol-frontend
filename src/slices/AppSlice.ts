@@ -27,17 +27,17 @@ interface IProtocolMetrics {
 export const loadAppDetails = createAsyncThunk(
   "app/loadAppDetails",
   async ({ networkID, provider }: IBaseAsyncThunk, { dispatch }) => {
-    const metricsData = await fetch("https://breakchain.money/api/dashboardMetrics")
+    const metricsData = await fetch("https://api.breakchain.money/api/dashboardMetrics")
       .then(resp => resp.json())
       .then(res => {
         return res;
       });
-    const stakeMetrics = await fetch("https://breakchain.money/api/stakingMetrics")
+    const stakeMetrics = await fetch("https://api.breakchain.money/api/stakingMetrics")
       .then(resp => resp.json())
       .then(res => {
         return res;
       });
-    const bondMetrics = await fetch("https://breakchain.money/api/bondingMetrics")
+    const bondMetrics = await fetch("https://api.breakchain.money/api/bondingMetrics")
       .then(resp => resp.json())
       .then(res => {
         return res;
