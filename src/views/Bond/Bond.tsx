@@ -36,6 +36,9 @@ const Bond = () => {
   const [quantity, setQuantity] = useState<number | undefined>();
 
   const isBondLoading = useAppSelector<boolean>(state => (state.bonding.loading ? state.bonding.loading : false));
+  const marketPrice = useAppSelector(state => {
+    return state.app.priceFloor;
+  });
 
   const onRecipientAddressChange = (e: InputEvent): void => {
     return setRecipientAddress(e.target.value);
@@ -77,7 +80,7 @@ const Bond = () => {
               <Trans>Market Price</Trans>
             </Typography>
             <Typography variant="h3" color="primary" className="price">
-              {isBondLoading ? <Skeleton /> : formatCurrency(bond.marketPrice, 2)}
+              {isBondLoading ? <Skeleton /> : formatCurrency(Number(marketPrice), 2)}
             </Typography>
           </div>
         </Box>

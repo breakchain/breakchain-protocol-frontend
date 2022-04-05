@@ -116,7 +116,7 @@ export const TreasuryBackingGraph = () => {
 
 export const XCHAINStakedGraph = () => {
   const theme = useTheme();
-  const marketPrice = useSelector(state => state.app.marketPrice);
+  const xChainStaked = useSelector(state => state.app.xChainStaked);
   const { data } = useTreasuryMetrics({ refetchOnMount: false });
 
   const staked =
@@ -132,7 +132,7 @@ export const XCHAINStakedGraph = () => {
     <ChartSmall
       isStaked
       type="area"
-      data={marketPrice}
+      data={xChainStaked}
       dataKey={["staked"]}
       dataFormat="percent"
       headerText="XCHAIN Staked"
@@ -141,7 +141,7 @@ export const XCHAINStakedGraph = () => {
       infoTooltipMessage={tooltipInfoMessages.staked}
       expandedGraphStrokeColor={theme.palette.graphStrokeColor}
       // headerSubText={`${staked && trim(staked[0].staked, 2)}% `}
-      headerSubText={formatCurrency(marketPrice, 2)}
+      headerSubText={trim(xChainStaked, 2) + "%"}
     />
   );
 };
