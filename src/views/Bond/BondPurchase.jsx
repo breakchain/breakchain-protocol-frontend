@@ -182,13 +182,13 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
         <Box className="bond-data">
           <DataRow
             title={t`Your Balance`}
-            balance={`${Intl.NumberFormat("en-US").format(usdcBalance, 4)} ${"USDC"}`}
+            balance={`${Intl.NumberFormat("en-US").format(usdcBalance, 2)} ${"USDC"}`}
             isLoading={isBondLoading}
           />
           <DataRow
             title={t`You Will Get`}
             balance={
-              `${Intl.NumberFormat("en-US").format(usdcBalance / appData.bondPrice || 0, 4) || "0"} ` + `${"XCHAIN"}`
+              `${Intl.NumberFormat("en-US").format(quantity / appData.bondPrice || 0, 4) || "0"} ` + `${"XCHAIN"}`
             }
             isLoading={isBondLoading}
           />

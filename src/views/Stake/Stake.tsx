@@ -78,6 +78,9 @@ function Stake() {
   const fiveDayRate = useAppSelector(state => {
     return state.app.fiveDayRate;
   });
+  const priceFloor = useAppSelector(state => {
+    return state.app.priceFloor || 0;
+  });
   const earningDay = useAppSelector((state: any) => {
     return state.app.earningDay || 0;
   });
@@ -307,7 +310,7 @@ function Stake() {
   // const stakingRebasePercentage = trim(stakingRebase * 100, 4);
   // const nextRewardValue = trim((Number(stakingRebasePercentage) / 100) * trimmedBalance, 4);
 
-  const formattedTrimmedStakingAPY = new Intl.NumberFormat("en-US").format(Number(trimmedStakingAPY));
+  const formattedTrimmedStakingAPY = new Intl.NumberFormat("en-US").format(Number(trim(Number(trimmedStakingAPY), 2)));
   const formattedStakingTVL = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
@@ -520,7 +523,8 @@ function Stake() {
                       title={`Your Balance`}
                       id="user-balance"
                       balance={
-                        sXChainBalance && `${new Intl.NumberFormat("en-US").format(Number(xChainBalance))} XCHAIN`
+                        sXChainBalance &&
+                        `${new Intl.NumberFormat("en-US").format(Number(trim(Number(xChainBalance), 2)))} XCHAIN`
                       }
                       isLoading={sXChainBalance === "0.0" || sXChainBalance === ""}
                     />
@@ -530,7 +534,8 @@ function Stake() {
                           title={`Your Staked Balance`}
                           id="user-staked-balance"
                           balance={
-                            sXChainBalance && `${new Intl.NumberFormat("en-US").format(Number(sXChainBalance))} sXCHAIN`
+                            sXChainBalance &&
+                            `${new Intl.NumberFormat("en-US").format(Number(trim(Number(sXChainBalance), 2)))} sXCHAIN`
                           }
                           isLoading={sXChainBalance === "0.0" || sXChainBalance === ""}
                         />
@@ -542,7 +547,7 @@ function Stake() {
                       balance={
                         xChainBalance &&
                         `${new Intl.NumberFormat("en-US").format(
-                          Number((nextRewardYield / 100) * Number(xChainBalance)),
+                          Number(trim(Number((nextRewardYield / 100) * Number(xChainBalance)), 2)),
                         )} XCHAIN`
                       }
                       isLoading={sXChainBalance === "0.0" || sXChainBalance === ""}
@@ -550,7 +555,7 @@ function Stake() {
                     <DataRow title={t`Next Reward Yield`} balance={`${nextRewardYield}%`} isLoading={isAppLoading} />
                     <DataRow
                       title={t`ROI (5-Day Rate)`}
-                      balance={`${trim(Number(fiveDayRate) * 100, 4)}%`}
+                      balance={`${trim(Number(fiveDayRate) * 100, 2)}%`}
                       isLoading={sXChainBalance === "0.0" || sXChainBalance === ""}
                     />
                     <DataRow
@@ -558,12 +563,16 @@ function Stake() {
                       balance={
                         xChainBalance &&
                         `$${new Intl.NumberFormat("en-US").format(
-                          ((stakingAPY / 100) * Number(xChainBalance) + Number(xChainBalance)) / 365,
+                          Number(trim(((stakingAPY / 100) * Number(xChainBalance) + Number(xChainBalance)) / 365, 2)),
                         )}`
                       }
                       isLoading={isAppLoading}
                     />
-                    {/* <DataRow title="Position" balance={position && `${position.toFixed(2)}`} isLoading={isAppLoading} /> */}
+                    <DataRow
+                      title="Position"
+                      balance={(priceFloor && `${priceFloor.toFixed(2)}`) || "0"}
+                      isLoading={isAppLoading}
+                    />
                     {/* <DataRow
                         title="Position"
                         balance={`${(Number(stakingTVL) / Number(currentIndex)).toFixed(2)}`}
