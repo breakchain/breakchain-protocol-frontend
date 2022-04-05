@@ -180,15 +180,21 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
 
       <Slide direction="left" in={true} mountOnEnter unmountOnExit {...{ timeout: 533 }}>
         <Box className="bond-data">
-          <DataRow title={t`Your Balance`} balance={`${trim(usdcBalance, 4)} ${"USDC"}`} isLoading={isBondLoading} />
+          <DataRow
+            title={t`Your Balance`}
+            balance={`${Intl.NumberFormat("en-US").format(usdcBalance, 4)} ${"USDC"}`}
+            isLoading={isBondLoading}
+          />
           <DataRow
             title={t`You Will Get`}
-            balance={`${trim(usdcBalance / appData.bondPrice || "0", 4) || "0"} ` + `${"USDC"}`}
+            balance={
+              `${Intl.NumberFormat("en-US").format(usdcBalance / appData.bondPrice || 0, 4) || "0"} ` + `${"XCHAIN"}`
+            }
             isLoading={isBondLoading}
           />
           <DataRow
             title={t`Max You Can Buy`}
-            balance={`${trim(appData.maxBuy, 4) || "0"} ` + `${"USDC"}`}
+            balance={`${Intl.NumberFormat("en-US").format(appData.maxBuy, 4) || "0"} ` + `${"USDC"}`}
             isLoading={isBondLoading}
           />
           <DataRow

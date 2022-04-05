@@ -271,6 +271,10 @@ function App() {
     }
   }, [walletChecked, networkId]);
 
+  useEffect(() => {
+    loadAppDetails({ networkID: 0, provider: {} as any });
+  }, []);
+
   // this useEffect picks up any time a user Connects via the button
   useEffect(() => {
     // don't load ANY details until wallet is Connected

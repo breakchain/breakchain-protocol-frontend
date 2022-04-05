@@ -32,27 +32,17 @@ export const loadAppDetails = createAsyncThunk(
       .then(res => {
         return res;
       });
-    // const stakeMetrics = await fetch("https://api.breakchain.money/api/stakingMetrics")
-    //   .then(resp => resp.json())
-    //   .then(res => {
-    //     return res;
-    //   });
-    // const bondMetrics = await fetch("https://api.breakchain.money/api/bondingMetrics")
-    //   .then(resp => resp.json())
-    //   .then(res => {
-    //     return res;
-    //   });
     let marketPrice;
-    try {
-      const originalPromiseResult = await dispatch(
-        loadMarketPrice({ networkID: networkID, provider: provider }),
-      ).unwrap();
-      marketPrice = originalPromiseResult?.marketPrice;
-    } catch (rejectedValueOrSerializedError) {
-      // handle error here
-      console.error("Returned a null response from dispatch(loadMarketPrice)");
-      return;
-    }
+    // try {
+    //   const originalPromiseResult = await dispatch(
+    //     loadMarketPrice({ networkID: networkID, provider: provider }),
+    //   ).unwrap();
+    //   marketPrice = originalPromiseResult?.marketPrice;
+    // } catch (rejectedValueOrSerializedError) {
+    //   // handle error here
+    //   console.error("Returned a null response from dispatch(loadMarketPrice)");
+    //   return;
+    // }
 
     const marketCap = parseFloat(metricsData.body["market-cap"]);
     const priceFloor = parseFloat(metricsData.body["price-floor"]);
@@ -76,6 +66,7 @@ export const loadAppDetails = createAsyncThunk(
     const debtRatio = parseFloat(metricsData.body["debt-ratio"]);
     const vestTerm = parseFloat(metricsData.body["vesting-term"]);
     const bondPrice = parseFloat(metricsData.body["bond-price"]);
+    const xChainPrice = parseFloat(metricsData.body["xchain-price"]);
 
     // const
     if (!provider) {
@@ -104,41 +95,42 @@ export const loadAppDetails = createAsyncThunk(
         debtRatio,
         vestTerm,
         bondPrice,
+        xChainPrice,
       } as IAppData;
     }
-    const currentBlock = await provider.getBlockNumber();
+    // const currentBlock = await provider.getBlockNumber();
 
-    const stakingContract = OlympusStakingv2__factory.connect(addresses[networkID].STAKING_ADDRESS, provider);
-    const stakingContractV1 = OlympusStaking__factory.connect(addresses[networkID].STAKING_ADDRESS, provider);
+    // const stakingContract = OlympusStakingv2__factory.connect(addresses[networkID].STAKING_ADDRESS, provider);
+    // const stakingContractV1 = OlympusStaking__factory.connect(addresses[networkID].STAKING_ADDRESS, provider);
 
-    const sohmMainContract = SOHM__factory.connect(addresses[networkID].SOHM_ADDRESS as string, provider);
+    // const sohmMainContract = SOHM__factory.connect(addresses[networkID].SOHM_ADDRESS as string, provider);
 
     // Calculating staking
     try {
-      const epoch = await stakingContract.epoch();
-      //const secondsToEpoch = Number(await stakingContract.secondsToNextEpoch());
+      // const epoch = await stakingContract.epoch();
+      // //const secondsToEpoch = Number(await stakingContract.secondsToNextEpoch());
 
-      const stakingReward = epoch.distribute;
+      // const stakingReward = epoch.distribute;
 
-      const circ = await sohmMainContract.circulatingSupply();
+      // const circ = await sohmMainContract.circulatingSupply();
 
-      const stakingRebase =
-        Number(circ.toString()) > 0 ? Number(stakingReward.toString()) / Number(circ.toString()) : 0;
-      const fiveDayRate = Math.pow(1 + stakingRebase, 5 * 3) - 1;
-      const stakingAPY = Math.pow(1 + stakingRebase, 365 * 3) - 1;
+      // const stakingRebase =
+      //   Number(circ.toString()) > 0 ? Number(stakingReward.toString()) / Number(circ.toString()) : 0;
+      // const fiveDayRate = Math.pow(1 + stakingRebase, 5 * 3) - 1;
+      // const stakingAPY = Math.pow(1 + stakingRebase, 365 * 3) - 1;
 
-      // Current index
-      const currentIndex = await stakingContract.index();
-      const currentIndexV1 = await stakingContractV1.index();
+      // // Current index
+      // const currentIndex = await stakingContract.index();
+      // const currentIndexV1 = await stakingContractV1.index();
 
       return {
-        currentIndex: ethers.utils.formatUnits(currentIndex, "gwei"),
-        currentIndexV1: ethers.utils.formatUnits(currentIndexV1, "gwei"),
-        currentBlock,
+        // currentIndex: ethers.utils.formatUnits(currentIndex, "gwei"),
+        // currentIndexV1: ethers.utils.formatUnits(currentIndexV1, "gwei"),
+        // currentBlock,
         fiveDayRate,
-        stakingAPY,
+        // stakingAPY,
         runAwayAvail,
-        stakingRebase,
+        // stakingRebase,
         marketCap,
         priceFloor,
         totalLocked,
@@ -159,6 +151,7 @@ export const loadAppDetails = createAsyncThunk(
         debtRatio,
         vestTerm,
         bondPrice,
+        xChainPrice,
       } as IAppData;
     } catch (e: any) {
       console.log("errormessage", e.message);
@@ -247,6 +240,7 @@ export interface IAppData {
   readonly debtRatio?: number;
   readonly vestTerm?: number;
   readonly bondPrice?: number;
+  readonly xChainPrice?: number;
 }
 
 const initialState: IAppData = {

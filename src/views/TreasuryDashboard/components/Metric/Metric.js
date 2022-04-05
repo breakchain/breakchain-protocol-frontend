@@ -11,13 +11,13 @@ const sharedProps = {
 };
 
 export const OHMPrice = () => {
-  const marketPrice = useSelector(state => state.app.marketPrice);
+  const xChainPrice = useSelector(state => state.app.xChainPrice);
   return (
     <div>
       <Metric
         label={`XCHAIN Price`}
-        metric={marketPrice && formatCurrency(marketPrice, 2)}
-        isLoading={marketPrice ? false : true}
+        metric={xChainPrice && formatCurrency(xChainPrice, 2)}
+        isLoading={xChainPrice ? false : true}
         {...sharedProps}
       />
       <br />
