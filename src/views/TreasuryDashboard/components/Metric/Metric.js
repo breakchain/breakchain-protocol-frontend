@@ -62,8 +62,8 @@ export const CircSupply = () => {
   return (
     <div>
       <Metric
-        label={t`Circulating Supply / Total Supply`}
-        metric={circSupply && parseInt(circSupply) + " / " + parseInt(totalSupply)}
+        label={t`Total Supply`}
+        metric={circSupply && formatCurrency(parseInt(circSupply))}
         isLoading={circSupply ? false : true}
         {...sharedProps}
       />

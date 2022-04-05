@@ -132,7 +132,7 @@ export const XCHAINStakedGraph = () => {
     <ChartSmall
       isStaked
       type="area"
-      data={staked}
+      data={marketPrice}
       dataKey={["staked"]}
       dataFormat="percent"
       headerText="XCHAIN Staked"
@@ -141,7 +141,7 @@ export const XCHAINStakedGraph = () => {
       infoTooltipMessage={tooltipInfoMessages.staked}
       expandedGraphStrokeColor={theme.palette.graphStrokeColor}
       // headerSubText={`${staked && trim(staked[0].staked, 2)}% `}
-      headerSubText={marketPrice}
+      headerSubText={formatCurrency(marketPrice, 2)}
     />
   );
 };
