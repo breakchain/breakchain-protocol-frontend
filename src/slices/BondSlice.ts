@@ -52,8 +52,8 @@ export const changeApproval = createAsyncThunk(
       dispatch(
         fetchPendingTxns({
           txnHash: approveTx.hash,
-          text: "Approving " + "USDC",
-          type: "approve_" + "USDC",
+          text: "Approving " + "UST",
+          type: "approve_" + "UST",
         }),
       );
       await approveTx.wait();

@@ -546,13 +546,17 @@ function Stake() {
                       title={t`Next Reward Amount`}
                       balance={
                         xChainBalance &&
-                        `${new Intl.NumberFormat("en-US").format(
+                        `${Intl.NumberFormat("en-US").format(
                           Number(trim(Number((nextRewardYield / 100) * Number(xChainBalance)), 2)),
                         )} XCHAIN`
                       }
                       isLoading={sXChainBalance === "0.0" || sXChainBalance === ""}
                     />
-                    <DataRow title={t`Next Reward Yield`} balance={`${nextRewardYield}%`} isLoading={isAppLoading} />
+                    <DataRow
+                      title={t`Next Reward Yield`}
+                      balance={`${trim(nextRewardYield, 3)}%`}
+                      isLoading={isAppLoading}
+                    />
                     <DataRow
                       title={t`ROI (5-Day Rate)`}
                       balance={`${trim(Number(fiveDayRate) * 100, 2)}%`}
@@ -568,11 +572,11 @@ function Stake() {
                       }
                       isLoading={isAppLoading}
                     />
-                    <DataRow
+                    {/* <DataRow
                       title="Position"
                       balance={(priceFloor && `${priceFloor.toFixed(2)}`) || "0"}
                       isLoading={isAppLoading}
-                    />
+                    /> */}
                     {/* <DataRow
                         title="Position"
                         balance={`${(Number(stakingTVL) / Number(currentIndex)).toFixed(2)}`}
