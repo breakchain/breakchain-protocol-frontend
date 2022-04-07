@@ -63,7 +63,7 @@ export const CircSupply = () => {
     <div>
       <Metric
         label={t`Total Supply`}
-        metric={circSupply && formatCurrency(parseInt(circSupply))}
+        metric={circSupply && Intl.NumberFormat("en-US").format(parseInt(circSupply))}
         isLoading={circSupply ? false : true}
         {...sharedProps}
       />

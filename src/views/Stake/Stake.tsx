@@ -572,11 +572,11 @@ function Stake() {
                       }
                       isLoading={isAppLoading}
                     />
-                    <DataRow
+                    {/* <DataRow
                       title="Position"
                       balance={(priceFloor && `${priceFloor.toFixed(2)}`) || "0"}
                       isLoading={isAppLoading}
-                    />
+                    /> */}
                     {/* <DataRow
                         title="Position"
                         balance={`${(Number(stakingTVL) / Number(currentIndex)).toFixed(2)}`}
