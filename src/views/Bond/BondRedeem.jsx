@@ -76,10 +76,10 @@ function BondRedeem({ bond }) {
       </Box>
       <Slide direction="right" in={true} mountOnEnter unmountOnExit {...{ timeout: 533 }}>
         <Box className="bond-data">
-          <DataRow title={t`Pending Rewards`} balance={`${trim(bond.interestDue, 4)} USDC`} isLoading={isBondLoading} />
+          <DataRow title={t`Pending Rewards`} balance={`${trim(bond.interestDue, 4)} UST`} isLoading={isBondLoading} />
           <DataRow
             title={t`Claimable Rewards`}
-            balance={`${trim(bond.pendingPayout, 4)} USDC`}
+            balance={`${trim(bond.pendingPayout, 4)} UST`}
             isLoading={isBondLoading}
           />
           <DataRow title={t`Time until fully vested`} balance={vestingTime()} isLoading={isBondLoading} />
