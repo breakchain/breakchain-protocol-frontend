@@ -119,7 +119,7 @@ function NavContent({ handleDrawerToggle }) {
         <div className="dapp-menu-top">
           <Box className="branding-header">
             <Link target="_self" href={"https://www.breakchain.money"}>
-              <img src={OlympusIcon} style={{ minWidth: "200px", minHeight: "125px", width: "200px" }} />
+              <img src={OlympusIcon} style={{ width: "200px" }} />
             </Link>
 
             {/* <WalletAddressEns /> */}
