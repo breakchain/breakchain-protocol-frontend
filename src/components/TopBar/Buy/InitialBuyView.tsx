@@ -95,14 +95,14 @@ export interface Token {
 const tokens = [
   {
     type: "ERC20",
-    address: "0xE4576a1e7bfC649c94654A3157cdD6B2A286Dad1",
+    address: "0xd3d2d5F7582b53F0929D06fB6f12473811ba2aB5",
     symbol: "XCHAIN",
     decimals: 18,
     image: "https://breakchain.s3.amazonaws.com/coinicon.png",
   },
   {
     type: "ERC20",
-    address: "0xD750DEB4052F7e846e8f5a102C8fFC719AcDc45B",
+    address: "0xBB3A0712AA17cE116358d71F6C07EB4505D7910a",
     symbol: "sXCHAIN",
     decimals: 18,
     image: "https://breakchain.s3.amazonaws.com/coinicon.png",
