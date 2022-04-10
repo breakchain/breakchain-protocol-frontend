@@ -118,7 +118,7 @@ function NavContent({ handleDrawerToggle }) {
       <Box className="dapp-sidebar-inner" display="flex" justifyContent="space-between" flexDirection="column">
         <div className="dapp-menu-top">
           <Box className="branding-header">
-            <Link target="_self" href={"http://" + window.location.host + "/home"}>
+            <Link target="_self" href={"https://www.breakchain.money"}>
               <img src={OlympusIcon} style={{ minWidth: "200px", minHeight: "125px", width: "200px" }} />
             </Link>
 
@@ -134,11 +134,7 @@ function NavContent({ handleDrawerToggle }) {
                 id="dash-nav"
                 // to="home"
                 target="_self"
-                href={"http://" + window.location.host + "/home"}
-                isActive={(match, location) => {
-                  return checkPage(match, location, "home");
-                }}
-                className={`button-dapp-menu ${isActive ? "active" : ""}`}
+                href={"https://www.breakchain.money"}
                 onClick={handleDrawerToggle}
               >
                 <Typography variant="h6">
