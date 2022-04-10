@@ -5,7 +5,7 @@ import externalUrls from "./externalUrls";
 import { ReactComponent as StakeIcon } from "../../assets/icons/stake.svg";
 import { ReactComponent as BondIcon } from "../../assets/icons/bond.svg";
 import { ReactComponent as DashboardIcon } from "../../assets/icons/dashboard.svg";
-import OlympusIcon from "../../assets/logo.png";
+import OlympusIcon from "../../assets/logo_new.png";
 import { ReactComponent as PoolTogetherIcon } from "../../assets/icons/33-together.svg";
 import { ReactComponent as InfoIcon } from "../../assets/icons/info.svg";
 import { ReactComponent as ZapIcon } from "../../assets/icons/zap.svg";
