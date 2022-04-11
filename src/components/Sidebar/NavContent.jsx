@@ -215,13 +215,9 @@ function NavContent({ handleDrawerToggle }) {
                 </Typography>
               </Link>
               <Link
-                // component={NavLink}
                 id="roadmap-nav"
-                href={window.location.hostname + "/roadmap"}
-                isActive={(match, location) => {
-                  return checkPage(match, location, "roadmap");
-                }}
-                className={`button-dapp-menu ${isActive ? "active" : ""}`}
+                href={"https://www.breakchain-protocol.com/XCHAIN_Roadmap.pdf"}
+                target="_blank"
                 onClick={handleDrawerToggle}
               >
                 <Typography variant="h6">
@@ -232,7 +228,7 @@ function NavContent({ handleDrawerToggle }) {
               <Link
                 // component={NavLink}
                 id="whitepaper-nav"
-                href={window.location.hostname + "/whitepaper"}
+                href={window.location.host + "/whitepaper"}
                 isActive={(match, location) => {
                   return checkPage(match, location, "whitepaper");
                 }}
