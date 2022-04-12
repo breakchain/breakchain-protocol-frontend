@@ -162,7 +162,7 @@ function InitialBuyView({ onClose }: { onClose: () => void }) {
   };
 
   return (
-    <Paper elevation={3} style={{ borderRadius: "12px" }}>
+    <Paper elevation={3} style={{ borderRadius: "12px", zIndex: 2000000 }}>
       <Box className={classes.dropContainer}>
         <ExternalLink
           color={currentTheme === "dark" ? "primary" : undefined}

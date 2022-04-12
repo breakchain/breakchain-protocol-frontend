@@ -4,6 +4,7 @@ import { abi as ierc20Abi } from "../abi/IERC20.json";
 import { abi as oerc20ABI } from "../abi/xchain/OlympusERC20Contract.json";
 import { abi as sOlympusABI } from "../abi/sXchain/sOlympus.json";
 import { abi as BondABI } from "../abi/xchain/Bond.json";
+import { abi as BondDpeoABI } from "../abi/xchain/BondDepository.json";
 import { abi as sOHMv2 } from "../abi/sOhmv2.json";
 import { abi as fuseProxy } from "../abi/FuseProxy.json";
 import { abi as wsOHM } from "../abi/wsOHM.json";
@@ -348,18 +349,29 @@ export const loadAccountDetails = createAsyncThunk(
     let stakeAllowance = BigNumber.from("0");
     let unstakeAllowance = BigNumber.from("0");
     let bondAllowance = BigNumber.from("0");
+    let claimable = 0;
+    let pending = 0;
+    let vestTime = 0;
 
     try {
       const signer = provider.getSigner();
+      const bondContract = new ethers.Contract(addresses[networkID].BOND_DEPOSITORY_ADDRESS, BondDpeoABI, signer);
       const stakeContract = new ethers.Contract(addresses[networkID].OLYMPUS_ERC20_ADDRESS, oerc20ABI, signer);
       const unstakeContract = new ethers.Contract(addresses[networkID].SOHM_ADDRESS, sOlympusABI, signer);
       const reservedContract = new ethers.Contract(addresses[networkID].BOND_ADDRESS, BondABI, signer);
       stakeAllowance = await stakeContract.allowance(address, addresses[networkID].STAKING_HELPER_ADDRESS);
       unstakeAllowance = await unstakeContract.allowance(address, addresses[networkID].STAKING_ADDRESS);
       bondAllowance = await reservedContract.allowance(address, addresses[networkID].BOND_DEPOSITORY_ADDRESS);
+
+      let bondInfo = await bondContract.bondInfo(address);
+      let percentVested = await bondContract.percentVestedFor(address);
+      claimable = await bondContract.pendingPayoutFor(address);
+      vestTime = 5 - (percentVested / 10000) * 5;
+      pending = bondInfo[0];
     } catch (e) {
       handleContractError(e);
     }
+
     await dispatch(getBalances({ address, networkID, provider }));
     await dispatch(getDonationBalances({ address, networkID, provider }));
     await dispatch(getRedemptionBalances({ address, networkID, provider }));
@@ -377,6 +389,9 @@ export const loadAccountDetails = createAsyncThunk(
       },
       bonding: {
         usdcBond: +bondAllowance,
+        claim: ethers.utils.formatUnits(claimable, "gwei"),
+        pending: ethers.utils.formatUnits(pending, "gwei"),
+        vestTime: vestTime,
       },
     };
   },

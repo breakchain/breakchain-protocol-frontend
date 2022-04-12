@@ -20,6 +20,10 @@ function BondRedeem({ bond }) {
     return state.app;
   });
 
+  const bonding = useSelector(state => {
+    return state.account.bonding;
+  });
+
   useEffect(() => {
     if (appData && (appData.vestTerm || appData.maxBuy || appData.bondROI)) {
       setLoading(false);
@@ -76,16 +80,20 @@ function BondRedeem({ bond }) {
       </Box>
       <Slide direction="right" in={true} mountOnEnter unmountOnExit {...{ timeout: 533 }}>
         <Box className="bond-data">
-          <DataRow title={t`Pending Rewards`} balance={`${trim(bond.interestDue, 4)} UST`} isLoading={isBondLoading} />
           <DataRow
-            title={t`Claimable Rewards`}
-            balance={`${trim(bond.pendingPayout, 4)} UST`}
+            title={t`Pending Rewards`}
+            balance={`${trim(bonding.pending, 2)} XCHAIN`}
             isLoading={isBondLoading}
           />
-          <DataRow title={t`Time until fully vested`} balance={vestingTime()} isLoading={isBondLoading} />
+          <DataRow
+            title={t`Claimable Rewards`}
+            balance={`${trim(bonding.claim, 3)} XCHAIN`}
+            isLoading={isBondLoading}
+          />
+          <DataRow title={t`Time until fully vested`} balance={trim(bonding.vestTime, 2)} isLoading={isBondLoading} />
           <DataRow
             title={t`ROI`}
-            balance={<DisplayBondDiscount key={bond.bondROI} bond={bond} />}
+            balance={<DisplayBondDiscount key={bonding.vestTime} bond={bond} />}
             isLoading={isBondLoading}
           />
           <DataRow
