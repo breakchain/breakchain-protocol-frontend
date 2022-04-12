@@ -97,14 +97,14 @@ const tokens = [
     type: "ERC20",
     address: "0xd3d2d5F7582b53F0929D06fB6f12473811ba2aB5",
     symbol: "XCHAIN",
-    decimals: 18,
+    decimals: 9,
     image: "https://breakchain.s3.amazonaws.com/coinicon.png",
   },
   {
     type: "ERC20",
     address: "0xBB3A0712AA17cE116358d71F6C07EB4505D7910a",
     symbol: "sXCHAIN",
-    decimals: 18,
+    decimals: 9,
     image: "https://breakchain.s3.amazonaws.com/coinicon.png",
   },
 ];
