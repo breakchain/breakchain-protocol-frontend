@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 
 import { addresses, NetworkId } from "../constants";
-import { abi as sOHMv2 } from "../abi/sOhmv2.json";
+import { abi as bondABI } from "../abi/xchain/BondDepository.json";
 import { setAll, getTokenPrice, getMarketPrice } from "../helpers";
 import { NodeHelper } from "src/helpers/NodeHelper";
 import apollo from "../lib/apolloClient";

@@ -273,7 +273,7 @@ function App() {
 
   useEffect(() => {
     loadAppDetails({ networkID: 0, provider: {} as any });
-  }, []);
+  }, [address]);
 
   // this useEffect picks up any time a user Connects via the button
   useEffect(() => {
