@@ -216,7 +216,7 @@ function NavContent({ handleDrawerToggle }) {
               </Link>
               <Link
                 id="roadmap-nav"
-                href={"https://www.breakchain-protocol.com/XCHAIN_Roadmap.pdf"}
+                href={process.env.PUBLIC_URL + "/XCHAIN_Roadmap.pdf"}
                 target="_blank"
                 onClick={handleDrawerToggle}
               >
