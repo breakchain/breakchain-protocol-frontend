@@ -216,7 +216,7 @@ function NavContent({ handleDrawerToggle }) {
               </Link>
               <Link
                 id="roadmap-nav"
-                href={process.env.PUBLIC_URL + "/XCHAIN_Roadmap.pdf"}
+                href={"https://breakchain-docs.s3.amazonaws.com/XCHAIN_Roadmap.pdf"}
                 target="_blank"
                 onClick={handleDrawerToggle}
               >
