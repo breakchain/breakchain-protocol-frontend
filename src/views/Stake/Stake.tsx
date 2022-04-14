@@ -310,7 +310,9 @@ function Stake() {
   // const stakingRebasePercentage = trim(stakingRebase * 100, 4);
   // const nextRewardValue = trim((Number(stakingRebasePercentage) / 100) * trimmedBalance, 4);
 
-  const formattedTrimmedStakingAPY = new Intl.NumberFormat("en-US").format(Number(trim(Number(trimmedStakingAPY), 2)));
+  const formattedTrimmedStakingAPY = new Intl.NumberFormat("en-US").format(
+    Number(trim(Number(trimmedStakingAPY) / 100, 2)),
+  );
   const formattedStakingTVL = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
@@ -559,16 +561,16 @@ function Stake() {
                     />
                     <DataRow
                       title={t`ROI (5-Day Rate)`}
-                      balance={`${trim(Number(fiveDayRate) * 100, 2)}%`}
+                      balance={`${trim(Number(fiveDayRate), 2)}%`}
                       isLoading={sXChainBalance === "0.0" || sXChainBalance === ""}
                     />
                     <DataRow
                       title="Your Earnings Per Day"
                       balance={
                         xChainBalance &&
-                        `$${new Intl.NumberFormat("en-US").format(
+                        `${new Intl.NumberFormat("en-US").format(
                           Number(trim(((stakingAPY / 100) * Number(xChainBalance) + Number(xChainBalance)) / 365, 2)),
-                        )}`
+                        )} XCHAIN`
                       }
                       isLoading={isAppLoading}
                     />
