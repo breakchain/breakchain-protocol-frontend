@@ -552,7 +552,7 @@ function Stake() {
                         xChainBalance === ""
                           ? 0
                           : Intl.NumberFormat("en-US").format(
-                              Number(trim(Number((nextRewardYield / 100) * Number(xChainBalance)), 2)),
+                              Number(trim(Number((nextRewardYield / 100) * Number(sXChainBalance)), 2)),
                             )
                       } XCHAIN`}
                       isLoading={isAppLoading}
@@ -574,7 +574,7 @@ function Stake() {
                           ? 0
                           : new Intl.NumberFormat("en-US").format(
                               Number(
-                                trim(((stakingAPY / 100) * Number(xChainBalance) + Number(xChainBalance)) / 365, 2),
+                                trim(((stakingAPY / 100) * Number(sXChainBalance) + Number(sXChainBalance)) / 365, 2),
                               ),
                             )
                       } XCHAIN`}
