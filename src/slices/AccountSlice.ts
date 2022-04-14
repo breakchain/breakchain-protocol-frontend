@@ -170,41 +170,41 @@ export const getBalances = createAsyncThunk(
 export const getDonationBalances = createAsyncThunk(
   "account/getDonationBalances",
   async ({ address, networkID, provider }: IBaseAddressAsyncThunk) => {
-    let giveAllowance = 0;
-    let donationInfo: IUserDonationInfo = {};
+    // let giveAllowance = 0;
+    // let donationInfo: IUserDonationInfo = {};
 
-    if (addresses[networkID] && addresses[networkID].GIVING_ADDRESS) {
-      const sohmContract = new ethers.Contract(addresses[networkID].SOHM_V2 as string, ierc20Abi, provider);
-      giveAllowance = await sohmContract.allowance(address, addresses[networkID].GIVING_ADDRESS);
-      const givingContract = new ethers.Contract(
-        addresses[networkID].GIVING_ADDRESS as string,
-        OlympusGiving,
-        provider,
-      );
+    // if (addresses[networkID] && addresses[networkID].GIVING_ADDRESS) {
+    //   const sohmContract = new ethers.Contract(addresses[networkID].SOHM_V2 as string, ierc20Abi, provider);
+    //   giveAllowance = await sohmContract.allowance(address, addresses[networkID].GIVING_ADDRESS);
+    //   const givingContract = new ethers.Contract(
+    //     addresses[networkID].GIVING_ADDRESS as string,
+    //     OlympusGiving,
+    //     provider,
+    //   );
 
-      try {
-        // NOTE: The BigNumber here is from ethers, and is a different implementation of BigNumber used in the rest of the frontend. For that reason, we convert to string in the interim.
-        let allDeposits: [string[], BigNumber[]] = await givingContract.getAllDeposits(address);
-        for (let i = 0; i < allDeposits[0].length; i++) {
-          if (allDeposits[1][i].eq(0)) continue;
+    //   try {
+    //     // NOTE: The BigNumber here is from ethers, and is a different implementation of BigNumber used in the rest of the frontend. For that reason, we convert to string in the interim.
+    //     let allDeposits: [string[], BigNumber[]] = await givingContract.getAllDeposits(address);
+    //     for (let i = 0; i < allDeposits[0].length; i++) {
+    //       if (allDeposits[1][i].eq(0)) continue;
 
-          // Store as a formatted string
-          donationInfo[allDeposits[0][i]] = ethers.utils.formatUnits(allDeposits[1][i], "gwei");
-        }
-      } catch (e: unknown) {
-        console.log(
-          "If the following error contains 'user is not donating', then it is an expected error. No need to report it!",
-        );
-        console.log(e);
-      }
-    } else {
-      console.log("Unable to find GIVING_ADDRESS contract on chain ID " + networkID);
-    }
+    //       // Store as a formatted string
+    //       donationInfo[allDeposits[0][i]] = ethers.utils.formatUnits(allDeposits[1][i], "gwei");
+    //     }
+    //   } catch (e: unknown) {
+    //     console.log(
+    //       "If the following error contains 'user is not donating', then it is an expected error. No need to report it!",
+    //     );
+    //     console.log(e);
+    //   }
+    // } else {
+    //   console.log("Unable to find GIVING_ADDRESS contract on chain ID " + networkID);
+    // }
 
     return {
       giving: {
-        sohmGive: +giveAllowance,
-        donationInfo: donationInfo,
+        // sohmGive: +giveAllowance,
+        // donationInfo: donationInfo,
         loading: false,
       },
     };
