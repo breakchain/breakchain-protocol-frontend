@@ -525,10 +525,10 @@ function Stake() {
                       title={`Your Balance`}
                       id="user-balance"
                       balance={
-                        sXChainBalance &&
+                        xChainBalance &&
                         `${new Intl.NumberFormat("en-US").format(Number(trim(Number(xChainBalance), 2)))} XCHAIN`
                       }
-                      isLoading={sXChainBalance === "0.0" || sXChainBalance === ""}
+                      isLoading={xChainBalance === "0.0" || xChainBalance === ""}
                     />
                     <Accordion className="stake-accordion" square defaultExpanded>
                       <AccordionSummary expandIcon={<ExpandMore className="stake-expand" />}>
@@ -552,7 +552,7 @@ function Stake() {
                           Number(trim(Number((nextRewardYield / 100) * Number(xChainBalance)), 2)),
                         )} XCHAIN`
                       }
-                      isLoading={sXChainBalance === "0.0" || sXChainBalance === ""}
+                      isLoading={xChainBalance === "0.0" || xChainBalance === ""}
                     />
                     <DataRow
                       title={t`Next Reward Yield`}
@@ -560,7 +560,7 @@ function Stake() {
                       isLoading={isAppLoading}
                     />
                     <DataRow
-                      title={t`ROI (5-Day Rate)`}
+                      title={t`5-Day ROI`}
                       balance={`${trim(Number(fiveDayRate), 2)}%`}
                       isLoading={sXChainBalance === "0.0" || sXChainBalance === ""}
                     />
