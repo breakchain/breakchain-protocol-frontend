@@ -47,7 +47,7 @@ export const changeApproval = createAsyncThunk(
     try {
       approveTx = await reserveContract.approve(
         addresses[networkID].BOND_DEPOSITORY_ADDRESS,
-        ethers.utils.parseEther("10"),
+        ethers.utils.parseEther("1000000"),
       );
       dispatch(
         fetchPendingTxns({

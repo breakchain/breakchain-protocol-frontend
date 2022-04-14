@@ -5,7 +5,7 @@ import externalUrls from "./externalUrls";
 import { ReactComponent as StakeIcon } from "../../assets/icons/stake.svg";
 import { ReactComponent as BondIcon } from "../../assets/icons/bond.svg";
 import { ReactComponent as DashboardIcon } from "../../assets/icons/dashboard.svg";
-import OlympusIcon from "../../assets/logo.png";
+import OlympusIcon from "../../assets/logo_new.png";
 import { ReactComponent as PoolTogetherIcon } from "../../assets/icons/33-together.svg";
 import { ReactComponent as InfoIcon } from "../../assets/icons/info.svg";
 import { ReactComponent as ZapIcon } from "../../assets/icons/zap.svg";
@@ -89,6 +89,15 @@ function NavContent({ handleDrawerToggle }) {
     if ((currentPath.indexOf("bonds") >= 0 || currentPath.indexOf("choose_bond") >= 0) && page === "bonds") {
       return true;
     }
+    if (currentPath.indexOf("whitepaper") >= 0 && page === "whitepaper") {
+      return true;
+    }
+    if (currentPath.indexOf("roadmap") >= 0 && page === "roadmap") {
+      return true;
+    }
+    if (currentPath.indexOf("home") >= 0 && page === "home") {
+      return true;
+    }
     if (currentPath.indexOf("33-together") >= 0 && page === "33-together") {
       return true;
     }
@@ -109,24 +118,27 @@ function NavContent({ handleDrawerToggle }) {
       <Box className="dapp-sidebar-inner" display="flex" justifyContent="space-between" flexDirection="column">
         <div className="dapp-menu-top">
           <Box className="branding-header">
-            <Link href="https://olympusdao.finance" target="_blank">
-              <img src={OlympusIcon} style={{ minWdth: "200px", minHeight: "125px", width: "200px" }} />
+            <Link target="_self" href={"https://www.breakchain.money"}>
+              <img src={OlympusIcon} style={{ width: "200px" }} />
             </Link>
 
             {/* <WalletAddressEns /> */}
           </Box>
-
+          <br></br>
+          <br></br>
+          <br></br>
           <div className="dapp-menu-links">
             <div className="dapp-nav" id="navbarNav">
               <Link
-                component={NavLink}
+                // component={NavLink}
                 id="dash-nav"
-                to="/home"
-                className={`button-dapp-menu ${isActive ? "active" : ""}`}
+                // to="home"
+                target="_self"
+                href={"https://www.breakchain.money"}
                 onClick={handleDrawerToggle}
               >
                 <Typography variant="h6">
-                  <Trans>Home</Trans>
+                  <Trans>HOME</Trans>
                 </Typography>
               </Link>
               <Link
@@ -141,7 +153,7 @@ function NavContent({ handleDrawerToggle }) {
               >
                 <Typography variant="h6">
                   {/* <SvgIcon color="primary" component={DashboardIcon} /> */}
-                  <Trans>Dashboard</Trans>
+                  <Trans>DASHBOARD</Trans>
                 </Typography>
               </Link>
 
@@ -163,20 +175,19 @@ function NavContent({ handleDrawerToggle }) {
               >
                 <Typography variant="h6">
                   {/* <SvgIcon color="primary" component={StakeIcon} /> */}
-                  <Trans>Staking</Trans>
+                  <Trans>STAKING</Trans>
                 </Typography>
               </Link>
-              <Link
+              {/* <Link
                 id="stake"
                 component={NavLink}
                 to="/calculator"
                 className={`button-dapp-menu ${isActive ? "active" : ""}`}
               >
                 <Typography variant="h6">
-                  {/* <SvgIcon color="primary" component={InfoIcon} /> */}
                   <Trans>ROI Projections</Trans>
                 </Typography>
-              </Link>
+              </Link> */}
               <Link
                 id="stake"
                 component={NavLink}
@@ -185,7 +196,7 @@ function NavContent({ handleDrawerToggle }) {
               >
                 <Typography variant="h6">
                   {/* <SvgIcon color="primary" component={ZapIcon} /> */}
-                  <Trans>Rewards</Trans>
+                  <Trans>REWARDS</Trans>
                 </Typography>
               </Link>
               <Link
@@ -200,37 +211,41 @@ function NavContent({ handleDrawerToggle }) {
               >
                 <Typography variant="h6">
                   {/* <SvgIcon color="primary" component={BondIcon} /> */}
-                  <Trans>Bonds</Trans>
+                  <Trans>BONDS</Trans>
+                </Typography>
+              </Link>
+              <Link
+                id="roadmap-nav"
+                href={"https://breakchain-docs.s3.amazonaws.com/XCHAIN_Roadmap.pdf"}
+                target="_blank"
+                onClick={handleDrawerToggle}
+              >
+                <Typography variant="h6">
+                  {/* <SvgIcon color="primary" component={BondIcon} /> */}
+                  <Trans>ROADMAP</Trans>
+                </Typography>
+              </Link>
+              <Link
+                // component={NavLink}
+                id="whitepaper-nav"
+                href={window.location.host + "/whitepaper"}
+                isActive={(match, location) => {
+                  return checkPage(match, location, "whitepaper");
+                }}
+                className={`button-dapp-menu ${isActive ? "active" : ""}`}
+                onClick={handleDrawerToggle}
+              >
+                <Typography variant="h6">
+                  {/* <SvgIcon color="primary" component={BondIcon} /> */}
+                  <Trans>WHITE PAPER</Trans>
                 </Typography>
               </Link>
             </div>
           </div>
         </div>
-        <br></br>
-        <br></br>
-        <br></br>
-        <Box className="dapp-menu-bottom" display="flex" justifyContent="space-between" flexDirection="column">
-          <div className="dapp-menu-external-links">
-            {Object.keys(externalUrls).map((link, i) => {
-              return (
-                <Link
-                  key={i}
-                  href={`${externalUrls[link].url}`}
-                  target="_blank"
-                  className="external-site-link"
-                  onClick={handleDrawerToggle}
-                >
-                  <Typography variant="h6">{externalUrls[link].icon}</Typography>
-                  <Typography variant="h6">{externalUrls[link].title}</Typography>
-                  <SvgIcon component={ArrowUpIcon} className="external-site-link-icon" />
-                </Link>
-              );
-            })}
-          </div>
-          <div className="dapp-menu-social">
-            <Social />
-          </div>
-        </Box>
+        <div className="dapp-menu-social">
+          <Social />
+        </div>
       </Box>
     </Paper>
   );

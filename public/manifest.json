@@ -1,8 +1,8 @@
 {
-  "short_name": "OlympusDAO",
+  "short_name": "Blockchain Protocol",
   "start_url": ".",
   "homepage": "./",
-  "name": "OlympusDAO",
+  "name": "Blockchain Protocol",
   "launch_path": "/public/index.html",
   "icons": [
     {

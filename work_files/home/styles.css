@@ -1,0 +1,94 @@
+@font-face {
+    font-family: "poppins";
+    src: url("../assets/fonts/Poppins-Regular.woff") format('woff');
+    font-weight:400
+}
+
+@font-face {
+    font-family: "myfont";
+    src: url("../assets/fonts/Poppins-Bold.woff") format('woff');
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: "myfont";
+    src: url("../assets/fonts/Poppins-Italic.woff") format('woff');
+    font-style: italic;
+}
+
+
+body {
+  font-family: poppins;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: black;
+  color:white;
+  margin-top :130px;
+  background-image: url('../assets/images/breakchain/logo_black_fade.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position-x: center;
+    background-position-y:center;
+}
+header {
+    background-color: black;
+    position: absolute;
+    top: 0px; 
+    left:0px;
+    width:100%;
+    /* padding:10px 10px; */
+}
+.main {
+    
+    text-align: center;
+    overflow: scroll;
+    /* height: 500px; */
+    width:75%;
+}
+footer {
+    padding:10px 10px;
+    margin:0 0;
+    height: 150px;
+    position: absolute;
+    bottom: 0px;
+    left:0px;
+    width: 100%;
+    background-color: black;
+    color:white;
+}
+.partner {
+    display: block;
+    float:left;
+    padding: 5px;
+}
+.enterbutton {
+    display:block;
+    float:right;
+    padding:3px 20px;
+    margin: 20px 10px;
+    background-color: blue;
+    border-radius:5px;
+}
+.logo {
+    margin: 10px;
+}
+.statbox {
+    display:block;
+    height:80px;
+    width:80px;
+    float:left;
+    background-color: #333333;
+    color:white;
+    margin-bottom: 10px;
+    border-radius:5px;
+    text-align: center;
+    font-size: smaller;
+    
+}
+.statholder {
+    display:block;
+    width:80px;
+    margin:10px;
+    float:right;
+}
