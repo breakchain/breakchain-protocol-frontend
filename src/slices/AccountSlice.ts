@@ -117,25 +117,19 @@ export const getBalances = createAsyncThunk(
     const reservedContract = new ethers.Contract(addresses[networkID].BOND_ADDRESS, BondABI, signer);
     try {
       xChainBalance = await stakeContract.balanceOf(address);
-      console.log("xChain Balance:", xChainBalance);
     } catch (e) {
-      console.log("xChain error:", e);
       handleContractError(e);
     }
 
     try {
       sXChainBalance = await unstakeContract.balanceOf(address);
-      console.log("sXChain Balance:", sXChainBalance);
     } catch (e) {
-      console.log("sXChain error:", e);
       handleContractError(e);
     }
 
     try {
       usdcBalance = await reservedContract.balanceOf(address);
-      console.log("usdc Balance:", usdcBalance);
     } catch (e) {
-      console.log("usdc error:", e);
       handleContractError(e);
     }
 

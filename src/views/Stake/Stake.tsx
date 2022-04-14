@@ -524,35 +524,38 @@ function Stake() {
                     <DataRow
                       title={`Your Balance`}
                       id="user-balance"
-                      balance={
-                        xChainBalance &&
-                        `${new Intl.NumberFormat("en-US").format(Number(trim(Number(xChainBalance), 2)))} XCHAIN`
-                      }
-                      isLoading={xChainBalance === "0.0" || xChainBalance === ""}
+                      balance={`${
+                        xChainBalance === ""
+                          ? 0
+                          : new Intl.NumberFormat("en-US").format(Number(trim(Number(xChainBalance), 2)))
+                      } XCHAIN`}
+                      isLoading={isAppLoading}
                     />
                     <Accordion className="stake-accordion" square defaultExpanded>
                       <AccordionSummary expandIcon={<ExpandMore className="stake-expand" />}>
                         <DataRow
                           title={`Your Staked Balance`}
                           id="user-staked-balance"
-                          balance={
-                            sXChainBalance &&
-                            `${new Intl.NumberFormat("en-US").format(Number(trim(Number(sXChainBalance), 2)))} sXCHAIN`
-                          }
-                          isLoading={sXChainBalance === "0.0" || sXChainBalance === ""}
+                          balance={`${
+                            sXChainBalance === ""
+                              ? 0
+                              : new Intl.NumberFormat("en-US").format(Number(trim(Number(sXChainBalance), 2)))
+                          } sXCHAIN`}
+                          isLoading={isAppLoading}
                         />
                       </AccordionSummary>
                     </Accordion>
                     <Divider color="secondary" />
                     <DataRow
                       title={t`Next Reward Amount`}
-                      balance={
-                        xChainBalance &&
-                        `${Intl.NumberFormat("en-US").format(
-                          Number(trim(Number((nextRewardYield / 100) * Number(xChainBalance)), 2)),
-                        )} XCHAIN`
-                      }
-                      isLoading={xChainBalance === "0.0" || xChainBalance === ""}
+                      balance={`${
+                        xChainBalance === ""
+                          ? 0
+                          : Intl.NumberFormat("en-US").format(
+                              Number(trim(Number((nextRewardYield / 100) * Number(xChainBalance)), 2)),
+                            )
+                      } XCHAIN`}
+                      isLoading={isAppLoading}
                     />
                     <DataRow
                       title={t`Next Reward Yield`}
@@ -562,16 +565,19 @@ function Stake() {
                     <DataRow
                       title={t`ROI (5-Day Rate)`}
                       balance={`${trim(Number(fiveDayRate), 2)}%`}
-                      isLoading={sXChainBalance === "0.0" || sXChainBalance === ""}
+                      isLoading={isAppLoading}
                     />
                     <DataRow
                       title="Your Earnings Per Day"
-                      balance={
-                        xChainBalance &&
-                        `${new Intl.NumberFormat("en-US").format(
-                          Number(trim(((stakingAPY / 100) * Number(xChainBalance) + Number(xChainBalance)) / 365, 2)),
-                        )} XCHAIN`
-                      }
+                      balance={`${
+                        xChainBalance === ""
+                          ? 0
+                          : new Intl.NumberFormat("en-US").format(
+                              Number(
+                                trim(((stakingAPY / 100) * Number(xChainBalance) + Number(xChainBalance)) / 365, 2),
+                              ),
+                            )
+                      } XCHAIN`}
                       isLoading={isAppLoading}
                     />
                     {/* <DataRow
