@@ -552,7 +552,7 @@ function Stake() {
                         xChainBalance === ""
                           ? 0
                           : Intl.NumberFormat("en-US").format(
-                              Number(trim(Number((nextRewardYield / 100) * Number(sXChainBalance)), 2)),
+                              Number(trim(Number((nextRewardYield / 100) * Number(sXChainBalance)), 4)),
                             )
                       } XCHAIN`}
                       isLoading={isAppLoading}
