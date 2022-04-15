@@ -178,7 +178,7 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
   useEffect(() => {
     if (web3Provider?.on) {
       const handleAccountsChanged = (accounts: string[]) => {
-        console.log("accountsChanged", accounts);
+        window.location.reload();
       };
 
       const handleChainChanged = async (_hexChainId: string) => {
