@@ -266,10 +266,10 @@ export const changeStake = createAsyncThunk(
       // } else {
       if (action === "stake") {
         uaData.type = "stake";
-        stakeTx = await stakingHelper.stake(ethers.utils.parseUnits(value, "gwei"), { gasLimit: 500000 });
+        stakeTx = await stakingHelper.stake(ethers.utils.parseUnits(value, "gwei"), { gasLimit: 700000 });
       } else {
         uaData.type = "unstake";
-        stakeTx = await staking.unstake(ethers.utils.parseUnits(value, "gwei"), { gasLimit: 500000 });
+        stakeTx = await staking.unstake(ethers.utils.parseUnits(value, "gwei"), { gasLimit: 700000 });
       }
       // }
       const pendingTxnType = action === "stake" ? "staking" : "unstaking";
