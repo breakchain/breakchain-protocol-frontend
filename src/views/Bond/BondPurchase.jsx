@@ -98,8 +98,6 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
 
   const bondDetailsDebounce = useDebounce(quantity, 1000);
 
-  useEffect(() => {}, [bondDetailsDebounce]);
-
   const onSeekApproval = async () => {
     dispatch(changeApproval({ address, bond, provider, networkID: networkId }));
   };
