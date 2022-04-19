@@ -158,7 +158,7 @@ export const getBalances = createAsyncThunk(
         mockSohm: ethers.utils.formatUnits(mockSohmBalance, "gwei"),
         xChain: ethers.utils.formatUnits(xChainBalance, "gwei"),
         sXChain: ethers.utils.formatUnits(sXChainBalance, "gwei"),
-        ust: ethers.utils.formatUnits(ustBalance, "ether"),
+        ust: ethers.utils.formatUnits(ustBalance, "mwei"),
       },
     };
   },

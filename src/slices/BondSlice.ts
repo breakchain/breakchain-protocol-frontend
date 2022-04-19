@@ -276,13 +276,13 @@ export const bondAsset = createAsyncThunk(
         dispatch(clearPendingTxn(bondTx.hash));
       }
     }
-    dispatch(
-      fetchAccountSuccess({
-        bonding: {
-          usdcBond: null,
-        },
-      }),
-    );
+    //dispatch(
+    //fetchAccountSuccess({
+    //bonding: {
+    //usdcBond: null,
+    //},
+    //}),
+    //);
   },
 );
 

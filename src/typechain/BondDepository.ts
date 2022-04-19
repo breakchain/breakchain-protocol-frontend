@@ -26,270 +26,298 @@ import type {
 
 export interface BondDepositoryInterface extends ethers.utils.Interface {
   functions: {
-    "adjustments(uint256)": FunctionFragment;
-    "authority()": FunctionFragment;
-    "close(uint256)": FunctionFragment;
-    "create(string,address,uint256[3],bool[2],uint256[2],uint32[2])": FunctionFragment;
-    "currentControlVariable(uint256)": FunctionFragment;
-    "currentDebt(uint256)": FunctionFragment;
-    "daoReward()": FunctionFragment;
-    "debtDecay(uint256)": FunctionFragment;
-    "debtRatio(uint256)": FunctionFragment;
-    "deposit(uint256,uint256,uint256,address,address)": FunctionFragment;
-    "getReward()": FunctionFragment;
-    "indexesFor(address)": FunctionFragment;
-    "isLive(uint256)": FunctionFragment;
-    "liveMarkets()": FunctionFragment;
-    "liveMarketsFor(address)": FunctionFragment;
-    "marketPrice(uint256)": FunctionFragment;
-    "markets(uint256)": FunctionFragment;
-    "marketsForQuote(address,uint256)": FunctionFragment;
-    "metadata(uint256)": FunctionFragment;
-    "names(uint256)": FunctionFragment;
-    "notes(address,uint256)": FunctionFragment;
-    "payoutFor(uint256,uint256)": FunctionFragment;
-    "pendingFor(address,uint256)": FunctionFragment;
-    "pullNote(address,uint256)": FunctionFragment;
-    "pushNote(address,uint256)": FunctionFragment;
-    "redeem(address,uint256[],bool)": FunctionFragment;
-    "redeemAll(address,bool)": FunctionFragment;
-    "refReward()": FunctionFragment;
-    "rewards(address)": FunctionFragment;
-    "setAuthority(address)": FunctionFragment;
-    "setRewards(uint256,uint256)": FunctionFragment;
-    "terms(uint256)": FunctionFragment;
-    "updateTreasury()": FunctionFragment;
-    "whitelist(address)": FunctionFragment;
-    "whitelisted(address)": FunctionFragment;
+    "DAO()": FunctionFragment;
+    "OHM()": FunctionFragment;
+    "adjustment()": FunctionFragment;
+    "bondCalculator()": FunctionFragment;
+    "bondInfo(address)": FunctionFragment;
+    "bondPrice()": FunctionFragment;
+    "bondPriceInUSD()": FunctionFragment;
+    "currentDebt()": FunctionFragment;
+    "debtDecay()": FunctionFragment;
+    "debtRatio()": FunctionFragment;
+    "deposit(uint256,uint256,address)": FunctionFragment;
+    "initializeBondTerms(uint256,uint256,uint256,uint256,uint256,uint256,uint256)": FunctionFragment;
+    "isLiquidityBond()": FunctionFragment;
+    "lastDecay()": FunctionFragment;
+    "maxPayout()": FunctionFragment;
+    "payoutFor(uint256)": FunctionFragment;
+    "pendingPayoutFor(address)": FunctionFragment;
+    "percentVestedFor(address)": FunctionFragment;
+    "policy()": FunctionFragment;
+    "principle()": FunctionFragment;
+    "pullManagement()": FunctionFragment;
+    "pushManagement(address)": FunctionFragment;
+    "recoverLostToken(address)": FunctionFragment;
+    "redeem(address,bool)": FunctionFragment;
+    "renounceManagement()": FunctionFragment;
+    "setAdjustment(bool,uint256,uint256,uint256)": FunctionFragment;
+    "setBondTerms(uint8,uint256)": FunctionFragment;
+    "setStaking(address,bool)": FunctionFragment;
+    "staking()": FunctionFragment;
+    "stakingHelper()": FunctionFragment;
+    "standardizedDebtRatio()": FunctionFragment;
+    "terms()": FunctionFragment;
+    "totalDebt()": FunctionFragment;
+    "treasury()": FunctionFragment;
+    "useHelper()": FunctionFragment;
   };
 
+  encodeFunctionData(functionFragment: "DAO", values?: undefined): string;
+  encodeFunctionData(functionFragment: "OHM", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "adjustments",
-    values: [BigNumberish]
+    functionFragment: "adjustment",
+    values?: undefined
   ): string;
-  encodeFunctionData(functionFragment: "authority", values?: undefined): string;
-  encodeFunctionData(functionFragment: "close", values: [BigNumberish]): string;
   encodeFunctionData(
-    functionFragment: "create",
+    functionFragment: "bondCalculator",
+    values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: "bondInfo", values: [string]): string;
+  encodeFunctionData(functionFragment: "bondPrice", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "bondPriceInUSD",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "currentDebt",
+    values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: "debtDecay", values?: undefined): string;
+  encodeFunctionData(functionFragment: "debtRatio", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "deposit",
+    values: [BigNumberish, BigNumberish, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "initializeBondTerms",
     values: [
-      string,
-      string,
-      [BigNumberish, BigNumberish, BigNumberish],
-      [boolean, boolean],
-      [BigNumberish, BigNumberish],
-      [BigNumberish, BigNumberish]
+      BigNumberish,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "currentControlVariable",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "currentDebt",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(functionFragment: "daoReward", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "debtDecay",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "debtRatio",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "deposit",
-    values: [BigNumberish, BigNumberish, BigNumberish, string, string]
-  ): string;
-  encodeFunctionData(functionFragment: "getReward", values?: undefined): string;
-  encodeFunctionData(functionFragment: "indexesFor", values: [string]): string;
-  encodeFunctionData(
-    functionFragment: "isLive",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "liveMarkets",
+    functionFragment: "isLiquidityBond",
     values?: undefined
   ): string;
+  encodeFunctionData(functionFragment: "lastDecay", values?: undefined): string;
+  encodeFunctionData(functionFragment: "maxPayout", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "liveMarketsFor",
+    functionFragment: "payoutFor",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "pendingPayoutFor",
     values: [string]
   ): string;
   encodeFunctionData(
-    functionFragment: "marketPrice",
-    values: [BigNumberish]
+    functionFragment: "percentVestedFor",
+    values: [string]
+  ): string;
+  encodeFunctionData(functionFragment: "policy", values?: undefined): string;
+  encodeFunctionData(functionFragment: "principle", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "pullManagement",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "markets",
-    values: [BigNumberish]
+    functionFragment: "pushManagement",
+    values: [string]
   ): string;
   encodeFunctionData(
-    functionFragment: "marketsForQuote",
-    values: [string, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "metadata",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(functionFragment: "names", values: [BigNumberish]): string;
-  encodeFunctionData(
-    functionFragment: "notes",
-    values: [string, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "payoutFor",
-    values: [BigNumberish, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "pendingFor",
-    values: [string, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "pullNote",
-    values: [string, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "pushNote",
-    values: [string, BigNumberish]
+    functionFragment: "recoverLostToken",
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "redeem",
-    values: [string, BigNumberish[], boolean]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "redeemAll",
     values: [string, boolean]
   ): string;
-  encodeFunctionData(functionFragment: "refReward", values?: undefined): string;
-  encodeFunctionData(functionFragment: "rewards", values: [string]): string;
   encodeFunctionData(
-    functionFragment: "setAuthority",
-    values: [string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setRewards",
-    values: [BigNumberish, BigNumberish]
-  ): string;
-  encodeFunctionData(functionFragment: "terms", values: [BigNumberish]): string;
-  encodeFunctionData(
-    functionFragment: "updateTreasury",
+    functionFragment: "renounceManagement",
     values?: undefined
   ): string;
-  encodeFunctionData(functionFragment: "whitelist", values: [string]): string;
-  encodeFunctionData(functionFragment: "whitelisted", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "setAdjustment",
+    values: [boolean, BigNumberish, BigNumberish, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setBondTerms",
+    values: [BigNumberish, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setStaking",
+    values: [string, boolean]
+  ): string;
+  encodeFunctionData(functionFragment: "staking", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "stakingHelper",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "standardizedDebtRatio",
+    values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: "terms", values?: undefined): string;
+  encodeFunctionData(functionFragment: "totalDebt", values?: undefined): string;
+  encodeFunctionData(functionFragment: "treasury", values?: undefined): string;
+  encodeFunctionData(functionFragment: "useHelper", values?: undefined): string;
 
+  decodeFunctionResult(functionFragment: "DAO", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "OHM", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "adjustment", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "adjustments",
+    functionFragment: "bondCalculator",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "authority", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "close", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "create", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "bondInfo", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "bondPrice", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "currentControlVariable",
+    functionFragment: "bondPriceInUSD",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "currentDebt",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "daoReward", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "debtDecay", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "debtRatio", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "getReward", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "indexesFor", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "isLive", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "liveMarkets",
+    functionFragment: "initializeBondTerms",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "liveMarketsFor",
+    functionFragment: "isLiquidityBond",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "marketPrice",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "markets", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "marketsForQuote",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "metadata", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "names", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "notes", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "lastDecay", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "maxPayout", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "payoutFor", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "pendingFor", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "pullNote", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "pushNote", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "pendingPayoutFor",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "percentVestedFor",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "policy", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "principle", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "pullManagement",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "pushManagement",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "recoverLostToken",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "redeem", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "redeemAll", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "refReward", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "rewards", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "setAuthority",
+    functionFragment: "renounceManagement",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "setRewards", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "setAdjustment",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setBondTerms",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "setStaking", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "staking", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "stakingHelper",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "standardizedDebtRatio",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "terms", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "updateTreasury",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "whitelist", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "whitelisted",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: "totalDebt", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "treasury", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "useHelper", data: BytesLike): Result;
 
   events: {
-    "AuthorityUpdated(address)": EventFragment;
-    "Bond(uint256,uint256,uint256,uint256,uint256)": EventFragment;
-    "CloseMarket(uint256)": EventFragment;
-    "CreateMarket(uint256,address,address,uint256)": EventFragment;
+    "BondCreated(uint256,uint256,uint256,uint256)": EventFragment;
+    "BondPriceChanged(uint256,uint256,uint256)": EventFragment;
+    "BondRedeemed(address,uint256,uint256)": EventFragment;
+    "ControlVariableAdjustment(uint256,uint256,uint256,bool)": EventFragment;
+    "OwnershipPulled(address,address)": EventFragment;
+    "OwnershipPushed(address,address)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "AuthorityUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Bond"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "CloseMarket"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "CreateMarket"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "BondCreated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "BondPriceChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "BondRedeemed"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ControlVariableAdjustment"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnershipPulled"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnershipPushed"): EventFragment;
 }
 
-export type AuthorityUpdatedEvent = TypedEvent<[string], { authority: string }>;
-
-export type AuthorityUpdatedEventFilter =
-  TypedEventFilter<AuthorityUpdatedEvent>;
-
-export type BondEvent = TypedEvent<
-  [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber],
+export type BondCreatedEvent = TypedEvent<
+  [BigNumber, BigNumber, BigNumber, BigNumber],
   {
-    id: BigNumber;
-    amount: BigNumber;
+    deposit: BigNumber;
     payout: BigNumber;
     expires: BigNumber;
-    price: BigNumber;
+    priceInUSD: BigNumber;
   }
 >;
 
-export type BondEventFilter = TypedEventFilter<BondEvent>;
+export type BondCreatedEventFilter = TypedEventFilter<BondCreatedEvent>;
 
-export type CloseMarketEvent = TypedEvent<[BigNumber], { id: BigNumber }>;
+export type BondPriceChangedEvent = TypedEvent<
+  [BigNumber, BigNumber, BigNumber],
+  { priceInUSD: BigNumber; internalPrice: BigNumber; debtRatio: BigNumber }
+>;
 
-export type CloseMarketEventFilter = TypedEventFilter<CloseMarketEvent>;
+export type BondPriceChangedEventFilter =
+  TypedEventFilter<BondPriceChangedEvent>;
 
-export type CreateMarketEvent = TypedEvent<
-  [BigNumber, string, string, BigNumber],
+export type BondRedeemedEvent = TypedEvent<
+  [string, BigNumber, BigNumber],
+  { recipient: string; payout: BigNumber; remaining: BigNumber }
+>;
+
+export type BondRedeemedEventFilter = TypedEventFilter<BondRedeemedEvent>;
+
+export type ControlVariableAdjustmentEvent = TypedEvent<
+  [BigNumber, BigNumber, BigNumber, boolean],
   {
-    id: BigNumber;
-    baseToken: string;
-    quoteToken: string;
-    initialPrice: BigNumber;
+    initialBCV: BigNumber;
+    newBCV: BigNumber;
+    adjustment: BigNumber;
+    addition: boolean;
   }
 >;
 
-export type CreateMarketEventFilter = TypedEventFilter<CreateMarketEvent>;
+export type ControlVariableAdjustmentEventFilter =
+  TypedEventFilter<ControlVariableAdjustmentEvent>;
+
+export type OwnershipPulledEvent = TypedEvent<
+  [string, string],
+  { previousOwner: string; newOwner: string }
+>;
+
+export type OwnershipPulledEventFilter = TypedEventFilter<OwnershipPulledEvent>;
+
+export type OwnershipPushedEvent = TypedEvent<
+  [string, string],
+  { previousOwner: string; newOwner: string }
+>;
+
+export type OwnershipPushedEventFilter = TypedEventFilter<OwnershipPushedEvent>;
 
 export interface BondDepository extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -318,1000 +346,782 @@ export interface BondDepository extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    adjustments(
-      arg0: BigNumberish,
+    DAO(overrides?: CallOverrides): Promise<[string]>;
+
+    OHM(overrides?: CallOverrides): Promise<[string]>;
+
+    adjustment(
       overrides?: CallOverrides
     ): Promise<
-      [BigNumber, number, number, boolean] & {
-        change: BigNumber;
-        lastAdjustment: number;
-        timeToAdjusted: number;
-        active: boolean;
+      [boolean, BigNumber, BigNumber, BigNumber, BigNumber] & {
+        add: boolean;
+        rate: BigNumber;
+        target: BigNumber;
+        buffer: BigNumber;
+        lastTime: BigNumber;
       }
     >;
 
-    authority(overrides?: CallOverrides): Promise<[string]>;
+    bondCalculator(overrides?: CallOverrides): Promise<[string]>;
 
-    close(
-      _id: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    create(
-      _name: string,
-      _quoteToken: string,
-      _market: [BigNumberish, BigNumberish, BigNumberish],
-      _booleans: [boolean, boolean],
-      _terms: [BigNumberish, BigNumberish],
-      _intervals: [BigNumberish, BigNumberish],
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    currentControlVariable(
-      _id: BigNumberish,
+    bondInfo(
+      arg0: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<
+      [BigNumber, BigNumber, BigNumber, BigNumber] & {
+        payout: BigNumber;
+        vesting: BigNumber;
+        lastTime: BigNumber;
+        pricePaid: BigNumber;
+      }
+    >;
 
-    currentDebt(
-      _id: BigNumberish,
+    bondPrice(
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<[BigNumber] & { price_: BigNumber }>;
 
-    daoReward(overrides?: CallOverrides): Promise<[BigNumber]>;
+    bondPriceInUSD(
+      overrides?: CallOverrides
+    ): Promise<[BigNumber] & { price_: BigNumber }>;
+
+    currentDebt(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     debtDecay(
-      _id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<[BigNumber] & { decay_: BigNumber }>;
 
     debtRatio(
-      _id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<[BigNumber] & { debtRatio_: BigNumber }>;
 
     deposit(
-      _id: BigNumberish,
       _amount: BigNumberish,
       _maxPrice: BigNumberish,
-      _user: string,
-      _referral: string,
+      _depositor: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    getReward(
+    initializeBondTerms(
+      _controlVariable: BigNumberish,
+      _vestingTerm: BigNumberish,
+      _minimumPrice: BigNumberish,
+      _maxPayout: BigNumberish,
+      _fee: BigNumberish,
+      _maxDebt: BigNumberish,
+      _initialDebt: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    indexesFor(
-      _user: string,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber[]]>;
+    isLiquidityBond(overrides?: CallOverrides): Promise<[boolean]>;
 
-    isLive(_id: BigNumberish, overrides?: CallOverrides): Promise<[boolean]>;
+    lastDecay(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    liveMarkets(overrides?: CallOverrides): Promise<[BigNumber[]]>;
-
-    liveMarketsFor(
-      _token: string,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber[]]>;
-
-    marketPrice(
-      _id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
-    markets(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [
-        BigNumber,
-        string,
-        boolean,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber
-      ] & {
-        capacity: BigNumber;
-        quoteToken: string;
-        capacityInQuote: boolean;
-        totalDebt: BigNumber;
-        maxPayout: BigNumber;
-        sold: BigNumber;
-        purchased: BigNumber;
-      }
-    >;
-
-    marketsForQuote(
-      arg0: string,
-      arg1: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
-    metadata(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [number, number, number, number, number, number] & {
-        lastTune: number;
-        lastDecay: number;
-        length: number;
-        depositInterval: number;
-        tuneInterval: number;
-        quoteDecimals: number;
-      }
-    >;
-
-    names(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
-
-    notes(
-      arg0: string,
-      arg1: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, number, number, number, number] & {
-        payout: BigNumber;
-        created: number;
-        matured: number;
-        redeemed: number;
-        marketID: number;
-      }
-    >;
+    maxPayout(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     payoutFor(
-      _amount: BigNumberish,
-      _id: BigNumberish,
+      _value: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    pendingFor(
-      _user: string,
-      _index: BigNumberish,
+    pendingPayoutFor(
+      _depositor: string,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, boolean] & { payout_: BigNumber; matured_: boolean }
-    >;
+    ): Promise<[BigNumber] & { pendingPayout_: BigNumber }>;
 
-    pullNote(
-      _from: string,
-      _index: BigNumberish,
+    percentVestedFor(
+      _depositor: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber] & { percentVested_: BigNumber }>;
+
+    policy(overrides?: CallOverrides): Promise<[string]>;
+
+    principle(overrides?: CallOverrides): Promise<[string]>;
+
+    pullManagement(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    pushNote(
-      _to: string,
-      _index: BigNumberish,
+    pushManagement(
+      newOwner_: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    recoverLostToken(
+      _token: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     redeem(
-      _user: string,
-      _indexes: BigNumberish[],
-      _sendgOHM: boolean,
+      _recipient: string,
+      _stake: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    redeemAll(
-      _user: string,
-      _sendgOHM: boolean,
+    renounceManagement(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    refReward(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    rewards(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    setAuthority(
-      _newAuthority: string,
+    setAdjustment(
+      _addition: boolean,
+      _increment: BigNumberish,
+      _target: BigNumberish,
+      _buffer: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    setRewards(
-      _toFrontEnd: BigNumberish,
-      _toDAO: BigNumberish,
+    setBondTerms(
+      _parameter: BigNumberish,
+      _input: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    setStaking(
+      _staking: string,
+      _helper: boolean,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    staking(overrides?: CallOverrides): Promise<[string]>;
+
+    stakingHelper(overrides?: CallOverrides): Promise<[string]>;
+
+    standardizedDebtRatio(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     terms(
-      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
-      [boolean, BigNumber, number, number, BigNumber] & {
-        fixedTerm: boolean;
+      [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
         controlVariable: BigNumber;
-        vesting: number;
-        conclusion: number;
+        vestingTerm: BigNumber;
+        minimumPrice: BigNumber;
+        maxPayout: BigNumber;
+        fee: BigNumber;
         maxDebt: BigNumber;
       }
     >;
 
-    updateTreasury(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+    totalDebt(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    whitelist(
-      _operator: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+    treasury(overrides?: CallOverrides): Promise<[string]>;
 
-    whitelisted(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    useHelper(overrides?: CallOverrides): Promise<[boolean]>;
   };
 
-  adjustments(
-    arg0: BigNumberish,
+  DAO(overrides?: CallOverrides): Promise<string>;
+
+  OHM(overrides?: CallOverrides): Promise<string>;
+
+  adjustment(
     overrides?: CallOverrides
   ): Promise<
-    [BigNumber, number, number, boolean] & {
-      change: BigNumber;
-      lastAdjustment: number;
-      timeToAdjusted: number;
-      active: boolean;
+    [boolean, BigNumber, BigNumber, BigNumber, BigNumber] & {
+      add: boolean;
+      rate: BigNumber;
+      target: BigNumber;
+      buffer: BigNumber;
+      lastTime: BigNumber;
     }
   >;
 
-  authority(overrides?: CallOverrides): Promise<string>;
+  bondCalculator(overrides?: CallOverrides): Promise<string>;
 
-  close(
-    _id: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  create(
-    _name: string,
-    _quoteToken: string,
-    _market: [BigNumberish, BigNumberish, BigNumberish],
-    _booleans: [boolean, boolean],
-    _terms: [BigNumberish, BigNumberish],
-    _intervals: [BigNumberish, BigNumberish],
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  currentControlVariable(
-    _id: BigNumberish,
+  bondInfo(
+    arg0: string,
     overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  ): Promise<
+    [BigNumber, BigNumber, BigNumber, BigNumber] & {
+      payout: BigNumber;
+      vesting: BigNumber;
+      lastTime: BigNumber;
+      pricePaid: BigNumber;
+    }
+  >;
 
-  currentDebt(_id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  bondPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
-  daoReward(overrides?: CallOverrides): Promise<BigNumber>;
+  bondPriceInUSD(overrides?: CallOverrides): Promise<BigNumber>;
 
-  debtDecay(_id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  currentDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
-  debtRatio(_id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  debtDecay(overrides?: CallOverrides): Promise<BigNumber>;
+
+  debtRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
   deposit(
-    _id: BigNumberish,
     _amount: BigNumberish,
     _maxPrice: BigNumberish,
-    _user: string,
-    _referral: string,
+    _depositor: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  getReward(
+  initializeBondTerms(
+    _controlVariable: BigNumberish,
+    _vestingTerm: BigNumberish,
+    _minimumPrice: BigNumberish,
+    _maxPayout: BigNumberish,
+    _fee: BigNumberish,
+    _maxDebt: BigNumberish,
+    _initialDebt: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  indexesFor(_user: string, overrides?: CallOverrides): Promise<BigNumber[]>;
+  isLiquidityBond(overrides?: CallOverrides): Promise<boolean>;
 
-  isLive(_id: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+  lastDecay(overrides?: CallOverrides): Promise<BigNumber>;
 
-  liveMarkets(overrides?: CallOverrides): Promise<BigNumber[]>;
-
-  liveMarketsFor(
-    _token: string,
-    overrides?: CallOverrides
-  ): Promise<BigNumber[]>;
-
-  marketPrice(_id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
-
-  markets(
-    arg0: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, string, boolean, BigNumber, BigNumber, BigNumber, BigNumber] & {
-      capacity: BigNumber;
-      quoteToken: string;
-      capacityInQuote: boolean;
-      totalDebt: BigNumber;
-      maxPayout: BigNumber;
-      sold: BigNumber;
-      purchased: BigNumber;
-    }
-  >;
-
-  marketsForQuote(
-    arg0: string,
-    arg1: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
-  metadata(
-    arg0: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<
-    [number, number, number, number, number, number] & {
-      lastTune: number;
-      lastDecay: number;
-      length: number;
-      depositInterval: number;
-      tuneInterval: number;
-      quoteDecimals: number;
-    }
-  >;
-
-  names(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
-
-  notes(
-    arg0: string,
-    arg1: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, number, number, number, number] & {
-      payout: BigNumber;
-      created: number;
-      matured: number;
-      redeemed: number;
-      marketID: number;
-    }
-  >;
+  maxPayout(overrides?: CallOverrides): Promise<BigNumber>;
 
   payoutFor(
-    _amount: BigNumberish,
-    _id: BigNumberish,
+    _value: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  pendingFor(
-    _user: string,
-    _index: BigNumberish,
+  pendingPayoutFor(
+    _depositor: string,
     overrides?: CallOverrides
-  ): Promise<[BigNumber, boolean] & { payout_: BigNumber; matured_: boolean }>;
+  ): Promise<BigNumber>;
 
-  pullNote(
-    _from: string,
-    _index: BigNumberish,
+  percentVestedFor(
+    _depositor: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  policy(overrides?: CallOverrides): Promise<string>;
+
+  principle(overrides?: CallOverrides): Promise<string>;
+
+  pullManagement(
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  pushNote(
-    _to: string,
-    _index: BigNumberish,
+  pushManagement(
+    newOwner_: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  recoverLostToken(
+    _token: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   redeem(
-    _user: string,
-    _indexes: BigNumberish[],
-    _sendgOHM: boolean,
+    _recipient: string,
+    _stake: boolean,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  redeemAll(
-    _user: string,
-    _sendgOHM: boolean,
+  renounceManagement(
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  refReward(overrides?: CallOverrides): Promise<BigNumber>;
-
-  rewards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-  setAuthority(
-    _newAuthority: string,
+  setAdjustment(
+    _addition: boolean,
+    _increment: BigNumberish,
+    _target: BigNumberish,
+    _buffer: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  setRewards(
-    _toFrontEnd: BigNumberish,
-    _toDAO: BigNumberish,
+  setBondTerms(
+    _parameter: BigNumberish,
+    _input: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  setStaking(
+    _staking: string,
+    _helper: boolean,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  staking(overrides?: CallOverrides): Promise<string>;
+
+  stakingHelper(overrides?: CallOverrides): Promise<string>;
+
+  standardizedDebtRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
   terms(
-    arg0: BigNumberish,
     overrides?: CallOverrides
   ): Promise<
-    [boolean, BigNumber, number, number, BigNumber] & {
-      fixedTerm: boolean;
+    [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
       controlVariable: BigNumber;
-      vesting: number;
-      conclusion: number;
+      vestingTerm: BigNumber;
+      minimumPrice: BigNumber;
+      maxPayout: BigNumber;
+      fee: BigNumber;
       maxDebt: BigNumber;
     }
   >;
 
-  updateTreasury(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  totalDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
-  whitelist(
-    _operator: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  treasury(overrides?: CallOverrides): Promise<string>;
 
-  whitelisted(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  useHelper(overrides?: CallOverrides): Promise<boolean>;
 
   callStatic: {
-    adjustments(
-      arg0: BigNumberish,
+    DAO(overrides?: CallOverrides): Promise<string>;
+
+    OHM(overrides?: CallOverrides): Promise<string>;
+
+    adjustment(
       overrides?: CallOverrides
     ): Promise<
-      [BigNumber, number, number, boolean] & {
-        change: BigNumber;
-        lastAdjustment: number;
-        timeToAdjusted: number;
-        active: boolean;
+      [boolean, BigNumber, BigNumber, BigNumber, BigNumber] & {
+        add: boolean;
+        rate: BigNumber;
+        target: BigNumber;
+        buffer: BigNumber;
+        lastTime: BigNumber;
       }
     >;
 
-    authority(overrides?: CallOverrides): Promise<string>;
+    bondCalculator(overrides?: CallOverrides): Promise<string>;
 
-    close(_id: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-    create(
-      _name: string,
-      _quoteToken: string,
-      _market: [BigNumberish, BigNumberish, BigNumberish],
-      _booleans: [boolean, boolean],
-      _terms: [BigNumberish, BigNumberish],
-      _intervals: [BigNumberish, BigNumberish],
+    bondInfo(
+      arg0: string,
       overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    ): Promise<
+      [BigNumber, BigNumber, BigNumber, BigNumber] & {
+        payout: BigNumber;
+        vesting: BigNumber;
+        lastTime: BigNumber;
+        pricePaid: BigNumber;
+      }
+    >;
 
-    currentControlVariable(
-      _id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    bondPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
-    currentDebt(
-      _id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    bondPriceInUSD(overrides?: CallOverrides): Promise<BigNumber>;
 
-    daoReward(overrides?: CallOverrides): Promise<BigNumber>;
+    currentDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
-    debtDecay(_id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    debtDecay(overrides?: CallOverrides): Promise<BigNumber>;
 
-    debtRatio(_id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    debtRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
     deposit(
-      _id: BigNumberish,
       _amount: BigNumberish,
       _maxPrice: BigNumberish,
-      _user: string,
-      _referral: string,
-      overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber, BigNumber] & {
-        payout_: BigNumber;
-        expiry_: BigNumber;
-        index_: BigNumber;
-      }
-    >;
-
-    getReward(overrides?: CallOverrides): Promise<void>;
-
-    indexesFor(_user: string, overrides?: CallOverrides): Promise<BigNumber[]>;
-
-    isLive(_id: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
-
-    liveMarkets(overrides?: CallOverrides): Promise<BigNumber[]>;
-
-    liveMarketsFor(
-      _token: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber[]>;
-
-    marketPrice(
-      _id: BigNumberish,
+      _depositor: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    markets(
-      arg0: BigNumberish,
+    initializeBondTerms(
+      _controlVariable: BigNumberish,
+      _vestingTerm: BigNumberish,
+      _minimumPrice: BigNumberish,
+      _maxPayout: BigNumberish,
+      _fee: BigNumberish,
+      _maxDebt: BigNumberish,
+      _initialDebt: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<
-      [
-        BigNumber,
-        string,
-        boolean,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber
-      ] & {
-        capacity: BigNumber;
-        quoteToken: string;
-        capacityInQuote: boolean;
-        totalDebt: BigNumber;
-        maxPayout: BigNumber;
-        sold: BigNumber;
-        purchased: BigNumber;
-      }
-    >;
+    ): Promise<void>;
 
-    marketsForQuote(
-      arg0: string,
-      arg1: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    isLiquidityBond(overrides?: CallOverrides): Promise<boolean>;
 
-    metadata(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [number, number, number, number, number, number] & {
-        lastTune: number;
-        lastDecay: number;
-        length: number;
-        depositInterval: number;
-        tuneInterval: number;
-        quoteDecimals: number;
-      }
-    >;
+    lastDecay(overrides?: CallOverrides): Promise<BigNumber>;
 
-    names(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
-
-    notes(
-      arg0: string,
-      arg1: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, number, number, number, number] & {
-        payout: BigNumber;
-        created: number;
-        matured: number;
-        redeemed: number;
-        marketID: number;
-      }
-    >;
+    maxPayout(overrides?: CallOverrides): Promise<BigNumber>;
 
     payoutFor(
-      _amount: BigNumberish,
-      _id: BigNumberish,
+      _value: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    pendingFor(
-      _user: string,
-      _index: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, boolean] & { payout_: BigNumber; matured_: boolean }
-    >;
-
-    pullNote(
-      _from: string,
-      _index: BigNumberish,
+    pendingPayoutFor(
+      _depositor: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    pushNote(
-      _to: string,
-      _index: BigNumberish,
+    percentVestedFor(
+      _depositor: string,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<BigNumber>;
+
+    policy(overrides?: CallOverrides): Promise<string>;
+
+    principle(overrides?: CallOverrides): Promise<string>;
+
+    pullManagement(overrides?: CallOverrides): Promise<void>;
+
+    pushManagement(newOwner_: string, overrides?: CallOverrides): Promise<void>;
+
+    recoverLostToken(
+      _token: string,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     redeem(
-      _user: string,
-      _indexes: BigNumberish[],
-      _sendgOHM: boolean,
+      _recipient: string,
+      _stake: boolean,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    redeemAll(
-      _user: string,
-      _sendgOHM: boolean,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    renounceManagement(overrides?: CallOverrides): Promise<void>;
 
-    refReward(overrides?: CallOverrides): Promise<BigNumber>;
-
-    rewards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    setAuthority(
-      _newAuthority: string,
+    setAdjustment(
+      _addition: boolean,
+      _increment: BigNumberish,
+      _target: BigNumberish,
+      _buffer: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setRewards(
-      _toFrontEnd: BigNumberish,
-      _toDAO: BigNumberish,
+    setBondTerms(
+      _parameter: BigNumberish,
+      _input: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    setStaking(
+      _staking: string,
+      _helper: boolean,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    staking(overrides?: CallOverrides): Promise<string>;
+
+    stakingHelper(overrides?: CallOverrides): Promise<string>;
+
+    standardizedDebtRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
     terms(
-      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
-      [boolean, BigNumber, number, number, BigNumber] & {
-        fixedTerm: boolean;
+      [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
         controlVariable: BigNumber;
-        vesting: number;
-        conclusion: number;
+        vestingTerm: BigNumber;
+        minimumPrice: BigNumber;
+        maxPayout: BigNumber;
+        fee: BigNumber;
         maxDebt: BigNumber;
       }
     >;
 
-    updateTreasury(overrides?: CallOverrides): Promise<void>;
+    totalDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
-    whitelist(_operator: string, overrides?: CallOverrides): Promise<void>;
+    treasury(overrides?: CallOverrides): Promise<string>;
 
-    whitelisted(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    useHelper(overrides?: CallOverrides): Promise<boolean>;
   };
 
   filters: {
-    "AuthorityUpdated(address)"(
-      authority?: string | null
-    ): AuthorityUpdatedEventFilter;
-    AuthorityUpdated(authority?: string | null): AuthorityUpdatedEventFilter;
+    "BondCreated(uint256,uint256,uint256,uint256)"(
+      deposit?: null,
+      payout?: BigNumberish | null,
+      expires?: BigNumberish | null,
+      priceInUSD?: BigNumberish | null
+    ): BondCreatedEventFilter;
+    BondCreated(
+      deposit?: null,
+      payout?: BigNumberish | null,
+      expires?: BigNumberish | null,
+      priceInUSD?: BigNumberish | null
+    ): BondCreatedEventFilter;
 
-    "Bond(uint256,uint256,uint256,uint256,uint256)"(
-      id?: null,
-      amount?: null,
+    "BondPriceChanged(uint256,uint256,uint256)"(
+      priceInUSD?: BigNumberish | null,
+      internalPrice?: BigNumberish | null,
+      debtRatio?: BigNumberish | null
+    ): BondPriceChangedEventFilter;
+    BondPriceChanged(
+      priceInUSD?: BigNumberish | null,
+      internalPrice?: BigNumberish | null,
+      debtRatio?: BigNumberish | null
+    ): BondPriceChangedEventFilter;
+
+    "BondRedeemed(address,uint256,uint256)"(
+      recipient?: string | null,
       payout?: null,
-      expires?: null,
-      price?: null
-    ): BondEventFilter;
-    Bond(
-      id?: null,
-      amount?: null,
+      remaining?: null
+    ): BondRedeemedEventFilter;
+    BondRedeemed(
+      recipient?: string | null,
       payout?: null,
-      expires?: null,
-      price?: null
-    ): BondEventFilter;
+      remaining?: null
+    ): BondRedeemedEventFilter;
 
-    "CloseMarket(uint256)"(id?: null): CloseMarketEventFilter;
-    CloseMarket(id?: null): CloseMarketEventFilter;
+    "ControlVariableAdjustment(uint256,uint256,uint256,bool)"(
+      initialBCV?: null,
+      newBCV?: null,
+      adjustment?: null,
+      addition?: null
+    ): ControlVariableAdjustmentEventFilter;
+    ControlVariableAdjustment(
+      initialBCV?: null,
+      newBCV?: null,
+      adjustment?: null,
+      addition?: null
+    ): ControlVariableAdjustmentEventFilter;
 
-    "CreateMarket(uint256,address,address,uint256)"(
-      id?: null,
-      baseToken?: null,
-      quoteToken?: null,
-      initialPrice?: null
-    ): CreateMarketEventFilter;
-    CreateMarket(
-      id?: null,
-      baseToken?: null,
-      quoteToken?: null,
-      initialPrice?: null
-    ): CreateMarketEventFilter;
+    "OwnershipPulled(address,address)"(
+      previousOwner?: string | null,
+      newOwner?: string | null
+    ): OwnershipPulledEventFilter;
+    OwnershipPulled(
+      previousOwner?: string | null,
+      newOwner?: string | null
+    ): OwnershipPulledEventFilter;
+
+    "OwnershipPushed(address,address)"(
+      previousOwner?: string | null,
+      newOwner?: string | null
+    ): OwnershipPushedEventFilter;
+    OwnershipPushed(
+      previousOwner?: string | null,
+      newOwner?: string | null
+    ): OwnershipPushedEventFilter;
   };
 
   estimateGas: {
-    adjustments(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    DAO(overrides?: CallOverrides): Promise<BigNumber>;
 
-    authority(overrides?: CallOverrides): Promise<BigNumber>;
+    OHM(overrides?: CallOverrides): Promise<BigNumber>;
 
-    close(
-      _id: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    adjustment(overrides?: CallOverrides): Promise<BigNumber>;
 
-    create(
-      _name: string,
-      _quoteToken: string,
-      _market: [BigNumberish, BigNumberish, BigNumberish],
-      _booleans: [boolean, boolean],
-      _terms: [BigNumberish, BigNumberish],
-      _intervals: [BigNumberish, BigNumberish],
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    bondCalculator(overrides?: CallOverrides): Promise<BigNumber>;
 
-    currentControlVariable(
-      _id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    bondInfo(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    currentDebt(
-      _id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    bondPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
-    daoReward(overrides?: CallOverrides): Promise<BigNumber>;
+    bondPriceInUSD(overrides?: CallOverrides): Promise<BigNumber>;
 
-    debtDecay(_id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    currentDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
-    debtRatio(_id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    debtDecay(overrides?: CallOverrides): Promise<BigNumber>;
+
+    debtRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
     deposit(
-      _id: BigNumberish,
       _amount: BigNumberish,
       _maxPrice: BigNumberish,
-      _user: string,
-      _referral: string,
+      _depositor: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    getReward(
+    initializeBondTerms(
+      _controlVariable: BigNumberish,
+      _vestingTerm: BigNumberish,
+      _minimumPrice: BigNumberish,
+      _maxPayout: BigNumberish,
+      _fee: BigNumberish,
+      _maxDebt: BigNumberish,
+      _initialDebt: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    indexesFor(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isLiquidityBond(overrides?: CallOverrides): Promise<BigNumber>;
 
-    isLive(_id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    lastDecay(overrides?: CallOverrides): Promise<BigNumber>;
 
-    liveMarkets(overrides?: CallOverrides): Promise<BigNumber>;
-
-    liveMarketsFor(
-      _token: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    marketPrice(
-      _id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    markets(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
-
-    marketsForQuote(
-      arg0: string,
-      arg1: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    metadata(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
-
-    names(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
-
-    notes(
-      arg0: string,
-      arg1: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    maxPayout(overrides?: CallOverrides): Promise<BigNumber>;
 
     payoutFor(
-      _amount: BigNumberish,
-      _id: BigNumberish,
+      _value: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    pendingFor(
-      _user: string,
-      _index: BigNumberish,
+    pendingPayoutFor(
+      _depositor: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    pullNote(
-      _from: string,
-      _index: BigNumberish,
+    percentVestedFor(
+      _depositor: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    policy(overrides?: CallOverrides): Promise<BigNumber>;
+
+    principle(overrides?: CallOverrides): Promise<BigNumber>;
+
+    pullManagement(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    pushNote(
-      _to: string,
-      _index: BigNumberish,
+    pushManagement(
+      newOwner_: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    recoverLostToken(
+      _token: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     redeem(
-      _user: string,
-      _indexes: BigNumberish[],
-      _sendgOHM: boolean,
+      _recipient: string,
+      _stake: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    redeemAll(
-      _user: string,
-      _sendgOHM: boolean,
+    renounceManagement(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    refReward(overrides?: CallOverrides): Promise<BigNumber>;
-
-    rewards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    setAuthority(
-      _newAuthority: string,
+    setAdjustment(
+      _addition: boolean,
+      _increment: BigNumberish,
+      _target: BigNumberish,
+      _buffer: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    setRewards(
-      _toFrontEnd: BigNumberish,
-      _toDAO: BigNumberish,
+    setBondTerms(
+      _parameter: BigNumberish,
+      _input: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    terms(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
-
-    updateTreasury(
+    setStaking(
+      _staking: string,
+      _helper: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    whitelist(
-      _operator: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    staking(overrides?: CallOverrides): Promise<BigNumber>;
 
-    whitelisted(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    stakingHelper(overrides?: CallOverrides): Promise<BigNumber>;
+
+    standardizedDebtRatio(overrides?: CallOverrides): Promise<BigNumber>;
+
+    terms(overrides?: CallOverrides): Promise<BigNumber>;
+
+    totalDebt(overrides?: CallOverrides): Promise<BigNumber>;
+
+    treasury(overrides?: CallOverrides): Promise<BigNumber>;
+
+    useHelper(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    adjustments(
-      arg0: BigNumberish,
+    DAO(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    OHM(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    adjustment(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    bondCalculator(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    bondInfo(
+      arg0: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    authority(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    bondPrice(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    close(
-      _id: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+    bondPriceInUSD(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    create(
-      _name: string,
-      _quoteToken: string,
-      _market: [BigNumberish, BigNumberish, BigNumberish],
-      _booleans: [boolean, boolean],
-      _terms: [BigNumberish, BigNumberish],
-      _intervals: [BigNumberish, BigNumberish],
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+    currentDebt(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    currentControlVariable(
-      _id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    debtDecay(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    currentDebt(
-      _id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    daoReward(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    debtDecay(
-      _id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    debtRatio(
-      _id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    debtRatio(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deposit(
-      _id: BigNumberish,
       _amount: BigNumberish,
       _maxPrice: BigNumberish,
-      _user: string,
-      _referral: string,
+      _depositor: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    getReward(
+    initializeBondTerms(
+      _controlVariable: BigNumberish,
+      _vestingTerm: BigNumberish,
+      _minimumPrice: BigNumberish,
+      _maxPayout: BigNumberish,
+      _fee: BigNumberish,
+      _maxDebt: BigNumberish,
+      _initialDebt: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    indexesFor(
-      _user: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    isLiquidityBond(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    isLive(
-      _id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    lastDecay(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    liveMarkets(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    liveMarketsFor(
-      _token: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    marketPrice(
-      _id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    markets(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    marketsForQuote(
-      arg0: string,
-      arg1: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    metadata(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    names(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    notes(
-      arg0: string,
-      arg1: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    maxPayout(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     payoutFor(
-      _amount: BigNumberish,
-      _id: BigNumberish,
+      _value: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    pendingFor(
-      _user: string,
-      _index: BigNumberish,
+    pendingPayoutFor(
+      _depositor: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    pullNote(
-      _from: string,
-      _index: BigNumberish,
+    percentVestedFor(
+      _depositor: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    policy(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    principle(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    pullManagement(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    pushNote(
-      _to: string,
-      _index: BigNumberish,
+    pushManagement(
+      newOwner_: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    recoverLostToken(
+      _token: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     redeem(
-      _user: string,
-      _indexes: BigNumberish[],
-      _sendgOHM: boolean,
+      _recipient: string,
+      _stake: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    redeemAll(
-      _user: string,
-      _sendgOHM: boolean,
+    renounceManagement(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    refReward(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    setAdjustment(
+      _addition: boolean,
+      _increment: BigNumberish,
+      _target: BigNumberish,
+      _buffer: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
-    rewards(
-      arg0: string,
+    setBondTerms(
+      _parameter: BigNumberish,
+      _input: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setStaking(
+      _staking: string,
+      _helper: boolean,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    staking(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    stakingHelper(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    standardizedDebtRatio(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    setAuthority(
-      _newAuthority: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+    terms(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    setRewards(
-      _toFrontEnd: BigNumberish,
-      _toDAO: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+    totalDebt(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    terms(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    treasury(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    updateTreasury(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    whitelist(
-      _operator: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    whitelisted(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    useHelper(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

@@ -4,38 +4,20 @@
 
 import { Contract, Signer, utils } from "ethers";
 import { Provider } from "@ethersproject/providers";
-import type {
-  BondDepository,
-  BondDepositoryInterface,
-} from "../BondDepository";
+import type { SOlympus, SOlympusInterface } from "../SOlympus";
 
 const _abi = [
   {
     inputs: [
       {
-        internalType: "address",
-        name: "_OHM",
-        type: "address",
+        internalType: "string",
+        name: "_name",
+        type: "string",
       },
       {
-        internalType: "address",
-        name: "_principle",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "_treasury",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "_DAO",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "_bondCalculator",
-        type: "address",
+        internalType: "string",
+        name: "_symbol",
+        type: "string",
       },
     ],
     stateMutability: "nonpayable",
@@ -45,81 +27,50 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
-        indexed: false,
-        internalType: "uint256",
-        name: "deposit",
-        type: "uint256",
-      },
-      {
         indexed: true,
-        internalType: "uint256",
-        name: "payout",
-        type: "uint256",
+        internalType: "address",
+        name: "owner",
+        type: "address",
       },
-      {
-        indexed: true,
-        internalType: "uint256",
-        name: "expires",
-        type: "uint256",
-      },
-      {
-        indexed: true,
-        internalType: "uint256",
-        name: "priceInUSD",
-        type: "uint256",
-      },
-    ],
-    name: "BondCreated",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "uint256",
-        name: "priceInUSD",
-        type: "uint256",
-      },
-      {
-        indexed: true,
-        internalType: "uint256",
-        name: "internalPrice",
-        type: "uint256",
-      },
-      {
-        indexed: true,
-        internalType: "uint256",
-        name: "debtRatio",
-        type: "uint256",
-      },
-    ],
-    name: "BondPriceChanged",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
       {
         indexed: true,
         internalType: "address",
-        name: "recipient",
+        name: "spender",
         type: "address",
       },
       {
         indexed: false,
         internalType: "uint256",
-        name: "payout",
+        name: "value",
+        type: "uint256",
+      },
+    ],
+    name: "Approval",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "epoch",
         type: "uint256",
       },
       {
         indexed: false,
         internalType: "uint256",
-        name: "remaining",
+        name: "rebase",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "index",
         type: "uint256",
       },
     ],
-    name: "BondRedeemed",
+    name: "LogRebase",
     type: "event",
   },
   {
@@ -127,30 +78,37 @@ const _abi = [
     inputs: [
       {
         indexed: false,
-        internalType: "uint256",
-        name: "initialBCV",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "newBCV",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "adjustment",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "bool",
-        name: "addition",
-        type: "bool",
+        internalType: "address",
+        name: "stakingContract",
+        type: "address",
       },
     ],
-    name: "ControlVariableAdjustment",
+    name: "LogStakingContractUpdated",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "epoch",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "timestamp",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "totalSupply",
+        type: "uint256",
+      },
+    ],
+    name: "LogSupply",
     type: "event",
   },
   {
@@ -192,13 +150,38 @@ const _abi = [
     type: "event",
   },
   {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "from",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
+    ],
+    name: "Transfer",
+    type: "event",
+  },
+  {
     inputs: [],
-    name: "DAO",
+    name: "DOMAIN_SEPARATOR",
     outputs: [
       {
-        internalType: "address",
+        internalType: "bytes32",
         name: "",
-        type: "address",
+        type: "bytes32",
       },
     ],
     stateMutability: "view",
@@ -206,12 +189,12 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "OHM",
+    name: "INDEX",
     outputs: [
       {
-        internalType: "address",
+        internalType: "uint256",
         name: "",
-        type: "address",
+        type: "uint256",
       },
     ],
     stateMutability: "view",
@@ -219,173 +202,60 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "adjustment",
+    name: "PERMIT_TYPEHASH",
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "owner_",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "spender",
+        type: "address",
+      },
+    ],
+    name: "allowance",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "spender",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
+    ],
+    name: "approve",
     outputs: [
       {
         internalType: "bool",
-        name: "add",
+        name: "",
         type: "bool",
-      },
-      {
-        internalType: "uint256",
-        name: "rate",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "target",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "buffer",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "lastTime",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "bondCalculator",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    name: "bondInfo",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "payout",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "vesting",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "lastTime",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "pricePaid",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "bondPrice",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "price_",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "bondPriceInUSD",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "price_",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "currentDebt",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "debtDecay",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "decay_",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "debtRatio",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "debtRatio_",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_amount",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_maxPrice",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "_depositor",
-        type: "address",
-      },
-    ],
-    name: "deposit",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
       },
     ],
     stateMutability: "nonpayable",
@@ -395,165 +265,264 @@ const _abi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "_controlVariable",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_vestingTerm",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_minimumPrice",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_maxPayout",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_fee",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_maxDebt",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_initialDebt",
+        name: "gons",
         type: "uint256",
       },
     ],
-    name: "initializeBondTerms",
+    name: "balanceForGons",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "who",
+        type: "address",
+      },
+    ],
+    name: "balanceOf",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "circulatingSupply",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "decimals",
+    outputs: [
+      {
+        internalType: "uint8",
+        name: "",
+        type: "uint8",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "spender",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "subtractedValue",
+        type: "uint256",
+      },
+    ],
+    name: "decreaseAllowance",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "gonsForBalance",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "spender",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "addedValue",
+        type: "uint256",
+      },
+    ],
+    name: "increaseAllowance",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "index",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "stakingContract_",
+        type: "address",
+      },
+    ],
+    name: "initialize",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "initializer",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "manager",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "name",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+    ],
+    name: "nonces",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "spender",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "deadline",
+        type: "uint256",
+      },
+      {
+        internalType: "uint8",
+        name: "v",
+        type: "uint8",
+      },
+      {
+        internalType: "bytes32",
+        name: "r",
+        type: "bytes32",
+      },
+      {
+        internalType: "bytes32",
+        name: "s",
+        type: "bytes32",
+      },
+    ],
+    name: "permit",
     outputs: [],
     stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "isLiquidityBond",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "lastDecay",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "maxPayout",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_value",
-        type: "uint256",
-      },
-    ],
-    name: "payoutFor",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "_depositor",
-        type: "address",
-      },
-    ],
-    name: "pendingPayoutFor",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "pendingPayout_",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "_depositor",
-        type: "address",
-      },
-    ],
-    name: "percentVestedFor",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "percentVested_",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "policy",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "principle",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
     type: "function",
   },
   {
@@ -579,36 +548,17 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "address",
-        name: "_token",
-        type: "address",
-      },
-    ],
-    name: "recoverLostToken",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "_recipient",
-        type: "address",
+        internalType: "uint256",
+        name: "profit_",
+        type: "uint256",
       },
       {
-        internalType: "bool",
-        name: "_stake",
-        type: "bool",
+        internalType: "uint256",
+        name: "epoch_",
+        type: "uint256",
       },
     ],
-    name: "redeem",
+    name: "rebase",
     outputs: [
       {
         internalType: "uint256",
@@ -617,6 +567,55 @@ const _abi = [
       },
     ],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "rebases",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "epoch",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "rebase",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "totalStakedBefore",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "totalStakedAfter",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "amountRebased",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "blockNumberOccured",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -629,173 +628,104 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "bool",
-        name: "_addition",
-        type: "bool",
-      },
-      {
         internalType: "uint256",
-        name: "_increment",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_target",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_buffer",
+        name: "_INDEX",
         type: "uint256",
       },
     ],
-    name: "setAdjustment",
-    outputs: [],
+    name: "setIndex",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "stakingContract",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "symbol",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "totalSupply",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
+    ],
+    name: "transfer",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
     stateMutability: "nonpayable",
     type: "function",
   },
   {
     inputs: [
       {
-        internalType: "enum OlympusBondDepository.PARAMETER",
-        name: "_parameter",
-        type: "uint8",
-      },
-      {
-        internalType: "uint256",
-        name: "_input",
-        type: "uint256",
-      },
-    ],
-    name: "setBondTerms",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
         internalType: "address",
-        name: "_staking",
+        name: "from",
         type: "address",
       },
       {
-        internalType: "bool",
-        name: "_helper",
-        type: "bool",
-      },
-    ],
-    name: "setStaking",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "staking",
-    outputs: [
-      {
         internalType: "address",
-        name: "",
+        name: "to",
         type: "address",
       },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "stakingHelper",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "standardizedDebtRatio",
-    outputs: [
       {
         internalType: "uint256",
-        name: "",
+        name: "value",
         type: "uint256",
       },
     ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "terms",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "controlVariable",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "vestingTerm",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "minimumPrice",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "maxPayout",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "fee",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "maxDebt",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "totalDebt",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "treasury",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "useHelper",
+    name: "transferFrom",
     outputs: [
       {
         internalType: "bool",
@@ -803,20 +733,20 @@ const _abi = [
         type: "bool",
       },
     ],
-    stateMutability: "view",
+    stateMutability: "nonpayable",
     type: "function",
   },
 ];
 
-export class BondDepository__factory {
+export class SOlympus__factory {
   static readonly abi = _abi;
-  static createInterface(): BondDepositoryInterface {
-    return new utils.Interface(_abi) as BondDepositoryInterface;
+  static createInterface(): SOlympusInterface {
+    return new utils.Interface(_abi) as SOlympusInterface;
   }
   static connect(
     address: string,
     signerOrProvider: Signer | Provider
-  ): BondDepository {
-    return new Contract(address, _abi, signerOrProvider) as BondDepository;
+  ): SOlympus {
+    return new Contract(address, _abi, signerOrProvider) as SOlympus;
   }
 }
