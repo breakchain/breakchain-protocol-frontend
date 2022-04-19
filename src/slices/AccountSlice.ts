@@ -59,7 +59,7 @@ interface IUserBalances {
     pool: string;
     xChain: string;
     sXChain: string;
-    usdc: string;
+    ust: string;
   };
 }
 
@@ -108,7 +108,7 @@ export const getBalances = createAsyncThunk(
     let fiatDaowsohmBalance = BigNumber.from("0");
     let xChainBalance = BigNumber.from("0");
     let sXChainBalance = BigNumber.from("0");
-    let usdcBalance = BigNumber.from("0");
+    let ustBalance = BigNumber.from("0");
     let bondMarketPrice = BigNumber.from("0");
 
     const signer = provider.getSigner();
@@ -128,7 +128,7 @@ export const getBalances = createAsyncThunk(
     }
 
     try {
-      usdcBalance = await reservedContract.balanceOf(address);
+      ustBalance = await reservedContract.balanceOf(address);
     } catch (e) {
       handleContractError(e);
     }
@@ -158,7 +158,7 @@ export const getBalances = createAsyncThunk(
         mockSohm: ethers.utils.formatUnits(mockSohmBalance, "gwei"),
         xChain: ethers.utils.formatUnits(xChainBalance, "gwei"),
         sXChain: ethers.utils.formatUnits(sXChainBalance, "gwei"),
-        usdc: ethers.utils.formatUnits(usdcBalance, "ether"),
+        ust: ethers.utils.formatUnits(ustBalance, "ether"),
       },
     };
   },
@@ -486,7 +486,7 @@ export interface IAccountSlice extends IUserAccountDetails, IUserBalances {
     mockSohm: string;
     xChain: string;
     sXChain: string;
-    usdc: string;
+    ust: string;
   };
   loading: boolean;
   staking: {
@@ -539,7 +539,7 @@ const initialState: IAccountSlice = {
     mockSohm: "",
     xChain: "",
     sXChain: "",
-    usdc: "",
+    ust: "",
   },
   giving: { sohmGive: 0, donationInfo: {}, loading: true },
   mockGiving: { sohmGive: 0, donationInfo: {}, loading: true },
