@@ -48,7 +48,7 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
   }, [setLoading, appData]);
 
   const usdcBalance = useAppSelector(state => {
-    return state.account.balances && state.account.balances.usdc;
+    return state.account.balances && state.account.balances.ust;
   });
 
   const pendingTransactions = useSelector(state => {
