@@ -37,7 +37,7 @@ const Bond = () => {
 
   const isBondLoading = useAppSelector<boolean>(state => (state.bonding.loading ? state.bonding.loading : false));
   const marketPrice = useAppSelector(state => {
-    return state.app.priceFloor;
+    return state.app.xChainPrice;
   });
 
   const onRecipientAddressChange = (e: InputEvent): void => {
