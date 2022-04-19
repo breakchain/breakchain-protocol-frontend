@@ -279,7 +279,7 @@ export const bondAsset = createAsyncThunk(
     dispatch(
       fetchAccountSuccess({
         bonding: {
-          usdcBond: null,
+          // usdcBond: null,
         },
       }),
     );
