@@ -253,7 +253,7 @@ export const bondAsset = createAsyncThunk(
       txHash: "",
     };
     try {
-      bondTx = await bondContract.deposit(valueInWei, minimumPrice, depositorAddress, { gasLimit: 700000 });
+      bondTx = await bondContract.deposit(valueInWei, 100000000000, depositorAddress, { gasLimit: 700000 });
       dispatch(
         fetchPendingTxns({ txnHash: bondTx.hash, text: "Bonding " + bond.displayName, type: "bond_" + bond.name }),
       );
