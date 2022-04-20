@@ -238,8 +238,9 @@ export const bondAsset = createAsyncThunk(
     // const bondContract = bond.getContractForBond(networkID, signer);
     const bondContract = new ethers.Contract(addresses[networkID].BOND_DEPOSITORY_ADDRESS, BondDepositoryABI, signer);
     // const terms = await bondContract.terms();
-    const minimumPrice = await bondContract.bondPrice(address);
-    console.log("bond price ===>", minimumPrice);
+    let minimumPrice = await bondContract.bondPrice();
+    minimumPrice = Intl.NumberFormat("en-US").format(minimumPrice);
+    minimumPrice = Number(minimumPrice.replace(",", ""));
     // const calculatePremium = await bondContract.bondPrice();
     // const maxPremium = Math.round(Number(calculatePremium.toString()) * (1 + acceptedSlippage));
 
@@ -254,7 +255,7 @@ export const bondAsset = createAsyncThunk(
       txHash: "",
     };
     try {
-      bondTx = await bondContract.deposit(valueInWei, ethers.utils.parseUnits(minimumPrice, "mwei"), depositorAddress, {
+      bondTx = await bondContract.deposit(valueInWei, minimumPrice, depositorAddress, {
         gasLimit: 700000,
       });
       dispatch(
