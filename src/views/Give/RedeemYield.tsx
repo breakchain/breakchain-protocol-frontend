@@ -226,7 +226,7 @@ export default function RedeemYield() {
                   isLoading={isAppLoading}
                 />
                 <DataRow
-                  title={t`ROI (5-Day Rate)`}
+                  title={t`5-Day ROI`}
                   balance={`${getTrimmedBigNumber(fiveDayRateValue)}%`}
                   isLoading={isAppLoading}
                 />
