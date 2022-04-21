@@ -456,7 +456,7 @@ function Stake() {
                                 {txnButtonText(
                                   pendingTransactions,
                                   "staking",
-                                  `${t`Stake to`} ${confirmation ? " xCHAIN" : " xCHAIN"}`,
+                                  `${t`Stake`} ${confirmation ? " xCHAIN" : " xCHAIN"}`,
                                 )}
                               </Button>
                             ) : (
@@ -493,7 +493,7 @@ function Stake() {
                                 {txnButtonText(
                                   pendingTransactions,
                                   "unstaking",
-                                  `${t`Unstake from`} ${confirmation ? " sXCHAIN" : " sXCHAIN"}`,
+                                  `${t`Unstake`} ${confirmation ? " sXCHAIN" : " sXCHAIN"}`,
                                 )}
                               </Button>
                             ) : (
