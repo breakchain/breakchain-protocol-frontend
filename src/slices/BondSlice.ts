@@ -258,9 +258,7 @@ export const bondAsset = createAsyncThunk(
       bondTx = await bondContract.deposit(valueInWei, minimumPrice, depositorAddress, {
         gasLimit: 700000,
       });
-      dispatch(
-        fetchPendingTxns({ txnHash: bondTx.hash, text: "Bonding " + bond.displayName, type: "bond_" + bond.name }),
-      );
+      dispatch(fetchPendingTxns({ txnHash: bondTx.hash, text: "Bonding " + "UST", type: "bond_" + "UST" }));
       uaData.txHash = bondTx.hash;
       await bondTx.wait();
       // TODO: it may make more sense to only have it in the finally.
