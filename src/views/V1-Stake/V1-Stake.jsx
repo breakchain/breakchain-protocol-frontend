@@ -466,7 +466,7 @@ function V1Stake({ oldAssetsDetected, setMigrationModalOpen, hasActiveV1Bonds })
                       isLoading={isAppLoading}
                     />
                     <DataRow
-                      title={t`ROI (5-Day Rate)`}
+                      title={t`5-Day ROI`}
                       balance={`${trim(Number(fiveDayRate) * 100, 4)}%`}
                       isLoading={isAppLoading}
                     />
