@@ -577,7 +577,7 @@ function Stake() {
                         xChainBalance === ""
                           ? 0
                           : new Intl.NumberFormat("en-US").format(
-                              Number(trim((apy1Day / 100) * Number(sXChainBalance) + Number(sXChainBalance), 2)),
+                              Number(trim((apy1Day / 100) * Number(sXChainBalance), 2)),
                             )
                       } XCHAIN`}
                       isLoading={isAppLoading}
