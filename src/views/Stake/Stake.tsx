@@ -69,6 +69,10 @@ function Stake() {
   const stakingAPY = useAppSelector(state => {
     return state.app.stakeApy || 0;
   });
+
+  const apy1Day = useAppSelector(state => {
+    return state.app.apy1Day || 0;
+  });
   const stakingTVL = useAppSelector(state => {
     return state.app.stakeTotalLock || 0;
   });
@@ -573,9 +577,7 @@ function Stake() {
                         xChainBalance === ""
                           ? 0
                           : new Intl.NumberFormat("en-US").format(
-                              Number(
-                                trim(((stakingAPY / 100) * Number(sXChainBalance) + Number(sXChainBalance)) / 365, 2),
-                              ),
+                              Number(trim((apy1Day / 100) * Number(sXChainBalance) + Number(sXChainBalance), 2)),
                             )
                       } XCHAIN`}
                       isLoading={isAppLoading}

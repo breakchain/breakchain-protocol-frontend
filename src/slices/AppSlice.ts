@@ -67,6 +67,7 @@ export const loadAppDetails = createAsyncThunk(
     const vestTerm = parseFloat(metricsData.body["vesting-term"]);
     const bondPrice = parseFloat(metricsData.body["bond-price"]);
     const xChainPrice = parseFloat(metricsData.body["xchain-price"]);
+    const apy1Day = parseFloat(metricsData.body["APY-1-Day"]);
 
     // const
     if (!provider) {
@@ -96,6 +97,7 @@ export const loadAppDetails = createAsyncThunk(
         vestTerm,
         bondPrice,
         xChainPrice,
+        apy1Day,
       } as IAppData;
     }
     // const currentBlock = await provider.getBlockNumber();
@@ -152,6 +154,7 @@ export const loadAppDetails = createAsyncThunk(
         vestTerm,
         bondPrice,
         xChainPrice,
+        apy1Day,
       } as IAppData;
     } catch (e: any) {
       console.log("errormessage", e.message);
@@ -241,6 +244,7 @@ export interface IAppData {
   readonly vestTerm?: number;
   readonly bondPrice?: number;
   readonly xChainPrice?: number;
+  readonly apy1Day?: number;
 }
 
 const initialState: IAppData = {
