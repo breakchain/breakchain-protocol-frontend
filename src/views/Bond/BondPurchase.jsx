@@ -116,7 +116,7 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
             {!hasAllowance() ? (
               <div className="help-text">
                 <em>
-                  <Typography variant="body1" align="center" color="textSecondary">
+                  <Typography variant="body1" className="bond-note" color="textSecondary">
                     <Trans>First time bonding</Trans> <b>{"UST"}</b>? <br />{" "}
                     <Trans>Please approve Breakchain Protocol to use your</Trans> <b>{bond.displayName}</b>{" "}
                     <Trans>for bonding</Trans>.

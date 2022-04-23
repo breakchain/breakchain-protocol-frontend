@@ -63,9 +63,7 @@ export function Buy(dropState: boolean) {
     <>
       <BuyButton
         openBuy={openBuy}
-        href={`https://app.uniswap.org/#/swap?inputCurrency=${frax.getAddressForReserve(networkId)}&outputCurrency=${
-          addresses[networkId].OHM_V2
-        }`}
+        href="https://quickswap.exchange/#/swap?inputCurrency=0xE6469Ba6D2fD6130788E0eA9C0a0515900563b59&outputCurrency=0x028511FfA8D408FD9D8f1EfEcfc1733164F7566d"
       />
       {isBuyOpen && (
         <Box className={classes.dropDownMenu} onMouseLeave={closeBuy}>
