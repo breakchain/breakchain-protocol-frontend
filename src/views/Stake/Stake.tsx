@@ -465,7 +465,7 @@ function Stake() {
                                 {txnButtonText(
                                   pendingTransactions,
                                   "staking",
-                                  `${t`Stake`} ${confirmation ? " xCHAIN" : " xCHAIN"}`,
+                                  `${t`Stake`} ${confirmation ? " XCHAIN" : " XCHAIN"}`,
                                 )}
                               </Button>
                             ) : (
@@ -572,7 +572,7 @@ function Stake() {
                       isLoading={isAppLoading}
                     />
                     <DataRow
-                      title={t`ROI (5-Day Rate)`}
+                      title={t`5-Day ROI`}
                       balance={`${trim(Number(fiveDayRate), 2)}%`}
                       isLoading={isAppLoading}
                     />

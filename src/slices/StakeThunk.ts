@@ -218,7 +218,6 @@ export const changeStake = createAsyncThunk(
       dispatch(error("Please connect your wallet!"));
       return;
     }
-
     const signer = provider.getSigner();
 
     const staking = new ethers.Contract(addresses[networkID].STAKING_ADDRESS as string, StakingABI, signer);
@@ -269,7 +268,7 @@ export const changeStake = createAsyncThunk(
         stakeTx = await stakingHelper.stake(ethers.utils.parseUnits(value, "gwei"), { gasLimit: 700000 });
       } else {
         uaData.type = "unstake";
-        stakeTx = await staking.unstake(ethers.utils.parseUnits(value, "gwei"), { gasLimit: 700000 });
+        stakeTx = await staking.unstake(ethers.utils.parseUnits(value, "gwei"), false, { gasLimit: 700000 });
       }
       // }
       const pendingTxnType = action === "stake" ? "staking" : "unstaking";

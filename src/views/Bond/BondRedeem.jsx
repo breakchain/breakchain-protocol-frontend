@@ -90,7 +90,11 @@ function BondRedeem({ bond }) {
             balance={`${trim(bonding.claim, 3)} XCHAIN`}
             isLoading={isBondLoading}
           />
-          <DataRow title={t`Time until fully vested`} balance={trim(bonding.vestTime, 2)} isLoading={isBondLoading} />
+          <DataRow
+            title={t`Time until fully vested`}
+            balance={`${trim(bonding.vestTime, 2)} days`}
+            isLoading={isBondLoading}
+          />
           <DataRow
             title={t`ROI`}
             balance={<DisplayBondDiscount key={bonding.vestTime} bond={bond} />}
