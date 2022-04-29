@@ -173,6 +173,11 @@ function Stake() {
   const stakeAllowance = useAppSelector(state => {
     return (state.account.staking && state.account.staking.ohmStake) || 0;
   });
+
+  const xChainPrice = useAppSelector(state => {
+    return state.app.xChainPrice || 0;
+  });
+
   const unstakeAllowance = useAppSelector(state => {
     return (state.account.staking && state.account.staking.ohmUnstake) || 0;
   });
@@ -577,9 +582,14 @@ function Stake() {
                         xChainBalance === ""
                           ? 0
                           : new Intl.NumberFormat("en-US").format(
-                              Number(trim((apy1Day / 100) * Number(sXChainBalance) + Number(sXChainBalance), 2)),
+                              Number(
+                                trim(
+                                  ((apy1Day / 100) * Number(sXChainBalance) + Number(sXChainBalance)) * xChainPrice,
+                                  2,
+                                ),
+                              ),
                             )
-                      } XCHAIN`}
+                      } $`}
                       isLoading={isAppLoading}
                     />
                     {/* <DataRow
