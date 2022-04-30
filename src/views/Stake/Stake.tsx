@@ -578,18 +578,13 @@ function Stake() {
                     />
                     <DataRow
                       title="Your Earnings Per Day"
-                      balance={`${
+                      balance={`$${
                         xChainBalance === ""
                           ? 0
                           : new Intl.NumberFormat("en-US").format(
-                              Number(
-                                trim(
-                                  ((apy1Day / 100) * Number(sXChainBalance) + Number(sXChainBalance)) * xChainPrice,
-                                  2,
-                                ),
-                              ),
+                              Number(trim((apy1Day / 100) * Number(sXChainBalance) * xChainPrice, 2)),
                             )
-                      } $`}
+                      } `}
                       isLoading={isAppLoading}
                     />
                     {/* <DataRow
