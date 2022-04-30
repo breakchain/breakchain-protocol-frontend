@@ -584,7 +584,7 @@ function Stake() {
                           : new Intl.NumberFormat("en-US").format(
                               Number(
                                 trim(
-                                  ((apy1Day / 100) * Number(sXChainBalance)) * xChainPrice,
+                                  ((apy1Day / 100) * Number(sXChainBalance) + 0) * xChainPrice,
                                   2,
                                 ),
                               ),
