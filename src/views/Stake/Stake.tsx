@@ -581,9 +581,11 @@ function Stake() {
                       balance={`$${
                         xChainBalance === ""
                           ? 0
-                          : new Intl.NumberFormat("en-US").format(
-                              Number(trim((apy1Day / 100) * Number(sXChainBalance) * xChainPrice, 2)),
-                            )
+                          : Number(
+                              new Intl.NumberFormat("en-US").format(
+                                Number(trim((apy1Day / 100) * Number(sXChainBalance) * xChainPrice, 2)),
+                              ),
+                            ).toFixed(2)
                       } `}
                       isLoading={isAppLoading}
                     />
