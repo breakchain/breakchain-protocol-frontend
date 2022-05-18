@@ -5,6 +5,7 @@ import { abi as oerc20ABI } from "../abi/xchain/OlympusERC20Contract.json";
 import { abi as sOlympusABI } from "../abi/sXchain/sOlympus.json";
 import { abi as BondABI } from "../abi/xchain/Bond.json";
 import { abi as BondDpeoABI } from "../abi/xchain/BondDepository.json";
+import { abi as AirDropABI } from "../abi/claim/break_airdrop_abi.json";
 import { abi as sOHMv2 } from "../abi/sOhmv2.json";
 import { abi as fuseProxy } from "../abi/FuseProxy.json";
 import { abi as wsOHM } from "../abi/wsOHM.json";
@@ -60,6 +61,7 @@ interface IUserBalances {
     xChain: string;
     sXChain: string;
     ust: string;
+    claim: string;
   };
 }
 
@@ -110,11 +112,14 @@ export const getBalances = createAsyncThunk(
     let sXChainBalance = BigNumber.from("0");
     let ustBalance = BigNumber.from("0");
     let bondMarketPrice = BigNumber.from("0");
+    let claimBalance = BigNumber.from("0");
 
     const signer = provider.getSigner();
     const stakeContract = new ethers.Contract(addresses[networkID].OLYMPUS_ERC20_ADDRESS, oerc20ABI, signer);
     const unstakeContract = new ethers.Contract(addresses[networkID].SOHM_ADDRESS, sOlympusABI, signer);
     const reservedContract = new ethers.Contract(addresses[networkID].BOND_ADDRESS, BondABI, signer);
+    console.log("=========================>");
+    const airDropContract = new ethers.Contract(addresses[networkID].AIRDROP_ADDRESS, AirDropABI, signer);
     try {
       xChainBalance = await stakeContract.balanceOf(address);
     } catch (e) {
@@ -129,6 +134,12 @@ export const getBalances = createAsyncThunk(
 
     try {
       ustBalance = await reservedContract.balanceOf(address);
+    } catch (e) {
+      handleContractError(e);
+    }
+
+    try {
+      claimBalance = await airDropContract.airdropAmount(address);
     } catch (e) {
       handleContractError(e);
     }
@@ -159,6 +170,7 @@ export const getBalances = createAsyncThunk(
         xChain: ethers.utils.formatUnits(xChainBalance, "gwei"),
         sXChain: ethers.utils.formatUnits(sXChainBalance, "gwei"),
         ust: ethers.utils.formatUnits(ustBalance, "mwei"),
+        claim: ethers.utils.formatUnits(claimBalance, "wei"),
       },
     };
   },
@@ -487,6 +499,7 @@ export interface IAccountSlice extends IUserAccountDetails, IUserBalances {
     xChain: string;
     sXChain: string;
     ust: string;
+    claim: string;
   };
   loading: boolean;
   staking: {
@@ -540,6 +553,7 @@ const initialState: IAccountSlice = {
     xChain: "",
     sXChain: "",
     ust: "",
+    claim: "",
   },
   giving: { sohmGive: 0, donationInfo: {}, loading: true },
   mockGiving: { sohmGive: 0, donationInfo: {}, loading: true },
