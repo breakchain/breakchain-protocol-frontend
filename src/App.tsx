@@ -54,7 +54,7 @@ import ProjectInfo from "./views/Give/ProjectInfo";
 import projectData from "src/views/Give/projects.json";
 import Announcement from "./components/Announcement/Announcement";
 // import { getAllBonds, getUserNotes } from "./slices/BondSliceV2";
-import Airdrop from "src/views/Airdrop";
+import Airdrop from "src/views/Airdrop/AirDrop";
 import { NetworkId } from "./constants";
 import Calculator from "./views/Calculator";
 
