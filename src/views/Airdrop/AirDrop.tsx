@@ -35,7 +35,7 @@ function Airdrop() {
             <div className="airdropitem">
               <Typography component="h5">Airdrop</Typography>
               <Typography component="h5">
-                {new Intl.NumberFormat("en-US").format(Number(trim(Number(claimBalance), 2)))}
+                {new Intl.NumberFormat("en-US").format(Number(trim(Number(claimBalance) / (10 ^ 9), 9)))}
               </Typography>
               <Button variant="contained" color="primary" onClick={() => claim()}>
                 Claim
