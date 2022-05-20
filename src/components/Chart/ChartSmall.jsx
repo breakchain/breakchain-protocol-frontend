@@ -493,7 +493,7 @@ function ChartSmall({
           <Skeleton variant="text" width={100} />
         ) : (
           <Box display="flex">
-            <Typography variant="h5" style={{ fontWeight: 600, marginRight: 5 }}>
+            <Typography variant="h5" className="subtext" style={{ fontWeight: 600 }}>
               {headerSubText}
             </Typography>
             {/* <Typography variant="h5" color="textSecondary" style={{ fontWeight: 400 }}>
