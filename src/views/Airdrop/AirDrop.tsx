@@ -15,6 +15,9 @@ function Airdrop() {
   const claimBalance = useAppSelector(state => {
     return state.account.balances && state.account.balances.claim;
   });
+  //console.log(222);
+  //console.log(claimBalance);
+  //console.log(Number(claimBalance) / 10 ** 9);
 
   const claim = useCallback(async () => {
     const signer = provider.getSigner();
@@ -34,9 +37,7 @@ function Airdrop() {
           <Grid item xs={12}>
             <div className="airdropitem">
               <Typography component="h5">Airdrop</Typography>
-              <Typography component="h5">
-                {new Intl.NumberFormat("en-US").format(Number(trim(Number(claimBalance) / (10 ^ 9), 9)))}
-              </Typography>
+              <Typography component="h5">{Number(trim(Number(claimBalance) / 10 ** 9, 9))}</Typography>
               <Button variant="contained" color="primary" onClick={() => claim()}>
                 Claim
               </Button>
