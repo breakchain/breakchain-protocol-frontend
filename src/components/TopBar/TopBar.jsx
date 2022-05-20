@@ -69,13 +69,8 @@ function TopBar({ theme, toggleTheme, handleDrawerToggle, tap }) {
         </Button>
 
         <Box display="flex">
-          {/* {!isVerySmallScreen && <OhmMenu />} /}
-          <Wallet />
-          {/ <ConnectMenu /> */}
           <Wallet closeDrop={closeDropMenu} />
           <Buy dropState={openMenu} />
-          {/* <ThemeSwitcher theme={theme} toggleTheme={toggleTheme} /> */}
-          {/* <LocaleSwitcher /> */}
         </Box>
       </Toolbar>
     </AppBar>

@@ -5,10 +5,10 @@
         component={NavLink}
         id="dash-nav"
         to="/dashboard"
-        isActive={(match, location) => {
+        isactive={(match, location) => {
           return checkPage(match, location, "dashboard");
         }}
-        className={`button-dapp-menu ${isActive ? "active" : ""}`}
+        className={`button-dapp-menu ${isactive ? "active" : ""}`}
         onClick={handleDrawerToggle}
       >
         <Typography variant="h6">
@@ -21,10 +21,10 @@
         component={NavLink}
         id="bond-nav"
         to="/bonds"
-        isActive={(match, location) => {
+        isactive={(match, location) => {
           return checkPage(match, location, "bonds");
         }}
-        className={`button-dapp-menu ${isActive ? "active" : ""}`}
+        className={`button-dapp-menu ${isactive ? "active" : ""}`}
         onClick={handleDrawerToggle}
       >
         <Typography variant="h6">
@@ -110,10 +110,10 @@
         component={NavLink}
         id="stake-nav"
         to="/"
-        isActive={(match, location) => {
+        isactive={(match, location) => {
           return checkPage(match, location, "stake");
         }}
-        className={`button-dapp-menu ${isActive ? "active" : ""}`}
+        className={`button-dapp-menu ${isactive ? "active" : ""}`}
         onClick={handleDrawerToggle}
       >
         <Typography variant="h6">
@@ -128,10 +128,10 @@
             component={NavLink}
             id="give-nav"
             to="/give"
-            isActive={(match, location) => {
+            isactive={(match, location) => {
               return checkPage(match, location, "give");
             }}
-            className={`button-dapp-menu ${isActive ? "active" : ""}`}
+            className={`button-dapp-menu ${isactive ? "active" : ""}`}
             onClick={handleDrawerToggle}
           >
             <Typography variant="h6">
@@ -149,10 +149,10 @@
         component={NavLink}
         id="wrap-nav"
         to="/wrap"
-        isActive={(match, location) => {
+        isactive={(match, location) => {
           return checkPage(match, location, "wrap");
         }}
-        className={`button-dapp-menu ${isActive ? "active" : ""}`}
+        className={`button-dapp-menu ${isactive ? "active" : ""}`}
         onClick={handleDrawerToggle}
       >
         <Box display="flex" alignItems="center">
@@ -202,10 +202,10 @@
         component={NavLink}
         id="wrap-nav"
         to="/wrap"
-        isActive={(match, location) => {
+        isactive={(match, location) => {
           return checkPage(match, location, "wrap");
         }}
-        className={`button-dapp-menu ${isActive ? "active" : ""}`}
+        className={`button-dapp-menu ${isactive ? "active" : ""}`}
         onClick={handleDrawerToggle}
       >
         <Box display="flex" alignItems="center">

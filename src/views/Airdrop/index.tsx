@@ -15,7 +15,7 @@ function Airdrop() {
         Rewards
       </Typography>
       <Grid container>
-        <Grid item xs={3}>
+        <Grid item>
           <Card className="airdropitem">
             <Typography component="h5">Airdrop</Typography>
             <Typography component="h5">0</Typography>

@@ -43,7 +43,7 @@ import { useAppSelector } from "src/hooks";
 import { AppDispatch } from "src/store";
 
 function NavContent({ handleDrawerToggle }) {
-  const [isActive] = useState();
+  const [isactive] = useState();
   const { networkId, address, provider } = useWeb3Context();
   const { bonds } = useBonds(networkId);
   const location = useLocation();
@@ -63,48 +63,48 @@ function NavContent({ handleDrawerToggle }) {
   const checkPage = useCallback((match, location, page) => {
     const currentPath = location.pathname.replace("/", "");
     if (currentPath.indexOf("dashboard") >= 0 && page === "dashboard") {
-      return true;
+      return 1;
     }
     if (currentPath.indexOf("zap") >= 0 && page === "zap") {
-      return true;
+      return 1;
     }
     if (currentPath.indexOf("stake") >= 0 && page === "stake") {
-      return true;
+      return 1;
     }
     if (currentPath.indexOf("wrap") >= 0 && page === "wrap") {
-      return true;
+      return 1;
     }
     if (currentPath.indexOf("give") >= 0 && page == "give") {
-      return true;
+      return 1;
     }
     if (currentPath.indexOf("givedonations") >= 0 && page == "give/donations") {
-      return true;
+      return 1;
     }
     if (currentPath.indexOf("giveredeem") >= 0 && page == "give/redeem") {
-      return true;
+      return 1;
     }
     if ((currentPath.indexOf("bonds-v1") >= 0 || currentPath.indexOf("choose_bond") >= 0) && page === "bonds-v1") {
-      return true;
+      return 1;
     }
     if ((currentPath.indexOf("bonds") >= 0 || currentPath.indexOf("choose_bond") >= 0) && page === "bonds") {
-      return true;
+      return 1;
     }
     if (currentPath.indexOf("whitepaper") >= 0 && page === "whitepaper") {
-      return true;
+      return 1;
     }
     if (currentPath.indexOf("roadmap") >= 0 && page === "roadmap") {
-      return true;
+      return 1;
     }
     if (currentPath.indexOf("home") >= 0 && page === "home") {
-      return true;
+      return 1;
     }
     if (currentPath.indexOf("33-together") >= 0 && page === "33-together") {
-      return true;
+      return 1;
     }
     if (currentPath.indexOf("33-together") >= 0 && page === "33-together") {
-      return true;
+      return 1;
     }
-    return false;
+    return 0;
   }, []);
 
   const sortedBonds = bondsV2.sort((a, b) => {
@@ -145,10 +145,10 @@ function NavContent({ handleDrawerToggle }) {
                 component={NavLink}
                 id="dash-nav"
                 to="/dashboard"
-                isActive={(match, location) => {
+                isactive={(match, location) => {
                   return checkPage(match, location, "dashboard");
                 }}
-                className={`button-dapp-menu ${isActive ? "active" : ""}`}
+                className={`button-dapp-menu ${isactive ? "active" : ""}`}
                 onClick={handleDrawerToggle}
               >
                 <Typography variant="h6">
@@ -161,7 +161,7 @@ function NavContent({ handleDrawerToggle }) {
                 id="bond-nav"
                 target="_blank"
                 href="https://quickswap.exchange/#/swap"
-                className={`button-dapp-menu ${isActive ? "active" : ""}`}
+                className={`button-dapp-menu ${isactive ? "active" : ""}`}
               >
                 <Typography variant="h6">
                   <Trans>Buy</Trans>
@@ -171,7 +171,7 @@ function NavContent({ handleDrawerToggle }) {
                 id="stake"
                 component={NavLink}
                 to="/stake"
-                className={`button-dapp-menu ${isActive ? "active" : ""}`}
+                className={`button-dapp-menu ${isactive ? "active" : ""}`}
               >
                 <Typography variant="h6">
                   {/* <SvgIcon color="primary" component={StakeIcon} /> */}
@@ -182,7 +182,7 @@ function NavContent({ handleDrawerToggle }) {
                 id="stake"
                 component={NavLink}
                 to="/calculator"
-                className={`button-dapp-menu ${isActive ? "active" : ""}`}
+                className={`button-dapp-menu ${isactive ? "active" : ""}`}
               >
                 <Typography variant="h6">
                   <Trans>ROI Projections</Trans>
@@ -192,7 +192,7 @@ function NavContent({ handleDrawerToggle }) {
                 id="stake"
                 component={NavLink}
                 to="/airdrop"
-                className={`button-dapp-menu ${isActive ? "active" : ""}`}
+                className={`button-dapp-menu ${isactive ? "active" : ""}`}
               >
                 <Typography variant="h6">
                   {/* <SvgIcon color="primary" component={ZapIcon} /> */}
@@ -203,10 +203,10 @@ function NavContent({ handleDrawerToggle }) {
                 component={NavLink}
                 id="bond-nav"
                 to="/bonds"
-                isActive={(match, location) => {
+                isactive={(match, location) => {
                   return checkPage(match, location, "bonds");
                 }}
-                className={`button-dapp-menu ${isActive ? "active" : ""}`}
+                className={`button-dapp-menu ${isactive ? "active" : ""}`}
                 onClick={handleDrawerToggle}
               >
                 <Typography variant="h6">
@@ -229,10 +229,10 @@ function NavContent({ handleDrawerToggle }) {
                 // component={NavLink}
                 id="whitepaper-nav"
                 href={window.location.host + "/whitepaper"}
-                isActive={(match, location) => {
+                isactive={(match, location) => {
                   return checkPage(match, location, "whitepaper");
                 }}
-                className={`button-dapp-menu ${isActive ? "active" : ""}`}
+                className={`button-dapp-menu ${isactive ? "active" : ""}`}
                 onClick={handleDrawerToggle}
               >
                 <Typography variant="h6">

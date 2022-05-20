@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const BuyButton = ({ openBuy, href }: { openBuy: () => void; href: string }) => {
+const BuyButton = ({ openBuy }: { openBuy: () => void }) => {
   const { connected } = useWeb3Context();
   const classes = useStyles();
   const onClick = openBuy;
@@ -36,10 +36,12 @@ const BuyButton = ({ openBuy, href }: { openBuy: () => void; href: string }) => 
     <Button
       id="ohm-menu-button"
       variant="contained"
+      className={classes.button}
       color="primary"
       onMouseEnter={onClick}
-      href={href}
-      target={`_blank`}
+      onClick={onClick}
+      href=""
+      target={`_self`}
     >
       <Typography>{label}</Typography>
     </Button>
@@ -61,10 +63,7 @@ export function Buy(dropState: boolean) {
 
   return (
     <>
-      <BuyButton
-        openBuy={openBuy}
-        href="https://quickswap.exchange/#/swap?inputCurrency=0xE6469Ba6D2fD6130788E0eA9C0a0515900563b59&outputCurrency=0x028511FfA8D408FD9D8f1EfEcfc1733164F7566d"
-      />
+      <BuyButton openBuy={openBuy} />
       {isBuyOpen && (
         <Box className={classes.dropDownMenu} onMouseLeave={closeBuy}>
           <InitialBuyView onClose={closeBuy} />
