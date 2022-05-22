@@ -31,7 +31,7 @@ const lightTheme = {
   outlinedPrimaryButtonHoverColor: "#333333",
   outlinedSecondaryButtonHoverBG: "#FCFCFC",
   outlinedSecondaryButtonHoverColor: "#333333",
-  containedSecondaryButtonHoverBG: "#33333333",
+  containedSecondaryButtonHoverBG: "#333333",
   graphStrokeColor: "rgba(37, 52, 73, .2)",
   gridButtonHoverBackground: "rgba(118, 130, 153, 0.2)",
   gridButtonActiveBackground: "rgba(118, 130, 153, 0.7)",
@@ -239,7 +239,7 @@ export const light = responsiveFontSizes(
               border: "1px solid blue",
             },
             "@media (hover:none)": {
-              color: lightTheme.color,
+              // color: lightTheme.color,
               backgroundColor: lightTheme.primaryButtonBG,
               "&:hover": {
                 backgroundColor: lightTheme.primaryButtonHoverBG,
