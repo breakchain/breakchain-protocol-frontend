@@ -1,9 +1,9 @@
 [![Lighthouse PWA Test](https://github.com/ivelin/olympus-frontend/actions/workflows/lighthouse.yml/badge.svg)](https://github.com/ivelin/olympus-frontend/actions/workflows/lighthouse.yml)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
 
-# [Ω Olympus Frontend](https://app.olympusdao.finance/)
+# [Ω Breakchain Frontend](https://www.breakchain-protocol.money/)
 
-This is the front-end repo for Olympus that allows users be part of the future of _Meta Greece_.
+This is the front-end repo for Breakchain that allows users be part of the future of finance.
 
 We are moving at web3 speed and we are looking for talented contributors to boost this rocket. Take a look at our [CONTRIBUTING GUIDE](CONTRIBUTING.md) if you are considering joining a world class DAO.
 
