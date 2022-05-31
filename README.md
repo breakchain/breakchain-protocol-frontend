@@ -17,7 +17,7 @@ Required:
 
 ```bash
 $ git clone https://github.com/breakchain/breakchain-protocol-frontend.git
-$ cd olympusdao
+$ cd breakchain-protocol-frontend
 
 # set up your environment variables
 # read the comments in the .env files for what is required/optional
