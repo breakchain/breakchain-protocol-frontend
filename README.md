@@ -16,7 +16,7 @@ Required:
 - [Git](https://git-scm.com/downloads)
 
 ```bash
-$ git clone https://github.com/OlympusDAO/olympusdao.git
+$ git clone https://github.com/breakchain/breakchain-protocol-frontend.git
 $ cd olympusdao
 
 # set up your environment variables
