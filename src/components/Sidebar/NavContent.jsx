@@ -228,11 +228,8 @@ function NavContent({ handleDrawerToggle }) {
               <Link
                 // component={NavLink}
                 id="whitepaper-nav"
-                href={window.location.host + "/whitepaper"}
-                isactive={(match, location) => {
-                  return checkPage(match, location, "whitepaper");
-                }}
-                className={`button-dapp-menu ${isactive ? "active" : ""}`}
+                href={"https://breakchain-docs.s3.amazonaws.com/BreakChain_Protocol_Whitepaper.pdf"}
+                target="_blank"
                 onClick={handleDrawerToggle}
               >
                 <Typography variant="h6">
