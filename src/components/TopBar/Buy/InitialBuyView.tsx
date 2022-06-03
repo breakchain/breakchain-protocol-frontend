@@ -170,6 +170,12 @@ function InitialBuyView({ onClose }: { onClose: () => void }) {
         >
           <Typography>Buy on QuickSwap</Typography>
         </ExternalLink>
+        <ExternalLink
+          color={currentTheme === "dark" ? "primary" : undefined}
+          href="https://wallet.polygon.technology/login/"
+        >
+          <Typography>Polygon Bridge</Typography>
+        </ExternalLink>
         {window.ethereum && (
           <>
             <Box className={classes.divider}>

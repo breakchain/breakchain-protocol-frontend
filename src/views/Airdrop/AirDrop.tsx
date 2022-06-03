@@ -37,7 +37,7 @@ function Airdrop() {
           <Grid item xs={12}>
             <div className="airdropitem">
               <Typography component="h5">Token Launch</Typography>
-              <Typography component="h5">{Number(trim(Number(claimBalance) / 10 ** 9, 9))} XCHAIN</Typography>
+              <Typography component="h5">{Math.floor(Number(claimBalance) / 10 ** 9)} XCHAIN</Typography>
               <Button variant="contained" color="primary" onClick={() => claim()}>
                 Claim
               </Button>
