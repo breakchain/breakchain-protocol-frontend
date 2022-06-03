@@ -171,8 +171,8 @@ export const frax = new StableBond({
 
 export const usdc = new StableBond({
   name: "usdc",
-  displayName: "UST",
-  bondToken: "UST",
+  displayName: "USDC",
+  bondToken: "USDC",
   payoutToken: "OHM",
   v2Bond: true,
   bondIconSvg: FraxImg,

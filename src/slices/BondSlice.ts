@@ -52,8 +52,8 @@ export const changeApproval = createAsyncThunk(
       dispatch(
         fetchPendingTxns({
           txnHash: approveTx.hash,
-          text: "Approving " + "UST",
-          type: "approve_" + "UST",
+          text: "Approving " + "USDC",
+          type: "approve_" + "USDC",
         }),
       );
       await approveTx.wait();
@@ -258,7 +258,7 @@ export const bondAsset = createAsyncThunk(
       bondTx = await bondContract.deposit(valueInWei, minimumPrice, depositorAddress, {
         gasLimit: 700000,
       });
-      dispatch(fetchPendingTxns({ txnHash: bondTx.hash, text: "Bonding " + "UST", type: "bond_" + "UST" }));
+      dispatch(fetchPendingTxns({ txnHash: bondTx.hash, text: "Bonding " + "USDC", type: "bond_" + "USDC" }));
       uaData.txHash = bondTx.hash;
       await bondTx.wait();
       // TODO: it may make more sense to only have it in the finally.

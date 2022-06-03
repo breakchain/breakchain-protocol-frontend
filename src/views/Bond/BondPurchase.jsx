@@ -117,7 +117,7 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
               <div className="help-text">
                 <em>
                   <Typography variant="body1" className="bond-note" color="textSecondary">
-                    <Trans>First time bonding</Trans> <b>{"UST"}</b>? <br />{" "}
+                    <Trans>First time bonding</Trans> <b>{"USDC"}</b>? <br />{" "}
                     <Trans>Please approve Breakchain Protocol to use your</Trans> <b>{bond.displayName}</b>{" "}
                     <Trans>for bonding</Trans>.
                   </Typography>
@@ -155,10 +155,10 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
                 color="primary"
                 id="bond-btn"
                 className="transaction-button"
-                disabled={isPendingTxn(pendingTransactions, "bond_" + "UST")}
+                disabled={isPendingTxn(pendingTransactions, "bond_" + "USDC")}
                 onClick={onBond}
               >
-                {txnButtonText(pendingTransactions, "bond_" + "UST", "Bond")}
+                {txnButtonText(pendingTransactions, "bond_" + "USDC", "Bond")}
               </Button>
             ) : (
               <Button
@@ -166,10 +166,10 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
                 color="primary"
                 id="bond-approve-btn"
                 className="transaction-button"
-                disabled={isPendingTxn(pendingTransactions, "approve_" + "UST")}
+                disabled={isPendingTxn(pendingTransactions, "approve_" + "USDC")}
                 onClick={onSeekApproval}
               >
-                {txnButtonText(pendingTransactions, "approve_" + "UST", "Approve")}
+                {txnButtonText(pendingTransactions, "approve_" + "USDC", "Approve")}
               </Button>
             )}
           </>
@@ -180,7 +180,7 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
         <Box className="bond-data">
           <DataRow
             title={t`Your Balance`}
-            balance={`${Intl.NumberFormat("en-US").format(usdcBalance, 2)} ${"UST"}`}
+            balance={`${Intl.NumberFormat("en-US").format(usdcBalance, 2)} ${"USDC"}`}
             isLoading={isBondLoading}
           />
           <DataRow
@@ -192,7 +192,7 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
           />
           <DataRow
             title={t`Max You Can Buy`}
-            balance={`${Intl.NumberFormat("en-US").format(appData.maxBuy, 4) || "0"} ` + `${"UST"}`}
+            balance={`${Intl.NumberFormat("en-US").format(appData.maxBuy, 4) || "0"} ` + `${"USDC"}`}
             isLoading={isBondLoading}
           />
           <DataRow
