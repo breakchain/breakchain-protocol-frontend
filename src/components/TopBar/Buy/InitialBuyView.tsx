@@ -172,7 +172,7 @@ function InitialBuyView({ onClose }: { onClose: () => void }) {
         </ExternalLink>
         <ExternalLink
           color={currentTheme === "dark" ? "primary" : undefined}
-          href="https://wallet.polygon.technology/login/"
+          href="https://wallet.polygon.technology/bridge/"
         >
           <Typography>Polygon Bridge</Typography>
         </ExternalLink>
