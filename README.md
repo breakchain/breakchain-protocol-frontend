@@ -1,5 +1,5 @@
 
-# [Breakchain Frontend](https://www.breakchain-protocol.money/)
+# [BreakChain Protocol Frontend](https://www.breakchain-protocol.money/)
 
 This is the front-end repo for Breakchain that allows users be part of the future of finance.
 
