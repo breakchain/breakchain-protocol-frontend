@@ -339,6 +339,7 @@ function Stake() {
               <Grid item>
                 <div className="card-header">
                   <Typography variant="h5">Staking</Typography>
+                  <RebaseTimer />
                 </div>
               </Grid>
             </Grid>
