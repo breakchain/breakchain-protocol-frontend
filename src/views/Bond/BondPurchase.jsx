@@ -117,9 +117,7 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
               <div className="help-text">
                 <em>
                   <Typography variant="body1" className="bond-note" color="textSecondary">
-                    <Trans>First time bonding</Trans> <b>{"USDC"}</b>? <br />{" "}
-                    <Trans>Please approve Breakchain Protocol to use your</Trans> <b>{bond.displayName}</b>{" "}
-                    <Trans>for bonding</Trans>.
+                    <Trans>Please approve the protocol to use your USDC</Trans>.
                   </Typography>
                 </em>
               </div>
