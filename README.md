@@ -1,7 +1,5 @@
-[![Lighthouse PWA Test](https://github.com/ivelin/olympus-frontend/actions/workflows/lighthouse.yml/badge.svg)](https://github.com/ivelin/olympus-frontend/actions/workflows/lighthouse.yml)
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
 
-# [Ω Breakchain Frontend](https://www.breakchain-protocol.money/)
+# [BreakChain Protocol Frontend](https://www.breakchain-protocol.money/)
 
 This is the front-end repo for Breakchain that allows users be part of the future of finance.
 
@@ -103,9 +101,8 @@ For the available theme properties, take a look at the themes in `src/themes`.
 
 ## Application translation
 
-Olympus uses [linguijs](https://github.com/lingui/js-lingui) to manage translation.
+Breakchain uses [linguijs](https://github.com/lingui/js-lingui) to manage translation.
 
-The language files are located in a submodule deployed in `src/locales/translations`. This submodule points to the [olympus translation repository](https://github.com/OlympusDAO/olympus-translations)
 
 In order to mark text for translation you can use:
 
@@ -120,43 +117,12 @@ t({
 })
 ```
 
-When new texts are created or existing texts are modified in the application please leave a message in the OlympusDao app-translation channel for the translators to translate them.
-
-### Resolving merge conflicts with translations
-
-```bash
-$ git diff
-# shows two commits in conflict below (fbdd867,e6e0919)
-diff --cc src/locales/translations
-index fbdd867,e6e0919..0000000
---- a/src/locales/translations
-+++ b/src/locales/translations
-
-cd src/locales/translations
-# first commit
-git checkout fbdd867
-# merge in second commit
-git merge e6e0919
-git commit
-
-cd ../../..
-git add src/locales/translations
-git commit
-```
 
 ## 🚀 Deployment
 
-Auto deployed on [Fleek.co](http://fleek.co/) fronted by [Cloudflare](https://www.cloudflare.com/). Since it is hosted via IPFS there is no running "server" component and we don't have server sided business logic. Users are served an `index.html` and javascript to run our applications.
-
-_**TODO**: TheGraph implementation/how/why we use it._
 
 ### Continuous deployment
 
-Commits to the follow branches are automatically deployed to their respective URLs.
-| Branch | URL |
-| --- | --- |
-| master | <https://app.olympusdao.finance> |
-| deploy | <https://staging.olympusdao.finance> |
 
 **Pull Requests**:
 Each PR into master will get its own custom URL that is visible on the PR page. QA & validate changes on that URL before merging into the deploy branch.
@@ -169,23 +135,8 @@ Each PR into master will get its own custom URL that is visible on the PR page. 
 
 First, take a look at our [CONTRIBUTING GUIDE](CONTRIBUTING.md) .
 
-We keep an updated list of bugs/feature requests in [Github Issues](https://github.com/OlympusDAO/olympusdao/issues).
-
-![GitHub issues](https://img.shields.io/github/issues/olympusdao/olympusdao?style=flat-square)
-
-Filter by ["good first issue"](https://github.com/OlympusDAO/olympusdao/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22) to get your feet wet!
-Once you submit a PR, our CI will generate a temporary testing URL where you can validate your changes. Tag any of the gatekeepers on the review to merge them into master.
 
 _**NOTE**_: For big changes associated with feature releases/milestones, they will be merged onto the `develop` branch for more thorough QA before a final merge to `master`
 
 **Defenders of the code**:
 
-Only the following people have merge access for the master branch.
-
-- [@Girth Brooks](https://github.com/dwjanus)
-- [@Unbanksy](https://github.com/unbanksy)
-- [@ZayenX](https://github.com/lolchocotaco)
-
-## 🗣 Community
-
-- [Join our Discord](https://discord.gg/gGZUMVDuhQ) and ask how you can get involved with the DAO!
