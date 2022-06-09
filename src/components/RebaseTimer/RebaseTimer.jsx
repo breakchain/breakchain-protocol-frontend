@@ -73,7 +73,7 @@ function RebaseTimer() {
           secondsToRebase > 0 ? (
             <>
               <strong>{rebaseString}&nbsp;</strong>
-              <Trans>to next rebase</Trans>
+              <Trans>to next pay out</Trans>
             </>
           ) : (
             <strong>rebasing</strong>
