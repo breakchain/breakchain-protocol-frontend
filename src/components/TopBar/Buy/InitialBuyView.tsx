@@ -166,7 +166,7 @@ function InitialBuyView({ onClose }: { onClose: () => void }) {
       <Box className={classes.dropContainer}>
         <ExternalLink
           color={currentTheme === "dark" ? "primary" : undefined}
-          href="https://quickswap.exchange/#/swap?inputCurrency=0xE6469Ba6D2fD6130788E0eA9C0a0515900563b59&outputCurrency=0x028511FfA8D408FD9D8f1EfEcfc1733164F7566d"
+          href="https://quickswap.exchange/#/swap?inputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&outputCurrency=0x028511FfA8D408FD9D8f1EfEcfc1733164F7566d"
         >
           <Typography>Buy on QuickSwap</Typography>
         </ExternalLink>
