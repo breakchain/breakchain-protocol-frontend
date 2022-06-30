@@ -47,7 +47,7 @@ export const PriceFloor = () => {
       <Metric
         label={t`Price Floor`}
         metric={!isNaN(priceFloor) && formatCurrency(priceFloor, 2)}
-        isLoading={priceFloor ? false : true}
+        isLoading={priceFloor !== undefined ? false : true}
         {...sharedProps}
       />
       <br />

@@ -442,7 +442,7 @@ function ChartSmall({
   };
 
   useEffect(() => {
-    if (data) {
+    if (data !== undefined) {
       setLoading(false);
     }
   }, [data]);

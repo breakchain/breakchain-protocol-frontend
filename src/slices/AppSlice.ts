@@ -44,6 +44,7 @@ export const loadAppDetails = createAsyncThunk(
     //   return;
     // }
 
+    console.log("floor price =======>", metricsData.body["market-cap"]);
     const marketCap = parseFloat(metricsData.body["market-cap"]);
     const priceFloor = parseFloat(metricsData.body["price-floor"]);
     const circulSupply = parseFloat(metricsData.body["circulating-supply"]);
