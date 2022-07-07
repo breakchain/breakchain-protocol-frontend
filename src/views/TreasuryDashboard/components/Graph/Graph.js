@@ -15,7 +15,7 @@ export const TotalValueLockedGraph = () => {
   return (
     <ChartSmall
       type="area"
-      data={totalLocked}
+      data={data}
       itemType={itemType.dollar}
       itemNames={tooltipItems.tvl}
       dataKey={["totalValueLocked"]}
@@ -37,7 +37,7 @@ export const TreasuryAssetsGraph = () => {
   return (
     <ChartSmall
       type="stack"
-      data={treasureAsset}
+      data={data}
       dataKey={[
         "treasuryDaiMarketValue",
         "treasuryFraxMarketValue",
@@ -70,7 +70,7 @@ export const TreasuryBackingGraph = () => {
   return (
     <ChartSmall
       type="stack"
-      data={treasureBack}
+      data={data}
       format="currency"
       dataKey={["treasuryDaiRiskFreeValue", "treasuryFraxRiskFreeValue", "treasuryLusdRiskFreeValue"]}
       stopColor={[
@@ -132,7 +132,7 @@ export const XCHAINStakedGraph = () => {
     <ChartSmall
       isStaked
       type="area"
-      data={xChainStaked}
+      data={staked}
       dataKey={["staked"]}
       dataFormat="percent"
       headerText="XCHAIN Staked"
@@ -160,7 +160,7 @@ export const RunwayAvailableGraph = () => {
   return (
     <ChartSmall
       type="multi"
-      data={runAwayAvail}
+      data={runway}
       dataKey={["runwayCurrent", "runway7dot5k", "runway5k", "runway2dot5k"]}
       color={theme.palette.text.primary}
       stroke={colors}
