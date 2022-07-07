@@ -91,7 +91,9 @@
   width: 100%;
   margin: 5px !important;
   color:white !important;
-
+  &:hover {
+    color:blue !important;
+  }
 }
 
 .help-text {
