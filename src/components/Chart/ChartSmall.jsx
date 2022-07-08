@@ -442,10 +442,10 @@ function ChartSmall({
   };
 
   useEffect(() => {
-    if (data !== undefined) {
+    if (data !== undefined && !headerSubText.includes("undefined")) {
       setLoading(false);
     }
-  }, [data]);
+  }, [data, headerSubText]);
 
   return loading ? (
     <Box style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -494,7 +494,7 @@ function ChartSmall({
         ) : (
           <Box display="flex">
             <Typography variant="h5" className="subtext" style={{ fontWeight: 600 }}>
-              {headerSubText}
+              {headerSubText !== undefined ? headerSubText : ""}
             </Typography>
             {/* <Typography variant="h5" color="textSecondary" style={{ fontWeight: 400 }}>
               {type !== "multi" && "Today"}
