@@ -470,13 +470,13 @@ function ChartSmall({
               {headerText}
             </Typography>
             <InfoTooltip message={infoTooltipMessage} />
-            <SvgIcon
+            {/* <SvgIcon
               component={Chart646}
               inheritViewBox="true"
               color="primary"
               onClick={handleOpen}
               style={{ fontSize: "2rem", cursor: "pointer", marginLeft: "10px" }}
-            />
+            /> */}
           </Box>
           <ExpandedChart
             open={open}
