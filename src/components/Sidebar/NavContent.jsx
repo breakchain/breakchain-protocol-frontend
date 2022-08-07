@@ -237,6 +237,18 @@ function NavContent({ handleDrawerToggle }) {
                   <Trans>WHITE PAPER</Trans>
                 </Typography>
               </Link>
+              <Link
+                // component={NavLink}
+                id="faq-nav"
+                href={"https://breakchain-docs.s3.amazonaws.com/FAQ.pdf"}
+                target="_blank"
+                onClick={handleDrawerToggle}
+              >
+                <Typography variant="h6">
+                  {/* <SvgIcon color="primary" component={BondIcon} /> */}
+                  <Trans>FAQ</Trans>
+                </Typography>
+              </Link>
             </div>
           </div>
         </div>
