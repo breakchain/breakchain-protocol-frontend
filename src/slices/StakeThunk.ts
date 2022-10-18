@@ -19,6 +19,7 @@ import {
 import { segmentUA } from "../helpers/userAnalyticHelpers";
 import { IERC20, OlympusStakingv2__factory, OlympusStaking__factory, StakingHelper } from "src/typechain";
 import ReactGA from "react-ga";
+import { Alert } from "@material-ui/lab";
 
 interface IUAData {
   address: string;
@@ -70,8 +71,14 @@ export const stakeApprove = createAsyncThunk(
     const stakeContract = new ethers.Contract(addresses[networkID].OLYMPUS_ERC20_ADDRESS, oerc20ABI, signer);
     const unstakeContract = new ethers.Contract(addresses[networkID].SOHM_ADDRESS, sOlympusABI, signer);
     let approveTx;
-    let stakeAllowance = await stakeContract.allowance(address, addresses[networkID].STAKING_HELPER_ADDRESS);
+    let stakeAllowance;
+    try {
+      stakeAllowance = await stakeContract.allowance(address, addresses[networkID].STAKING_HELPER_ADDRESS);
+    } catch (e) {
+      alert("Please make sure you switch to Polygon Mainnet");
+    }
     let unstakeAllowance = await unstakeContract.allowance(address, addresses[networkID].STAKING_ADDRESS);
+    // alert(addresses[networkID].STAKING_ADDRESS);
 
     try {
       if (token === "ohm") {
