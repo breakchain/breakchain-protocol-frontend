@@ -189,17 +189,6 @@ function NavContent({ handleDrawerToggle }) {
                 </Typography>
               </Link> */}
               <Link
-                id="stake"
-                component={NavLink}
-                to="/airdrop"
-                className={`button-dapp-menu ${isactive ? "active" : ""}`}
-              >
-                <Typography variant="h6">
-                  {/* <SvgIcon color="primary" component={ZapIcon} /> */}
-                  <Trans>REWARDS</Trans>
-                </Typography>
-              </Link>
-              <Link
                 component={NavLink}
                 id="bond-nav"
                 to="/bonds"
@@ -212,6 +201,17 @@ function NavContent({ handleDrawerToggle }) {
                 <Typography variant="h6">
                   {/* <SvgIcon color="primary" component={BondIcon} /> */}
                   <Trans>BONDS</Trans>
+                </Typography>
+              </Link>
+              <Link
+                id="stake"
+                component={NavLink}
+                to="/airdrop"
+                className={`button-dapp-menu ${isactive ? "active" : ""}`}
+              >
+                <Typography variant="h6">
+                  {/* <SvgIcon color="primary" component={ZapIcon} /> */}
+                  <Trans>REWARDS</Trans>
                 </Typography>
               </Link>
               <Link
@@ -235,6 +235,18 @@ function NavContent({ handleDrawerToggle }) {
                 <Typography variant="h6">
                   {/* <SvgIcon color="primary" component={BondIcon} /> */}
                   <Trans>WHITE PAPER</Trans>
+                </Typography>
+              </Link>
+              <Link
+                // component={NavLink}
+                id="audit-nav"
+                href={"https://breakchain-docs.s3.amazonaws.com/XCHAIN_SmartContracts_Audit.pdf"}
+                target="_blank"
+                onClick={handleDrawerToggle}
+              >
+                <Typography variant="h6">
+                  {/* <SvgIcon color="primary" component={BondIcon} /> */}
+                  <Trans>CODE AUDIT</Trans>
                 </Typography>
               </Link>
               <Link
