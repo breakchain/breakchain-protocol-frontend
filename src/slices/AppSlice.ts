@@ -101,17 +101,20 @@ export const loadAppDetails = createAsyncThunk(
         apy1Day,
       } as IAppData;
     }
-    // const currentBlock = await provider.getBlockNumber();
+    const currentBlock = await provider.getBlockNumber();
+    const currentTime = (await provider.getBlock(currentBlock)).timestamp;
 
-    // const stakingContract = OlympusStakingv2__factory.connect(addresses[networkID].STAKING_ADDRESS, provider);
+    const stakingContract = OlympusStakingv2__factory.connect(addresses[networkID].STAKING_ADDRESS, provider);
     // const stakingContractV1 = OlympusStaking__factory.connect(addresses[networkID].STAKING_ADDRESS, provider);
 
     // const sohmMainContract = SOHM__factory.connect(addresses[networkID].SOHM_ADDRESS as string, provider);
 
     // Calculating staking
     try {
-      // const epoch = await stakingContract.epoch();
-      // //const secondsToEpoch = Number(await stakingContract.secondsToNextEpoch());
+      const epoch = await stakingContract.epoch();
+      const epochNumber = epoch[1].toNumber();
+      const epochEndTime = epoch[2].toNumber();
+      // const secondsToEpoch = epoch[2].toNumber();
 
       // const stakingReward = epoch.distribute;
 
@@ -156,6 +159,10 @@ export const loadAppDetails = createAsyncThunk(
         bondPrice,
         xChainPrice,
         apy1Day,
+        epochNumber,
+        epochEndTime,
+        currentBlock,
+        currentTime,
       } as IAppData;
     } catch (e: any) {
       console.log("errormessage", e.message);
@@ -211,6 +218,7 @@ export interface IAppData {
   readonly currentIndex?: string;
   readonly currentIndexV1?: string;
   readonly currentBlock?: number;
+  readonly currentTime?: number;
   readonly fiveDayRate?: number;
   readonly loading: boolean;
   readonly loadingMarketPrice: boolean;
@@ -246,6 +254,8 @@ export interface IAppData {
   readonly bondPrice?: number;
   readonly xChainPrice?: number;
   readonly apy1Day?: number;
+  readonly epochNumber?: number;
+  readonly epochEndTime?: number;
 }
 
 const initialState: IAppData = {
