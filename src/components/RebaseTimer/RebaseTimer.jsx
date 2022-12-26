@@ -1,82 +1,66 @@
-import { useSelector, useDispatch } from "react-redux";
-import { getRebaseBlock, secondsUntilBlock, prettifySeconds } from "../../helpers";
+import { useSelector } from "react-redux";
 import { Box, Typography } from "@material-ui/core";
 import "./rebasetimer.scss";
 import { Skeleton } from "@material-ui/lab";
-import { useEffect, useMemo, useState } from "react";
-import { loadAppDetails } from "../../slices/AppSlice";
-import { useWeb3Context } from "../../hooks/web3Context";
+import { useEffect, useState } from "react";
 import { Trans } from "@lingui/macro";
 
 function RebaseTimer() {
-  const dispatch = useDispatch();
-  const { provider, networkId } = useWeb3Context();
+  let _clockHandler = null;
+  let _curTime = 0;
+  let _endTime = 0;
 
-  const SECONDS_TO_REFRESH = 60;
-  const [secondsToRebase, setSecondsToRebase] = useState(0);
-  const [rebaseString, setRebaseString] = useState("");
-  const [secondsToRefresh, setSecondsToRefresh] = useState(SECONDS_TO_REFRESH);
-
-  const currentBlock = useSelector(state => {
-    return state.app.currentBlock;
+  const currentTime = useSelector(state => {
+    return state.app.currentTime;
   });
-  const secondsToEpoch = useSelector(state => {
-    return state.app.secondsToEpoch;
+  const epochEndTime = useSelector(state => {
+    return state.app.epochEndTime;
   });
 
-  function initializeTimer() {
-    const rebaseBlock = getRebaseBlock(currentBlock);
-    const seconds = secondsUntilBlock(currentBlock, rebaseBlock);
-    setSecondsToRebase(secondsToEpoch);
-    const prettified = prettifySeconds(secondsToEpoch);
-    setRebaseString(prettified !== "" ? prettified : <Trans>Less than a minute</Trans>);
-  }
+  const [time, setTime] = useState(0);
 
-  // This initializes secondsToRebase as soon as currentBlock becomes available
-  useMemo(() => {
-    if (secondsToEpoch) {
-      initializeTimer();
-    }
-  }, [secondsToEpoch]);
-
-  // After every period SECONDS_TO_REFRESH, decrement secondsToRebase by SECONDS_TO_REFRESH,
-  // keeping the display up to date without requiring an on chain request to update currentBlock.
   useEffect(() => {
-    let interval = null;
-    if (secondsToRefresh > 0) {
-      interval = setInterval(() => {
-        setSecondsToRefresh(secondsToRefresh => secondsToRefresh - 1);
-      }, 1000);
-    } else {
-      // When the countdown goes negative, reload the app details and reinitialize the timer
-      if (secondsToRebase < 0) {
-        async function reload() {
-          await dispatch(loadAppDetails({ networkID: networkId, provider: provider }));
-        }
-        reload();
-        setRebaseString("");
-      } else {
-        clearInterval(interval);
-        setSecondsToRebase(secondsToRebase => secondsToRebase - SECONDS_TO_REFRESH);
-        setSecondsToRefresh(SECONDS_TO_REFRESH);
-        const prettified = prettifySeconds(secondsToRebase);
-        setRebaseString(prettified !== "" ? prettified : <Trans>Less than a minute</Trans>);
+    _clockHandler = setInterval(() => {
+      if (_curTime === 0 && currentTime) _curTime = currentTime;
+      if (_endTime === 0 && epochEndTime) _endTime = epochEndTime;
+      if (_curTime !== 0 && _endTime !== 0) {
+        _curTime++;
+        setTime(_endTime - _curTime);
       }
-    }
-    return () => clearInterval(interval);
-  }, [secondsToRebase, secondsToRefresh]);
+    }, 1000);
+    return () => {
+      if (_clockHandler) {
+        clearInterval(_clockHandler);
+      }
+    };
+  }, [currentTime, epochEndTime]);
+
+  const toHHMMSS = secs => {
+    let sec_num = parseInt(Math.abs(secs), 10);
+    let hours = Math.floor(sec_num / 3600);
+    let minutes = Math.floor(sec_num / 60) % 60;
+    let seconds = sec_num % 60;
+
+    return [hours, minutes, seconds]
+      .map(v => (v < 10 ? "0" + v : v))
+      .filter((v, i) => v !== "00" || i > 0)
+      .join(":");
+  };
 
   return (
     <Box className="rebase-timer">
       <Typography variant="body2">
-        {currentBlock ? (
-          secondsToRebase > 0 ? (
+        {currentTime && epochEndTime && time ? (
+          time > 0 ? (
             <>
-              <strong>{rebaseString}&nbsp;</strong>
-              <Trans>to next pay out</Trans>
+              <Trans>next pay out:</Trans>
+              <strong style={{ color: "blue" }}>&nbsp;{toHHMMSS(time)}</strong>
             </>
           ) : (
-            <strong>rebasing</strong>
+            <>
+              <Trans>missed the last payout:</Trans>
+              <strong style={{ color: "red" }}>&nbsp;{toHHMMSS(time)}</strong>
+            </>
           )
         ) : (
           <Skeleton width="155px" />
