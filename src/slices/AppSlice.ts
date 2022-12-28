@@ -10,6 +10,7 @@ import { RootState } from "src/store";
 import { IBaseAsyncThunk } from "./interfaces";
 import { OlympusStakingv2__factory, OlympusStaking__factory, SOhmv2, SOHM__factory } from "../typechain";
 import Web3 from "web3";
+import { AbiItem } from "web3-utils";
 
 interface IProtocolMetrics {
   readonly timestamp: string;
@@ -102,26 +103,40 @@ export const loadAppDetails = createAsyncThunk(
         apy1Day,
       } as IAppData;
     }
-    const currentBlock = await provider.getBlockNumber();
-    const currentTime = (await provider.getBlock(currentBlock)).timestamp;
+    let currentBlock;
+    let currentTime;
 
     let epoch;
     let epochNumber;
     let epochEndTime;
     try {
-      let isExistNetwork = -1;
-      const supportNetworks = Object.values(NetworkId);
-      isExistNetwork = supportNetworks.indexOf(networkID);
-      const stakingContract = OlympusStakingv2__factory.connect(
-        isExistNetwork !== -1 ? addresses[networkID].STAKING_ADDRESS : addresses[NetworkId.POLYGON].STAKING_ADDRESS,
-        isExistNetwork !== -1 ? provider : new Web3.providers.HttpProvider("https://polygon-rpc.com/"),
-      );
-      epoch = await stakingContract.epoch();
-      epochNumber = epoch[1].toNumber();
-      epochEndTime = epoch[2].toNumber();
+      try {
+        currentBlock = await provider.getBlockNumber();
+        currentTime = (await provider.getBlock(currentBlock)).timestamp;
+      } catch (e: any) {}
+      let stakingContract;
+      try {
+        stakingContract = OlympusStakingv2__factory.connect(addresses[networkID].STAKING_ADDRESS, provider);
+        epoch = await stakingContract.epoch();
+        epochNumber = epoch[1].toNumber();
+        epochEndTime = epoch[2].toNumber();
+      } catch (e: any) {
+        let defaultProvider = new Web3.providers.HttpProvider("https://polygon-rpc.com/");
+        const web3 = new Web3(defaultProvider);
+        currentBlock = await web3.eth.getBlockNumber();
+        currentTime = (await web3.eth.getBlock(currentBlock)).timestamp;
+        stakingContract = new web3.eth.Contract(
+          OlympusStaking__factory.abi as unknown as AbiItem[],
+          addresses[NetworkId.POLYGON].STAKING_ADDRESS,
+        );
+        epoch = await stakingContract.methods.epoch().call();
+        epochNumber = epoch[1];
+        epochEndTime = epoch[2];
+      }
     } catch (e: any) {
       console.log(e);
     }
+
     // const stakingContractV1 = OlympusStaking__factory.connect(addresses[networkID].STAKING_ADDRESS, provider);
 
     // const sohmMainContract = SOHM__factory.connect(addresses[networkID].SOHM_ADDRESS as string, provider);
