@@ -41,10 +41,24 @@ function RebaseTimer() {
     let minutes = Math.floor(sec_num / 60) % 60;
     let seconds = sec_num % 60;
 
-    return [hours, minutes, seconds]
-      .map(v => (v < 10 ? "0" + v : v))
-      .filter((v, i) => v !== "00" || i > 0)
-      .join(":");
+    let result = "";
+    if (hours === 1) {
+      result += hours + " hour ";
+    } else if (hours > 1) {
+      result += hours + " hours ";
+    }
+    if (minutes <= 1) {
+      result += minutes + " minute ";
+    } else {
+      result += minutes + " minutes ";
+    }
+    if (seconds <= 1) {
+      result += seconds + " second";
+    } else {
+      result += seconds + " seconds";
+    }
+
+    return result;
   };
 
   return (
@@ -58,7 +72,7 @@ function RebaseTimer() {
             </>
           ) : (
             <>
-              <Trans>missed the last payout:</Trans>
+              <Trans>last rebase:</Trans>
               <strong style={{ color: "red" }}>&nbsp;{toHHMMSS(time)}</strong>
             </>
           )
