@@ -9,6 +9,7 @@ import { createSlice, createSelector, createAsyncThunk } from "@reduxjs/toolkit"
 import { RootState } from "src/store";
 import { IBaseAsyncThunk } from "./interfaces";
 import { OlympusStakingv2__factory, OlympusStaking__factory, SOhmv2, SOHM__factory } from "../typechain";
+import Web3 from "web3";
 
 interface IProtocolMetrics {
   readonly timestamp: string;
@@ -104,16 +105,29 @@ export const loadAppDetails = createAsyncThunk(
     const currentBlock = await provider.getBlockNumber();
     const currentTime = (await provider.getBlock(currentBlock)).timestamp;
 
-    const stakingContract = OlympusStakingv2__factory.connect(addresses[networkID].STAKING_ADDRESS, provider);
+    let epoch;
+    let epochNumber;
+    let epochEndTime;
+    try {
+      let isExistNetwork = -1;
+      const supportNetworks = Object.values(NetworkId);
+      isExistNetwork = supportNetworks.indexOf(networkID);
+      const stakingContract = OlympusStakingv2__factory.connect(
+        isExistNetwork !== -1 ? addresses[networkID].STAKING_ADDRESS : addresses[NetworkId.POLYGON].STAKING_ADDRESS,
+        isExistNetwork !== -1 ? provider : new Web3.providers.HttpProvider("https://polygon-rpc.com/"),
+      );
+      epoch = await stakingContract.epoch();
+      epochNumber = epoch[1].toNumber();
+      epochEndTime = epoch[2].toNumber();
+    } catch (e: any) {
+      console.log(e);
+    }
     // const stakingContractV1 = OlympusStaking__factory.connect(addresses[networkID].STAKING_ADDRESS, provider);
 
     // const sohmMainContract = SOHM__factory.connect(addresses[networkID].SOHM_ADDRESS as string, provider);
 
     // Calculating staking
     try {
-      const epoch = await stakingContract.epoch();
-      const epochNumber = epoch[1].toNumber();
-      const epochEndTime = epoch[2].toNumber();
       // const secondsToEpoch = epoch[2].toNumber();
 
       // const stakingReward = epoch.distribute;
