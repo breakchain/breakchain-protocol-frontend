@@ -43,20 +43,22 @@ function RebaseTimer() {
 
     let result = "";
     if (hours === 1) {
-      result += hours + " hour ";
+      result += hours + " hour, ";
     } else if (hours > 1) {
-      result += hours + " hours ";
+      result += hours + " hours, ";
     }
     if (minutes <= 1) {
-      result += minutes + " minute ";
+      result += minutes + " minute";
     } else {
-      result += minutes + " minutes ";
+      result += minutes + " minutes";
     }
+    /*
     if (seconds <= 1) {
       result += seconds + " second";
     } else {
       result += seconds + " seconds";
     }
+    */
 
     return result;
   };
@@ -73,7 +75,7 @@ function RebaseTimer() {
           ) : (
             <>
               <Trans>last rebase:</Trans>
-              <strong style={{ color: "red" }}>&nbsp;{toHHMMSS(time)}</strong>
+              <strong style={{ color: "red" }}>&nbsp;{toHHMMSS(time)} ago</strong>
             </>
           )
         ) : (
