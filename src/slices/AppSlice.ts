@@ -9,6 +9,8 @@ import { createSlice, createSelector, createAsyncThunk } from "@reduxjs/toolkit"
 import { RootState } from "src/store";
 import { IBaseAsyncThunk } from "./interfaces";
 import { OlympusStakingv2__factory, OlympusStaking__factory, SOhmv2, SOHM__factory } from "../typechain";
+import Web3 from "web3";
+import { AbiItem } from "web3-utils";
 
 interface IProtocolMetrics {
   readonly timestamp: string;
@@ -101,19 +103,46 @@ export const loadAppDetails = createAsyncThunk(
         apy1Day,
       } as IAppData;
     }
-    const currentBlock = await provider.getBlockNumber();
-    const currentTime = (await provider.getBlock(currentBlock)).timestamp;
+    let currentBlock;
+    let currentTime;
 
-    const stakingContract = OlympusStakingv2__factory.connect(addresses[networkID].STAKING_ADDRESS, provider);
+    let epoch;
+    let epochNumber;
+    let epochEndTime;
+    try {
+      try {
+        currentBlock = await provider.getBlockNumber();
+        currentTime = (await provider.getBlock(currentBlock)).timestamp;
+      } catch (e: any) {}
+      let stakingContract;
+      try {
+        stakingContract = OlympusStakingv2__factory.connect(addresses[networkID].STAKING_ADDRESS, provider);
+        epoch = await stakingContract.epoch();
+        epochNumber = epoch[1].toNumber();
+        epochEndTime = epoch[2].toNumber();
+      } catch (e: any) {
+        let defaultProvider = new Web3.providers.HttpProvider("https://polygon-rpc.com/");
+        const web3 = new Web3(defaultProvider);
+        currentBlock = await web3.eth.getBlockNumber();
+        currentTime = (await web3.eth.getBlock(currentBlock)).timestamp;
+        stakingContract = new web3.eth.Contract(
+          OlympusStaking__factory.abi as unknown as AbiItem[],
+          addresses[NetworkId.POLYGON].STAKING_ADDRESS,
+        );
+        epoch = await stakingContract.methods.epoch().call();
+        epochNumber = epoch[1];
+        epochEndTime = epoch[2];
+      }
+    } catch (e: any) {
+      console.log(e);
+    }
+
     // const stakingContractV1 = OlympusStaking__factory.connect(addresses[networkID].STAKING_ADDRESS, provider);
 
     // const sohmMainContract = SOHM__factory.connect(addresses[networkID].SOHM_ADDRESS as string, provider);
 
     // Calculating staking
     try {
-      const epoch = await stakingContract.epoch();
-      const epochNumber = epoch[1].toNumber();
-      const epochEndTime = epoch[2].toNumber();
       // const secondsToEpoch = epoch[2].toNumber();
 
       // const stakingReward = epoch.distribute;
