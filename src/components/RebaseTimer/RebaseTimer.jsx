@@ -75,7 +75,7 @@ function RebaseTimer() {
           ) : (
             <>
               <Trans>last rebase:</Trans>
-              <strong style={{ color: "red" }}>&nbsp;{toHHMMSS(time)} ago</strong>
+              &nbsp;{toHHMMSS(time)} ago
             </>
           )
         ) : (
