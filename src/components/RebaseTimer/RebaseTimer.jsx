@@ -43,14 +43,14 @@ function RebaseTimer() {
 
     let result = "";
     if (hours === 1) {
-      result += hours + " hour, ";
+      result += hours + " hr, ";
     } else if (hours > 1) {
-      result += hours + " hours, ";
+      result += hours + " hrs, ";
     }
     if (minutes <= 1) {
-      result += minutes + " minute";
+      result += minutes + " min";
     } else {
-      result += minutes + " minutes";
+      result += minutes + " min";
     }
     /*
     if (seconds <= 1) {
