@@ -121,16 +121,20 @@ export const DisplayBondPrice = ({ bond }: { bond: IAllBondData }): ReactElement
   const bondPrice = useAppSelector(state => {
     return state.app && state.app.bondPrice;
   });
-  return (
-    <Fragment>
-      {new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-        maximumFractionDigits: 2,
-        minimumFractionDigits: 2,
-      }).format(Number(bondPrice))}
-    </Fragment>
-  );
+  if (typeof bondPrice !== "number") {
+    return <Fragment>$</Fragment>;
+  } else {
+    return (
+      <Fragment>
+        {new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+          maximumFractionDigits: 2,
+          minimumFractionDigits: 2,
+        }).format(Number(bondPrice))}
+      </Fragment>
+    );
+  }
 };
 
 export const DisplayBondDiscount = ({ bond }: { bond: IAllBondData }): ReactNode => {
